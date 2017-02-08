@@ -1,0 +1,238 @@
+\documentclass{article}
+
+
+
+\title{HIPSTER-C:\\
+       Happy Imperative Programming System for Teens on the Edge of Regular Culture}
+
+\begin{document}
+\maketitle
+
+
+\begin{abstract}
+  HIPSTER-C is an dual mode imperative and functional language for application programming closer to the bare metal than traditional interpreted languages. HIPSTER-C aims to bring much of the lower level functionality of systems programming to a higher level interface by acting as a C language translator.
+\end{abstract} 
+
+
+
+
+\section{Background}
+Small embedded devices are being deployed at a very rapid place to all sectors of the industry. These devices control a diverse mix of hardware, requiring many software systems to be developed. \par
+One common characteristic of these devices is that they have very little working memory, sometimes as little as tens or hundreds of kilobytes. Running an interpreted language on these devices requires a large amount of working memory for the program and the interpreter or runtime. \par
+HIPSTER-C aims to be a general purpose platform independent high level language for devices with small memory footprints. HIPSTER-C includes basic components of procedural and functional languages, with the aim to increase the scalablity, ease of use, and security of systems languages. \par 
+HIPSTER-C is translated to C, and then compiled to machine code. HIPSTER-C therefore can take advantage of C features and libraries while maintaining a high level interface suited for quick scripting projects and learning. 
+
+\section{Related Work}
+\subsection{Lua}
+Lua is a multipurpose scripting language that combines parts of functional and imperative programming. Lua is designed for systems scripting work, and has also been used as a backend multi-language software and games. 
+\subsection{Rust}
+Rust is a systems programming language that aims to solve some of the problems with C memory access. Rust supports both functional and imperative paradigms.
+
+
+
+
+\section{Syntax}
+HIPSTER-C uses a simple syntax that tries to minimize cluttered nested block statements and overuse of parentheses or ``left/right'' matching brackets. The beginning of statements are treated as definitions by default, requiring keywords like \textit{call} for calling function.  
+
+
+\subsection{Variables and Operators}
+HIPSTER-C supports operators:\par
+Arithmetic: \texttt{+, -, *, /, \%}\par 
+Assignment: \texttt{=}\par
+Boolean Logic: \texttt{!, \&\&, ||}\par
+Equality Testing: \texttt{==, !=}\par
+Order Relations: \texttt{<, <=, >, >=}\par
+Sequencing: whitespace
+Subexpression Grouping: \texttt{( )}\par 
+
+
+
+\begin{verbatim}
+int y = input;
+int x = input + 9;
+double z = input / 10;
+
+\end{verbatim}
+
+
+\subsection{Control Flow}
+HIPSTER-C has basic control flow statements based on C
+
+\begin{verbatim}
+if 2 < 9;
+   //we always do this
+end; 
+
+if 9 < 2;
+
+else;
+    //we always do this
+end;
+
+if 9<0;
+
+else if true;
+    //we always do this
+else;
+
+end; 
+
+for 0 to 100;
+   z = z + 1;
+end;
+
+\end{verbatim}
+
+\subsection{Types}
+Numeric types include all basic primitives from C. Type checking is enforced however, and some type conflicts will result in a compiler warning or error
+\begin{verbatim}
+int inttype = 4; //int
+double doubletype = call double inttype; // 4.0 
+int new; //defaults to 0 
+new = doubletype; //won't compile. Loss of precision
+new = call int doubletype; //floor(doubletype) 
+\end{verbatim}
+
+
+\subsection{Arrays}
+Arrays are much more high level than C arrays. They support range checking, dynamic resizing, and have some build it functions for checking length. Arrays are actually a function that takes an element or range of elements as a parameter, and returns an element or range of elements.  
+\begin{verbatim}
+int array inta = 1000; //1000 element array
+int array goob = [1 2 3 4 5 6 7 8]; //literal array with stuff in it
+call inta 1 = 3; //assign slot to 3
+call inta 1002 = 2; //realloc to bigger array, assign 2 to last spot
+call inta 2000; //realloc again
+call inta 2 55; //another array with elements 2-55 in it
+\end{verbatim}
+
+
+\subsection{Blobs}
+A blob is just a wrapper for a C struct. Blobs have block bodies. Blobs can be called like functions. Blobs can be accessed like functions with a series of overloaded parameters. A blob may have a hashmap backend later instead of a plain struct to avoid expensive memory operations when adding new values. 
+
+
+\begin{verbatim}
+
+blob b;
+int boing;
+double hooo;
+boolean akatsuki;
+end; 
+
+int bo = call b "boing"; //access boing value
+call b "boing" 2; //set boing to 2
+call b "russiannuclearcodes" 32;  //creates new value and reallocs struct. Guesses type from value (Bad idea. Expensive)  
+call b "russiannuclearcodes" int 32; //creates new value using int. Fails if value fails typecheck. 
+call b "russiannuclearcodes" int; //creates int value but does not assign. 
+\end{verbatim} 
+
+\subsection{Boolean Logic}
+Booleans use predefined keywords for \textit{true} and \textit{false}. HIPSTER-C supports C boolean operators. 
+\begin{verbatim}
+boolean ftype = false; 
+boolean ttype = true; 
+
+ttype && ftype //evaluates to false
+ttype || ftype //evaluates to true
+\end{verbatim}
+
+
+\subsection{Strings}
+Strings in HIPSTER-C are based off of c strings, but using a HIPSTER-C array of characters instead of a C array. 
+\begin{verbatim}
+string stype = 'hi there'; //strings are null terminated HIPSTER-C arrays
+char c = 'x';
+x = stype 3; //x is now 't'
+\end{verbatim}
+
+
+\subsection{Functions}
+Functions are declared with the \textit{function} keyword, with a single return value and a set number of parameters. Function overloading is allowed. Functions are called with the \textit{call} keyword. If \textit{call} is not used, a function can be treated as a type and passed to other functions, much like C function pointers or watered down lisp functions. 
+\begin{verbatim}
+
+function void test void; 
+   return void;
+end;
+
+function int test2 int:input; 
+   return input;
+end;
+
+//function that takes an function as a parameter and calls it
+function int arraycruncher function:func;
+   call func; //execute function from arguments 
+   return 0;
+end; 
+
+call test2 3; //calling a function with call keyword
+\end{verbatim}
+
+
+
+\section{Handling Low Level Constructs}
+HIPSTER-C is a primarily high level language used for scripting or application purposes. In the event that low level memory access is needed, however, there are a series of constructs that allow access to data structures, pointers, and even escaped out C code blocks. 
+
+\subsection{Pointers}
+HIPSTER-C relies primarily on garbage collection for memory management. In the event that the user needs more manual control, HIPSTER-C allows for an interface to regular C pointers. This can be used to interface with device drivers, or just to allow for speed and memory efficiency. \par
+Pointers can point to any primitive type, arrays, or blobs. When pointing to an array, the array is treated like a normal C array with no safeguards. When pointed to a struct, a pointer points to the beginning of the struct represented by the blob. 
+
+
+\begin{verbatim}
+blob b;
+ int boing;
+ double hooo;
+ boolean akatsuki;
+end; 
+
+int array a = [1 2 3 4 5 6 7 8];
+
+pointer int p; //declare a pointer.
+
+p = a; //same as p = call a 0;
+
+int new = call p; //dereference
+
+pointer int newp  = p+1 ; //pointer arithmatic
+
+pointer double = call double p; //scaaaaarry scaaaary pointer casting. Never do this.
+\end{verbatim}
+
+\subsection{C Escape Blocks}
+These are a direct analogy to asm blocks in plain C. They allow direct execution of a C function that passes parameters and returns a value. This function is NOT managed by the garbage collector and the user is responsible for freeing all data returned from it. Any includes or preprocessor directives at the top of the function in the header block will only apply to that particular function.\par
+Cblocks are treated as functions in HIPSTER-C and can support the same argument types and return values. Cblocks do NOT support typechecking in arguments though. Return value is typechecked and defaults to a default value on error. 
+
+
+
+\begin{verbatim}
+cblock void forkbomb;
+   header; 
+     #include <unistd.h>
+   end;
+   while(1) {
+     fork(); //muahahhaha
+   }
+end; 
+
+
+cblock int retzero;
+   header;
+   end;
+   return 0;
+end;
+
+int out = call retzero; // it's zero 
+\end{verbatim}
+
+\subsection{Tainted Functions}
+A function must be marked as tanted if any native C constructs (pointers, C blocks, etc) are used in it. Any data in the heap generated by the constructs will be autmatically freed upon exiting a tainted function, with the data copied into variable where possible. Any local variables that cannot be assigned to will be assigned to a default value. Cblocks are marked as tainted automatically. \par
+Tainted functions keep any weirdness associated with low level memory management contained in a recognizable area. 
+
+\begin{verbatim}
+
+tainted function void test void; 
+   return void;
+end;
+
+
+\end{verbatim}
+
+\end{document} 

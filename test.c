@@ -839,67 +839,124 @@ YY_RULE_SETUP
 /* ignore whitespace */;
 	YY_BREAK
 case 2:
-#line 15 "test.l"
+YY_RULE_SETUP
+#line 14 "test.l"
+{printf("fdef ");}
+	YY_BREAK
 case 3:
-#line 16 "test.l"
+YY_RULE_SETUP
+#line 15 "test.l"
+{printf("ptrt ");}
+	YY_BREAK
 case 4:
-#line 17 "test.l"
+YY_RULE_SETUP
+#line 16 "test.l"
+{printf("tant ");}
+	YY_BREAK
 case 5:
-#line 18 "test.l"
+YY_RULE_SETUP
+#line 17 "test.l"
+{printf("ddef ");}
+	YY_BREAK
 case 6:
-#line 19 "test.l"
+YY_RULE_SETUP
+#line 18 "test.l"
+{printf("idef ");}
+	YY_BREAK
 case 7:
-#line 20 "test.l"
+YY_RULE_SETUP
+#line 19 "test.l"
+{printf("forl ");}
+	YY_BREAK
 case 8:
-#line 21 "test.l"
+YY_RULE_SETUP
+#line 20 "test.l"
+{printf("call ");}
+	YY_BREAK
 case 9:
-#line 22 "test.l"
+YY_RULE_SETUP
+#line 21 "test.l"
+{printf("adef ");}
+	YY_BREAK
 case 10:
-#line 23 "test.l"
+YY_RULE_SETUP
+#line 22 "test.l"
+{printf("bdef ");}
+	YY_BREAK
 case 11:
-#line 24 "test.l"
+YY_RULE_SETUP
+#line 23 "test.l"
+{printf("true ");}
+	YY_BREAK
 case 12:
-#line 25 "test.l"
+YY_RULE_SETUP
+#line 24 "test.l"
+{printf("fals ");}
+	YY_BREAK
 case 13:
-#line 26 "test.l"
+YY_RULE_SETUP
+#line 25 "test.l"
+{printf("sdef ");}
+	YY_BREAK
 case 14:
-#line 27 "test.l"
+YY_RULE_SETUP
+#line 26 "test.l"
+{printf("cdef ");}
+	YY_BREAK
 case 15:
-#line 28 "test.l"
+YY_RULE_SETUP
+#line 27 "test.l"
+{printf("void ");}
+	YY_BREAK
 case 16:
-#line 29 "test.l"
+YY_RULE_SETUP
+#line 28 "test.l"
+{printf("retu ");}
+	YY_BREAK
 case 17:
-#line 30 "test.l"
+YY_RULE_SETUP
+#line 29 "test.l"
+{printf("cblk ");}
+	YY_BREAK
 case 18:
-#line 31 "test.l"
+YY_RULE_SETUP
+#line 30 "test.l"
+{printf("chdr ");}
+	YY_BREAK
 case 19:
-#line 32 "test.l"
+YY_RULE_SETUP
+#line 31 "test.l"
+{printf("ifst ");}
+	YY_BREAK
 case 20:
-#line 33 "test.l"
+YY_RULE_SETUP
+#line 32 "test.l"
+{printf("else ");}
+	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 33 "test.l"
-{printf("%s: is a keyword\n", yytext);}
+{printf("ends ");}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 35 "test.l"
-{printf("%s is a statement terminator\n",yytext);}
+{printf("semi ");}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 37 "test.l"
-{printf("%s is an addition operator\n",yytext);}
+{printf("oadd ");}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 38 "test.l"
-{printf("%s is subtraction operator\b",yytext);}
+{printf("osub ");}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 42 "test.l"
-{printf("%s is a variable\n",yytext);}
+{printf("vari ");}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
@@ -917,7 +974,7 @@ YY_RULE_SETUP
 #line 49 "test.l"
 ECHO;
 	YY_BREAK
-#line 921 "test.c"
+#line 978 "test.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1921,7 +1978,7 @@ void yyfree (void * ptr )
 #line 49 "test.l"
 
 
-
+ 
 main() {
 yylex();
 }

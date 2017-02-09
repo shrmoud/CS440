@@ -11,35 +11,35 @@
 [\t ]+ /* ignore whitespace */;
 
 
-function |
-pointer  |
-tained   |
-double   |
-int      |
-for      |
-call     |
-array    |
-boolean  |
-true     |
-false    |
-string   |
-char     |
-void     |
-return   |
-cblock   |
-header   |
-if       |
-else     |
-end       {printf("%s: is a keyword\n", yytext);}
+function {printf("fdef ");}
+pointer  {printf("ptrt ");}
+tained   {printf("tant ");}
+double   {printf("ddef ");}
+int      {printf("idef ");}
+for      {printf("forl ");}
+call     {printf("call ");}
+array    {printf("adef ");}
+boolean  {printf("bdef ");}
+true     {printf("true ");}
+false    {printf("fals ");}
+string   {printf("sdef ");}
+char     {printf("cdef ");}
+void     {printf("void ");}
+return   {printf("retu ");}
+cblock   {printf("cblk ");}
+header   {printf("chdr ");}
+if       {printf("ifst ");}
+else     {printf("else ");}
+end      {printf("ends ");}
 
-; {printf("%s is a statement terminator\n",yytext);}
+; {printf("semi ");}
 
-\+ {printf("%s is an addition operator\n",yytext);}
-\- {printf("%s is subtraction operator\b",yytext);}
+\+ {printf("oadd ");}
+\- {printf("osub ");}
 
 
 
-[a-zA-Z][a-zA-Z0-9]* {printf("%s is a variable\n",yytext);}
+[a-zA-Z][a-zA-Z0-9]* {printf("vari ");}
 
 
 .+ {printf("%s is invalid syntax\n", yytext);}
@@ -47,7 +47,7 @@ end       {printf("%s: is a keyword\n", yytext);}
 .|\n      {ECHO;  /* default */ }
 
 %%
-
+ 
 main() {
 yylex();
 }

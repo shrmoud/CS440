@@ -342,6 +342,9 @@ void yyfree (void *  );
 
 /* Begin user sect3 */
 
+#define yywrap() (/*CONSTCOND*/1)
+#define YY_SKIP_YYWRAP
+
 typedef unsigned char YY_CHAR;
 
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
@@ -525,11 +528,11 @@ int yy_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "test.l"
-#line 2 "test.l"
+#line 4 "test.l"
 
 
 
-#line 533 "test.c"
+#line 536 "test.c"
 
 #define INITIAL 0
 
@@ -747,11 +750,11 @@ YY_DECL
 		}
 
 	{
-#line 6 "test.l"
+#line 8 "test.l"
 
 
 
-#line 755 "test.c"
+#line 758 "test.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -810,71 +813,71 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 9 "test.l"
+#line 11 "test.l"
 /* ignore whitespace */;
 	YY_BREAK
 case 2:
-#line 13 "test.l"
-case 3:
-#line 14 "test.l"
-case 4:
 #line 15 "test.l"
-case 5:
+case 3:
 #line 16 "test.l"
-case 6:
+case 4:
 #line 17 "test.l"
-case 7:
+case 5:
 #line 18 "test.l"
-case 8:
+case 6:
 #line 19 "test.l"
-case 9:
+case 7:
 #line 20 "test.l"
-case 10:
+case 8:
 #line 21 "test.l"
-case 11:
+case 9:
 #line 22 "test.l"
-case 12:
+case 10:
 #line 23 "test.l"
-case 13:
+case 11:
 #line 24 "test.l"
-case 14:
+case 12:
 #line 25 "test.l"
-case 15:
+case 13:
 #line 26 "test.l"
-case 16:
+case 14:
 #line 27 "test.l"
-case 17:
+case 15:
 #line 28 "test.l"
-case 18:
+case 16:
 #line 29 "test.l"
-case 19:
+case 17:
 #line 30 "test.l"
-case 20:
+case 18:
 #line 31 "test.l"
-case 21:
+case 19:
 #line 32 "test.l"
+case 20:
+#line 33 "test.l"
+case 21:
+#line 34 "test.l"
 case 22:
 YY_RULE_SETUP
-#line 32 "test.l"
+#line 34 "test.l"
 {printf("%s: is a real word\n", yytext);}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 34 "test.l"
+#line 36 "test.l"
 { printf("%s is not a real word\n", yytext);}
 	YY_BREAK
 case 24:
 /* rule 24 can match eol */
 YY_RULE_SETUP
-#line 36 "test.l"
+#line 38 "test.l"
 {ECHO;  /* default */ }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 38 "test.l"
+#line 40 "test.l"
 ECHO;
 	YY_BREAK
-#line 878 "test.c"
+#line 881 "test.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1875,7 +1878,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 38 "test.l"
+#line 40 "test.l"
 
 
 

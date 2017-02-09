@@ -30,8 +30,7 @@ cblock   |
 header   |
 if       |
 else     |
-end      |
-go     {printf("%s: is a real word\n", yytext);}
+end       {printf("%s: is a real word\n", yytext);}
 
 [a-zA-Z]+ { printf("%s is not a real word\n", yytext);}
 

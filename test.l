@@ -1,40 +1,37 @@
 
 %option noyywrap
 %{
-
-
-
+#include "test.h"
 %}
 %%
-
 
 [\t ]+ /* ignore whitespace */;
 
 
-function {printf("fdef ");}
-pointer  {printf("ptrt ");}
-tained   {printf("tant ");}
-double   {printf("ddef ");}
-int      {printf("idef ");}
-for      {printf("forl ");}
-call     {printf("call ");}
-array    {printf("adef ");}
-boolean  {printf("bdef ");}
-true     {printf("true ");}
-false    {printf("fals ");}
-string   {printf("sdef ");}
-char     {printf("cdef ");}
-void     {printf("void ");}
-return   {printf("retu ");}
-cblock   {printf("cblk ");}
-header   {printf("chdr ");}
-if       {printf("ifst ");}
-else     {printf("else ");}
-end      {printf("ends ");}
+function {return FUNCTION;}
+pointer  {return POINTER;}
+tained   {return TAINTED;}
+double   {return DOUBLE;}
+int      {return INT;}
+for      {return FOR;}
+call     {return CALL;}
+array    {return ARRAY;}
+boolean  {return BOOLEAN;}
+true     {return TRUE;}
+false    {return FALSE;}
+string   {return STRING;}
+char     {return CHAR;}
+void     {return VOID;}
+return   {return RETURN;}
+cblock   {return CBLOCK;}
+header   {return HEADER;}
+if       {return IF;}
+else     {return ELSE;}
+end      {return END;}
 
 ; {printf("semi ");}
 
-\+ {printf("oadd ");}
+\+ {return ADD;}
 \- {printf("osub ");}
 
 

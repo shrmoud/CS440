@@ -551,10 +551,8 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "test.l"
 #line 4 "test.l"
-
-
-
-#line 558 "test.c"
+#include "test.h"
+#line 556 "test.c"
 
 #define INITIAL 0
 
@@ -772,11 +770,10 @@ YY_DECL
 		}
 
 	{
-#line 8 "test.l"
+#line 6 "test.l"
 
 
-
-#line 780 "test.c"
+#line 777 "test.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -835,146 +832,146 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 11 "test.l"
+#line 8 "test.l"
 /* ignore whitespace */;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 14 "test.l"
-{printf("fdef ");}
+#line 11 "test.l"
+{return FUNCTION;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 15 "test.l"
-{printf("ptrt ");}
+#line 12 "test.l"
+{return POINTER;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 16 "test.l"
-{printf("tant ");}
+#line 13 "test.l"
+{return TAINTED;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 17 "test.l"
-{printf("ddef ");}
+#line 14 "test.l"
+{return DOUBLE;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 18 "test.l"
-{printf("idef ");}
+#line 15 "test.l"
+{return INT;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 19 "test.l"
-{printf("forl ");}
+#line 16 "test.l"
+{return FOR;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 20 "test.l"
-{printf("call ");}
+#line 17 "test.l"
+{return CALL;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 21 "test.l"
-{printf("adef ");}
+#line 18 "test.l"
+{return ARRAY;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 22 "test.l"
-{printf("bdef ");}
+#line 19 "test.l"
+{return BOOLEAN;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 23 "test.l"
-{printf("true ");}
+#line 20 "test.l"
+{return TRUE;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 24 "test.l"
-{printf("fals ");}
+#line 21 "test.l"
+{return FALSE;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 25 "test.l"
-{printf("sdef ");}
+#line 22 "test.l"
+{return STRING;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 26 "test.l"
-{printf("cdef ");}
+#line 23 "test.l"
+{return CHAR;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 27 "test.l"
-{printf("void ");}
+#line 24 "test.l"
+{return VOID;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 28 "test.l"
-{printf("retu ");}
+#line 25 "test.l"
+{return RETURN;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 29 "test.l"
-{printf("cblk ");}
+#line 26 "test.l"
+{return CBLOCK;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 30 "test.l"
-{printf("chdr ");}
+#line 27 "test.l"
+{return HEADER;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 31 "test.l"
-{printf("ifst ");}
+#line 28 "test.l"
+{return IF;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 32 "test.l"
-{printf("else ");}
+#line 29 "test.l"
+{return ELSE;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 33 "test.l"
-{printf("ends ");}
+#line 30 "test.l"
+{return END;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 35 "test.l"
+#line 32 "test.l"
 {printf("semi ");}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 37 "test.l"
-{printf("oadd ");}
+#line 34 "test.l"
+{return ADD;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 38 "test.l"
+#line 35 "test.l"
 {printf("osub ");}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 42 "test.l"
+#line 39 "test.l"
 {printf("vari ");}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 45 "test.l"
+#line 42 "test.l"
 {printf("%s is invalid syntax\n", yytext);}
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
-#line 47 "test.l"
+#line 44 "test.l"
 {ECHO;  /* default */ }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 49 "test.l"
+#line 46 "test.l"
 ECHO;
 	YY_BREAK
-#line 978 "test.c"
+#line 975 "test.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1975,7 +1972,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 49 "test.l"
+#line 46 "test.l"
 
 
  

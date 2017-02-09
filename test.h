@@ -1,0 +1,23 @@
+#define FUNCTION 5
+#define POINTER 6
+#define TAINTED 7 
+#define DOUBLE 8
+#define INT 9
+#define FOR 10 
+#define CALL 11
+#define ARRAY 12
+#define BOOLEAN 13
+#define TRUE 14
+#define FALSE 15
+#define STRING 16
+#define CHAR 17
+#define VOID 18
+#define RETURN 19
+#define CBLOCK 20
+#define HEADER 21
+#define IF 22
+#define ELSE 23
+#define END 34
+#define VAR 35
+#define ADD 36
+

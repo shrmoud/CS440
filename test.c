@@ -861,7 +861,7 @@ YY_RULE_SETUP
 case 23:
 YY_RULE_SETUP
 #line 34 "test.l"
-{ printf"%s is not a real word\n", yytext);}
+{ printf("%s is not a real word\n", yytext);}
 	YY_BREAK
 case 24:
 /* rule 24 can match eol */

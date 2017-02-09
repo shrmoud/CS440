@@ -30,9 +30,12 @@ cblock   |
 header   |
 if       |
 else     |
-end       {printf("%s: is a real word\n", yytext);}
+end       {printf("%s: is a keyword\n", yytext);}
 
-[a-zA-Z]+ { printf("%s is not a real word\n", yytext);}
+[a-zA-Z][a-zA-Z0-9]* {printf("%s is a variable\n",yytext);}
+
+
+.+ {printf("%s is invalid syntax\n", yytext);}
 
 .|\n      {ECHO;  /* default */ }
 

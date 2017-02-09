@@ -32,6 +32,13 @@ if       |
 else     |
 end       {printf("%s: is a keyword\n", yytext);}
 
+; {printf("%s is a statement terminator\n",yytext);}
+
+\+ {printf("%s is an addition operator\n",yytext);}
+\- {printf("%s is subtraction operator\b",yytext);}
+
+
+
 [a-zA-Z][a-zA-Z0-9]* {printf("%s is a variable\n",yytext);}
 
 

@@ -49,12 +49,11 @@ end      {printf("END ");}
 
 [0-9]+\.?[0-9]* {printf("NUMBER ");}
 
-[a-zA-Z][a-zA-Z0-9]* {printf("VAR ");}
 
 [ \t\n]+ /* ignore whitespace */
 
 
-.      {ECHO;  /* default */ }
+.*      {printf("syntax error\n");}
 
 %%
  

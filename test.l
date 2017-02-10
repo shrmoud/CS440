@@ -1,68 +1,74 @@
-%option noyywrap
 %{
 #include "test.h"
 %}
 %%
 
-[\t ]+ /* ignore whitespace */
-
  
-function {return FUNCTION;}
-pointer  {return POINTER;}
-tained   {return TAINTED;}
-double   {return DOUBLE;}
-int      {return INT;}
-for      {return FOR;}
-call     {return CALL;}
-array    {return ARRAY;}
-boolean  {return BOOLEAN;}
-true     {return TRUE;}
-false    {return FALSE;}
-string   {return STRING;}
-char     {return CHAR;}
-void     {return VOID;}
-return   {return RETURN;}
-cblock   {return CBLOCK;}
-header   {return HEADER;}
-if       {return IF;}
-else     {return ELSE;}
-end      {return END;}
+function {printf("FUNCTION ");}
+pointer  {printf("POINTER ");}
+tained   {printf("TAINTED ");}
+double   {printf("DOUBLE ");}
+int      {printf("INT ");}
+for      {printf("FOR ");}
+call     {printf("CALL ");}
+array    {printf("ARRAY ");}
+boolean  {printf("BOOLEAN ");}
+true     {printf("TRUE ");}
+false    {printf("FALSE ");}
+string   {printf("STRING ");}
+char     {printf("CHAR ");}
+void     {printf("VOID ");}
+return   {printf("RETURN ");}
+cblock   {printf("CBLOCK ");}
+header   {printf("HEADER ");}
+if       {printf("IF ");}
+else     {printf("ELSE ");}
+end      {printf("END ");}
 
 
 
-";" {return SEMI;}
+";" {printf("SEMI ");}
 
 
-"\+" {return ADD;}
-"\-" {return SUBT;}
-"\*" {return MULT;}
-"/"  {return DIV;}
-"\=" {return ASSGN;} 
-"!"  {return NOT;}
-"&&" {return AND;}
-"||" {return OR;}
-"==" {return EQ;}
-"!=" {return NOTEQ;}
-"<"  {return LESS;} 
-">"  {return GRAT;}
-"<=" {return LEEQ;}
-">=" {return GREQ;}
-"("  {return LPAR;}
-")"  {return RPAR;}	
+"\+" {printf("ADD ");}
+"\-" {printf("SUBT ");}
+"\*" {printf("MULT ");}
+"/"  {printf("DIV ");}
+"\=" {printf("ASSGN ");} 
+"!"  {printf("NOT ");}
+"&&" {printf("AND ");}
+"||" {printf("OR ");}
+"==" {printf("EQ ");}
+"!=" {printf("NOTEQ ");}
+"<"  {printf("LESS ");} 
+">"  {printf("GRAT ");}
+"<=" {printf("LEEQ ");}
+">=" {printf("GREQ ");}
+"("  {printf("LPAR ");}
+")"  {printf("RPAR ");}	
+
+[0-9]+\.?[0-9]* {printf("NUMBER ");}
+
+[a-zA-Z][a-zA-Z0-9]* {printf("VAR ");}
+
+[ \t\n]+ /* ignore whitespace */
 
 
-
-[a-zA-Z][a-zA-Z0-9]* {return VAR;}
-
-
-
-.+ {printf("%s is invalid syntax\n", yytext);}
-
-.|\n      {ECHO;  /* default */ }
+.      {ECHO;  /* default */ }
 
 %%
  
-main() {
-yylex();
+main(int argc, char **argv) {
+    
+    {
+	++argv, --argc;  /* skip over program name */
+	if ( argc > 0 )
+	    yyin = fopen( argv[0], "r" );
+	else
+            yyin = stdin;
+	
+	yylex();
+	printf("\n");
+    }
 }
 

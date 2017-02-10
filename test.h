@@ -20,4 +20,21 @@
 #define END 34
 #define VAR 35
 #define ADD 36
+#define SEMI 37
+#define SUBT 38
+#define MULT 39
+#define DIV 40 
+#define ASSGN 41
+#define NOT 42
+#define AND 43
+#define OR 44
+#define EQ 45
+#define NOTEQ 46
+#define LESS 47
+#define GRAT 48
+#define LEEQ 49
+#define GREQ 50 
+#define LPAR 51
+#define RPAR 52
+
 

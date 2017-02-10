@@ -1,13 +1,12 @@
-
 %option noyywrap
 %{
 #include "test.h"
 %}
 %%
 
-[\t ]+ /* ignore whitespace */;
+[\t ]+ /* ignore whitespace */
 
-
+ 
 function {return FUNCTION;}
 pointer  {return POINTER;}
 tained   {return TAINTED;}
@@ -29,14 +28,32 @@ if       {return IF;}
 else     {return ELSE;}
 end      {return END;}
 
-; {printf("semi ");}
-
-\+ {return ADD;}
-\- {printf("osub ");}
 
 
+";" {return SEMI;}
 
-[a-zA-Z][a-zA-Z0-9]* {printf("vari ");}
+
+"\+" {return ADD;}
+"\-" {return SUBT;}
+"\*" {return MULT;}
+"/"  {return DIV;}
+"\=" {return ASSGN;} 
+"!"  {return NOT;}
+"&&" {return AND;}
+"||" {return OR;}
+"==" {return EQ;}
+"!=" {return NOTEQ;}
+"<"  {return LESS;} 
+">"  {return GRAT;}
+"<=" {return LEEQ;}
+">=" {return GREQ;}
+"("  {return LPAR;}
+")"  {return RPAR;}	
+
+
+
+[a-zA-Z][a-zA-Z0-9]* {return VAR;}
+
 
 
 .+ {printf("%s is invalid syntax\n", yytext);}

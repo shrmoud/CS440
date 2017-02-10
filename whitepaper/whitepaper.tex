@@ -15,7 +15,6 @@
 
 
 
-
 \section{Background}
 Small embedded devices are being deployed at a very rapid place to all sectors of the industry. These devices control a diverse mix of hardware, requiring many software systems to be developed. \par
 One common characteristic of these devices is that they have very little working memory, sometimes as little as tens or hundreds of kilobytes. Running an interpreted language on these devices requires a large amount of working memory for the program and the interpreter or runtime. \par
@@ -51,7 +50,6 @@ Subexpression Grouping: \texttt{( )}\par
 int y = input;
 int x = input + 9;
 double z = input / 10;
-
 \end{verbatim}
 
 
@@ -158,7 +156,7 @@ function int test2 int:input;
 end;
 
 //function that takes an function as a parameter and calls it
-function int arraycruncher function:func;
+function int functioncruncher function:func;
    call func; //execute function from arguments 
    return 0;
 end; 

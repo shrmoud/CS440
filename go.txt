@@ -1,0 +1,8 @@
+int x = 5;
+
+double doubletype = call x;
+
+
+function int test2 int:input;
+   return input;
+end;

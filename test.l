@@ -46,7 +46,8 @@ end      {printf("END ");}
 {W}<={W} {printf("LEEQ ");}
 {W}>={W} {printf("GREQ ");}
 {W}"("{W}  {printf("LPAR ");}
-{W}")"{W}  {printf("RPAR ");}	
+{W}")"{W}  {printf("RPAR ");}
+{W}":"{W}  {printf("TCOL ");} /* variable type specifier */ 
 
 [0-9]+(\.?[0-9]+)? {printf("NUMBER ");}
 

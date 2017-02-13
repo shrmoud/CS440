@@ -31,22 +31,22 @@ end      {printf("END ");}
 {W};{W} {printf("SEMI ");}
 
 
-"\+" {printf("ADD ");}
-"\-" {printf("SUBT ");}
-"\*" {printf("MULT ");}
-"/"  {printf("DIV ");}
-"\=" {printf("ASSGN ");} 
-"!"  {printf("NOT ");}
-"&&" {printf("AND ");}
-"||" {printf("OR ");}
-"==" {printf("EQ ");}
-"!=" {printf("NOTEQ ");}
-"<"  {printf("LESS ");} 
-">"  {printf("GRAT ");}
-"<=" {printf("LEEQ ");}
-">=" {printf("GREQ ");}
-"("  {printf("LPAR ");}
-")"  {printf("RPAR ");}	
+{W}\+{W} {printf("ADD ");}
+{W}\-{W} {printf("SUBT ");}
+{W}\*{W} {printf("MULT ");}
+{W}"/"{W}  {printf("DIV ");}
+{W}\={W} {printf("ASSGN ");} 
+{W}!{W}  {printf("NOT ");}
+{W}&&{W} {printf("AND ");}
+{W}"||"{W} {printf("OR ");}
+{W}=={W} {printf("EQ ");}
+{W}!={W} {printf("NOTEQ ");}
+{W}<{W}  {printf("LESS ");} 
+{W}>{W}  {printf("GRAT ");}
+{W}<={W} {printf("LEEQ ");}
+{W}>={W} {printf("GREQ ");}
+{W}"("{W}  {printf("LPAR ");}
+{W}")"{W}  {printf("RPAR ");}	
 
 [0-9]+\.?[0-9]* {printf("NUMBER ");}
 

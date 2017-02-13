@@ -35,11 +35,11 @@ end      {printf("END ");}
 {W}\-{W} {printf("SUBT ");}
 {W}\*{W} {printf("MULT ");}
 {W}"/"{W}  {printf("DIV ");}
-{W}\={W} {printf("ASSGN ");} 
+{W}"="{W} {printf("ASSGN ");} 
 {W}!{W}  {printf("NOT ");}
 {W}&&{W} {printf("AND ");}
 {W}"||"{W} {printf("OR ");}
-{W}=={W} {printf("EQ ");}
+{W}"=="{W} {printf("EQ ");}
 {W}!={W} {printf("NOTEQ ");}
 {W}<{W}  {printf("LESS ");} 
 {W}>{W}  {printf("GRAT ");}
@@ -48,7 +48,7 @@ end      {printf("END ");}
 {W}"("{W}  {printf("LPAR ");}
 {W}")"{W}  {printf("RPAR ");}	
 
-[0-9]+\.?[0-9]+ {printf("NUMBER ");}
+[0-9]+(\.?[0-9]+)? {printf("NUMBER ");}
 
 [a-zA-Z][a-zA-Z0-9]* {printf("VAR ");}
 

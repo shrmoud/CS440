@@ -1,6 +1,7 @@
 %{
 #include "test.h"
 %}
+W [ \t\n]*
 %%
 
  
@@ -27,7 +28,7 @@ end      {printf("END ");}
 
 
 
-";" {printf("SEMI ");}
+{W};{W} {printf("SEMI ");}
 
 
 "\+" {printf("ADD ");}
@@ -54,7 +55,7 @@ end      {printf("END ");}
 [ \t\n]+ /* ignore whitespace */
 
 
-.      {ECHO;  /* default */ }
+.      {printf("error\n");  /* default */ }
 
 %%
  

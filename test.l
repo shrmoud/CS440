@@ -48,7 +48,7 @@ end      {printf("END ");}
 {W}"("{W}  {printf("LPAR ");}
 {W}")"{W}  {printf("RPAR ");}	
 
-[0-9]+\.?[0-9]* {printf("NUMBER ");}
+[0-9]+\.?[0-9]+ {printf("NUMBER ");}
 
 [a-zA-Z][a-zA-Z0-9]* {printf("VAR ");}
 

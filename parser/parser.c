@@ -64,8 +64,8 @@
 /* Copy the first part of user declarations.  */
 #line 5 "parser.y" /* yacc.c:339  */
 
-#include "symbols.h"
 #include "stdio.h"
+#include "symbols.h"
 int yyerror(char * s);
 int yylex(void); 
 

@@ -3,8 +3,8 @@
 
 
 %{
-#include "symbols.h"
 #include "stdio.h"
+#include "symbols.h"
 int yyerror(char * s);
 int yylex(void); 
 %}

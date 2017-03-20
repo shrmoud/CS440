@@ -5,58 +5,58 @@ W [ \t\n]*
 %%
 
  
-function {printf("FUNCTION ");}
-pointer  {printf("POINTER ");}
-tained   {printf("TAINTED ");}
-double   {printf("DOUBLE ");}
-int      {printf("INT ");}
-for      {printf("FOR ");}
-call     {printf("CALL ");}
-array    {printf("ARRAY ");}
-boolean  {printf("BOOLEAN ");}
-true     {printf("TRUE ");}
-false    {printf("FALSE ");}
-string   {printf("STRING ");}
-char     {printf("CHAR ");}
-void     {printf("VOID ");}
-return   {printf("RETURN ");}
-cblock   {printf("CBLOCK ");}
-header   {printf("HEADER ");}
-if       {printf("IF ");}
-else     {printf("ELSE ");}
-end      {printf("END ");}
+function {return FUNCTIONDEF;}
+pointer  {return POINTER;}
+tained   {return TAINTED;}
+double   {return DOUBLE;}
+int      {return INT;}
+for      {return FOR;}
+call     {return CALL;}
+array    {return ARRAY;}
+boolean  {return BOOLEAN;}
+true     {return TRUE;}
+false    {return FALSE;}
+string   {return STRING;}
+char     {return CHAR;}
+void     {return VOID;}
+return   {return RETURN;}
+cblock   {return CBLOCK;}
+header   {return HEADER;}
+if       {return IF;}
+else     {return ELSE;}
+end      {return END;}
 
 
 
-{W};{W} {printf("SEMI ");}
+{W};{W} {return SEMI;}
 
 
-{W}\+{W} {printf("ADD ");}
-{W}\-{W} {printf("SUBT ");}
-{W}\*{W} {printf("MULT ");}
-{W}"/"{W}  {printf("DIV ");}
-{W}"="{W} {printf("ASSGN ");} 
-{W}!{W}  {printf("NOT ");}
-{W}&&{W} {printf("AND ");}
-{W}"||"{W} {printf("OR ");}
-{W}"=="{W} {printf("EQ ");}
-{W}!={W} {printf("NOTEQ ");}
-{W}<{W}  {printf("LESS ");} 
-{W}>{W}  {printf("GRAT ");}
-{W}<={W} {printf("LEEQ ");}
-{W}>={W} {printf("GREQ ");}
-{W}"("{W}  {printf("LPAR ");}
-{W}")"{W}  {printf("RPAR ");}
-{W}":"{W}  {printf("TCOL ");} /* variable type specifier */ 
+{W}\+{W} {return ADD;}
+{W}\-{W} {return SUBT;}
+{W}\*{W} {return MULT;}
+{W}"/"{W}  {return DIV;}
+{W}"="{W} {return ASSGN;} 
+{W}!{W}  {return NOT;}
+{W}&&{W} {return AND;}
+{W}"||"{W} {return OR;}
+{W}"=="{W} {return EQ;}
+{W}!={W} {return NOTEQ;}
+{W}<{W}  {return LESS;} 
+{W}>{W}  {return GRAT;}
+{W}<={W} {return LEEQ;}
+{W}>={W} {return GREQ;}
+{W}"("{W}  {return LPAR;}
+{W}")"{W}  {return RPAR;}
+{W}":"{W}  {return TCOL;} /* variable type specifier */ 
 
-[0-9]+(\.?[0-9]+)? {printf("NUMBER ");}
+[0-9]+(\.?[0-9]+)? {return NUMBER;}
 
-[a-zA-Z][a-zA-Z0-9]* {printf("VAR ");}
+[a-zA-Z][a-zA-Z0-9]* {return VAR;}
 
 [ \t\n]+ /* ignore whitespace */
 
 
-.      {printf("error\n");  /* default */ }
+.      {return ERR;  /* default */ }
 
 %%
  

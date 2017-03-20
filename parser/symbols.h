@@ -1,9 +1,5 @@
-#ifndef _HC_SYMBOLS_
-#define _HC_SYMBOLS_ 
-#else 
-
-
-#define FUNCTION 5
+#pragma once
+#define ERR -1
 #define POINTER 6
 #define TAINTED 7 
 #define DOUBLE 8
@@ -41,5 +37,7 @@
 #define GREQ 50 
 #define LPAR 51
 #define RPAR 52
+#define TCOL 53
+#define NUMBER 54
+#define FUNCTIONDEF 55
 
-#endif

@@ -860,220 +860,220 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 8 "scanner.l"
-{printf("FUNCTION ");}
+{return FUNCTIONDEF;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 9 "scanner.l"
-{printf("POINTER ");}
+{return POINTER;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 10 "scanner.l"
-{printf("TAINTED ");}
+{return TAINTED;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 11 "scanner.l"
-{printf("DOUBLE ");}
+{return DOUBLE;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 12 "scanner.l"
-{printf("INT ");}
+{return INT;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 13 "scanner.l"
-{printf("FOR ");}
+{return FOR;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 14 "scanner.l"
-{printf("CALL ");}
+{return CALL;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 15 "scanner.l"
-{printf("ARRAY ");}
+{return ARRAY;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 16 "scanner.l"
-{printf("BOOLEAN ");}
+{return BOOLEAN;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 17 "scanner.l"
-{printf("TRUE ");}
+{return TRUE;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 18 "scanner.l"
-{printf("FALSE ");}
+{return FALSE;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 19 "scanner.l"
-{printf("STRING ");}
+{return STRING;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 20 "scanner.l"
-{printf("CHAR ");}
+{return CHAR;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 21 "scanner.l"
-{printf("VOID ");}
+{return VOID;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 22 "scanner.l"
-{printf("RETURN ");}
+{return RETURN;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 23 "scanner.l"
-{printf("CBLOCK ");}
+{return CBLOCK;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 24 "scanner.l"
-{printf("HEADER ");}
+{return HEADER;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 25 "scanner.l"
-{printf("IF ");}
+{return IF;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 26 "scanner.l"
-{printf("ELSE ");}
+{return ELSE;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 27 "scanner.l"
-{printf("END ");}
+{return END;}
 	YY_BREAK
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
 #line 31 "scanner.l"
-{printf("SEMI ");}
+{return SEMI;}
 	YY_BREAK
 case 22:
 /* rule 22 can match eol */
 YY_RULE_SETUP
 #line 34 "scanner.l"
-{printf("ADD ");}
+{return ADD;}
 	YY_BREAK
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
 #line 35 "scanner.l"
-{printf("SUBT ");}
+{return SUBT;}
 	YY_BREAK
 case 24:
 /* rule 24 can match eol */
 YY_RULE_SETUP
 #line 36 "scanner.l"
-{printf("MULT ");}
+{return MULT;}
 	YY_BREAK
 case 25:
 /* rule 25 can match eol */
 YY_RULE_SETUP
 #line 37 "scanner.l"
-{printf("DIV ");}
+{return DIV;}
 	YY_BREAK
 case 26:
 /* rule 26 can match eol */
 YY_RULE_SETUP
 #line 38 "scanner.l"
-{printf("ASSGN ");} 
+{return ASSGN;} 
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
 #line 39 "scanner.l"
-{printf("NOT ");}
+{return NOT;}
 	YY_BREAK
 case 28:
 /* rule 28 can match eol */
 YY_RULE_SETUP
 #line 40 "scanner.l"
-{printf("AND ");}
+{return AND;}
 	YY_BREAK
 case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
 #line 41 "scanner.l"
-{printf("OR ");}
+{return OR;}
 	YY_BREAK
 case 30:
 /* rule 30 can match eol */
 YY_RULE_SETUP
 #line 42 "scanner.l"
-{printf("EQ ");}
+{return EQ;}
 	YY_BREAK
 case 31:
 /* rule 31 can match eol */
 YY_RULE_SETUP
 #line 43 "scanner.l"
-{printf("NOTEQ ");}
+{return NOTEQ;}
 	YY_BREAK
 case 32:
 /* rule 32 can match eol */
 YY_RULE_SETUP
 #line 44 "scanner.l"
-{printf("LESS ");} 
+{return LESS;} 
 	YY_BREAK
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
 #line 45 "scanner.l"
-{printf("GRAT ");}
+{return GRAT;}
 	YY_BREAK
 case 34:
 /* rule 34 can match eol */
 YY_RULE_SETUP
 #line 46 "scanner.l"
-{printf("LEEQ ");}
+{return LEEQ;}
 	YY_BREAK
 case 35:
 /* rule 35 can match eol */
 YY_RULE_SETUP
 #line 47 "scanner.l"
-{printf("GREQ ");}
+{return GREQ;}
 	YY_BREAK
 case 36:
 /* rule 36 can match eol */
 YY_RULE_SETUP
 #line 48 "scanner.l"
-{printf("LPAR ");}
+{return LPAR;}
 	YY_BREAK
 case 37:
 /* rule 37 can match eol */
 YY_RULE_SETUP
 #line 49 "scanner.l"
-{printf("RPAR ");}
+{return RPAR;}
 	YY_BREAK
 case 38:
 /* rule 38 can match eol */
 YY_RULE_SETUP
 #line 50 "scanner.l"
-{printf("TCOL ");} /* variable type specifier */ 
+{return TCOL;} /* variable type specifier */ 
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 52 "scanner.l"
-{printf("NUMBER ");}
+{return NUMBER;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 54 "scanner.l"
-{printf("VAR ");}
+{return VAR;}
 	YY_BREAK
 case 41:
 /* rule 41 can match eol */
@@ -1084,7 +1084,7 @@ YY_RULE_SETUP
 case 42:
 YY_RULE_SETUP
 #line 59 "scanner.l"
-{printf("error\n");  /* default */ }
+{return ERR;  /* default */ }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP

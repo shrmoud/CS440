@@ -4,6 +4,7 @@
 
 %{
 #include "symbols.h"
+#include "stdio.h"
 int yyerror(char * s);
 int yylex(void); 
 %}
@@ -17,7 +18,7 @@ int yylex(void);
 
 
 input: /* empty */ 
-     | exp { printf("Result %s\n", $1); }
+     | exp { printf("Result %d\n", $1); }
 	;
 
 exp: FUNCTION | FUNCTION exp;
@@ -26,6 +27,7 @@ exp: FUNCTION | FUNCTION exp;
 
 int yyerror(char * s) {
 	printf("%s\n",s);
+	return 0;
 }
 
 

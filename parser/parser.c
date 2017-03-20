@@ -65,10 +65,11 @@
 #line 5 "parser.y" /* yacc.c:339  */
 
 #include "symbols.h"
+#include "stdio.h"
 int yyerror(char * s);
 int yylex(void); 
 
-#line 72 "parser.tab.c" /* yacc.c:339  */
+#line 73 "parser.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -123,7 +124,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 127 "parser.tab.c" /* yacc.c:358  */
+#line 128 "parser.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -420,7 +421,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    19,    19,    20,    23,    23
+       0,    20,    20,    21,    24,    24
 };
 #endif
 
@@ -1185,13 +1186,13 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 20 "parser.y" /* yacc.c:1646  */
-    { printf("Result %s\n", (yyvsp[0])); }
-#line 1191 "parser.tab.c" /* yacc.c:1646  */
+#line 21 "parser.y" /* yacc.c:1646  */
+    { printf("Result %d\n", (yyvsp[0])); }
+#line 1192 "parser.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1195 "parser.tab.c" /* yacc.c:1646  */
+#line 1196 "parser.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1419,11 +1420,12 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 25 "parser.y" /* yacc.c:1906  */
+#line 26 "parser.y" /* yacc.c:1906  */
 
 
 int yyerror(char * s) {
 	printf("%s\n",s);
+	return 0;
 }
 
 

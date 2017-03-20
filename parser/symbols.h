@@ -1,4 +1,5 @@
 #pragma once
+#define YY_NO_UNPUT
 #define ERR -1
 #define POINTER 6
 #define TAINTED 7 

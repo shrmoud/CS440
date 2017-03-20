@@ -104,13 +104,24 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    FUNCTION = 258
+    integer = 258
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+
+union YYSTYPE
+{
+#line 12 "parser.y" /* yacc.c:355  */
+
+	int	int_val;
+	char* op_val;
+
+#line 122 "parser.tab.c" /* yacc.c:355  */
+};
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -124,7 +135,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 128 "parser.tab.c" /* yacc.c:358  */
+#line 139 "parser.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -421,7 +432,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    20,    20,    21,    24,    24
+       0,    23,    23,    24,    27,    28
 };
 #endif
 
@@ -430,7 +441,7 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "FUNCTION", "$accept", "input", "exp", YY_NULLPTR
+  "$end", "error", "$undefined", "integer", "$accept", "input", "exp", YY_NULLPTR
 };
 #endif
 
@@ -1186,13 +1197,25 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 21 "parser.y" /* yacc.c:1646  */
-    { printf("Result %d\n", (yyvsp[0])); }
-#line 1192 "parser.tab.c" /* yacc.c:1646  */
+#line 24 "parser.y" /* yacc.c:1646  */
+    { printf("Result \n"); }
+#line 1203 "parser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 4:
+#line 27 "parser.y" /* yacc.c:1646  */
+    { printf("test1\n");}
+#line 1209 "parser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 5:
+#line 28 "parser.y" /* yacc.c:1646  */
+    { printf("test2\n");}
+#line 1215 "parser.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1196 "parser.tab.c" /* yacc.c:1646  */
+#line 1219 "parser.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1420,7 +1443,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 26 "parser.y" /* yacc.c:1906  */
+#line 30 "parser.y" /* yacc.c:1906  */
 
 
 int yyerror(char * s) {

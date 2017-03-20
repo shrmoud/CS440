@@ -9,19 +9,23 @@ int yyerror(char * s);
 int yylex(void); 
 %}
 
+%union {
+	int	int_val;
+	char* op_val;
+}
 
 %start input
-
-%left FUNCTION
+%token <int_val> integer
 
 %%
 
 
 input: /* empty */ 
-     | exp { printf("Result %d\n", $1); }
+     | exp { printf("Result \n"); }
 	;
 
-exp: FUNCTION | FUNCTION exp;
+exp: integer{ printf("test1\n");}
+   | integer exp  { printf("test2\n");} ;
 
 %%
 

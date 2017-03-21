@@ -83,7 +83,7 @@ int yylex(void);
 %type <int> boolexp 
 %type <int> boolterm
 %type <int> expression
-
+%type <int> value
 %%
 expression: boolexp | exp | func
 
@@ -109,7 +109,8 @@ typecheck: type_t TCOL VAR
 
 typelist: typecheck |  typecheck typelist;
 
-func: FUNCTIONDEF type_t VAR typelist SEMI statement END;
+func: FUNCTIONDEF type_t VAR typelist SEMI statement RETURN value  SEMI END
+    |  FUNCTIONDEF VOID VAR typelist SEMI statement END;
 /* math and arithmatic */ 
 exp:  term
    | exp operator exp
@@ -149,7 +150,7 @@ digit:SUBT NUMBER |
 term: digit | VAR | assignment
 ;
 
-
+value: digit | VAR
 
 %%
 

@@ -13,7 +13,7 @@ int yylex(void);
 
 }
 
-%start expression
+%start statement
 %token PRINT
 %token POINTER
 %token TAINTED 
@@ -36,17 +36,27 @@ int yylex(void);
 %token TCOL
 %token <int> DECIMAL 
 %token <double>  NUMBER 
+
+
+/* blocks */ 
+
 %token END
+%token SEMI
+%type <int> statement
+%type <int> block
+
+
 /* functions */ 
 %token FUNCTIONDEF
-
-
+%type <int> func
+%type <int> typecheck
+%type <int> typelist
 
 /* math and arithmatic */ 
 %token MOD 
 %token VAR 
 %token ADD 
-%token SEMI
+
 %token SUBT 
 %token MULT 
 %token DIV  
@@ -75,7 +85,10 @@ int yylex(void);
 %type <int> expression
 
 %%
-expression: boolexp | exp
+expression: boolexp | exp | func
+
+statement: expression SEMI;
+
 
 /* Boolean logic */ 
 boolexp:  boolterm 
@@ -87,10 +100,16 @@ boolexp:  boolterm
 boolterm: TRUE | FALSE | VAR;
 
 
-/* functions */ 
+/* functions */
+
+type_t:  INT | BOOLEAN | DOUBLE | POINTER | CHAR | STRING;
 
 
+typecheck: type_t TCOL VAR
 
+typelist: typecheck |  typecheck typelist;
+
+func: FUNCTIONDEF type_t VAR typelist;
 /* math and arithmatic */ 
 exp:  term
    | exp operator exp

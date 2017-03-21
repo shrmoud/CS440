@@ -1,5 +1,5 @@
 %{
-#include "symbols.h"
+#include "parser.tab.h"
 %}
 W [ \t\n]*
 %%
@@ -56,8 +56,10 @@ end      {return END;}
 [ \t\n]+ /* ignore whitespace */
 
 
-.      {return ERR;  /* default */ }
+.      {return -1;  /* default */ }
 
 %%
- 
+int yywrap (void) { return 1;}
+
+
 

@@ -1,32 +1,66 @@
-/* HIPSTER-C parser */ 
+/* HIPSTER-parser */ 
 
 
 
 %{
 #include "stdio.h"
-#include "symbols.h"
 int yyerror(char * s);
 int yylex(void); 
 %}
 
 %union {
-	int	int_val;
-	char* op_val;
+	int num;
+	char id;
 }
 
 %start input
-%token <int_val> integer
+%token PRINT
+%token POINTER
+%token TAINTED 
+%token DOUBLE
+%token INT
+%token FOR 
+%token CALL
+%token ARRAY
+%token BOOLEAN
+%token TRUE
+%token FALSE
+%token STRING
+%token CHAR 
+%token VOID 
+%token RETURN 
+%token CBLOCK 
+%token HEADER 
+%token IF 
+%token ELSE 
+%token END 
+%token VAR 
+%token ADD 
+%token SEMI 
+%token SUBT 
+%token MULT 
+%token DIV  
+%token ASSGN 
+%token NOT 
+%token AND 
+%token OR 
+%token EQ 
+%token NOTEQ 
+%token LESS 
+%token GRAT 
+%token LEEQ 
+%token GREQ  
+%token LPAR 
+%token RPAR 
+%token TCOL 
+%token NUMBER 
+%token FUNCTIONDEF
 
 %%
 
 
-input: /* empty */ 
-     | exp { printf("Result \n"); }
+input: PRINT { printf("Result \n");} 
 	;
-
-exp: integer{ printf("test1\n");}
-   | integer exp  { printf("test2\n");} ;
-
 %%
 
 int yyerror(char * s) {

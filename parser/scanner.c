@@ -577,7 +577,7 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "scanner.l"
 #line 2 "scanner.l"
-#include "symbols.h"
+#include "parser.tab.h"
 #line 582 "lex.yy.c"
 
 #define INITIAL 0
@@ -1084,7 +1084,7 @@ YY_RULE_SETUP
 case 42:
 YY_RULE_SETUP
 #line 59 "scanner.l"
-{return ERR;  /* default */ }
+{return -1;  /* default */ }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
@@ -2095,6 +2095,8 @@ void yyfree (void * ptr )
 #line 61 "scanner.l"
 
 
- 
+int yywrap (void) { return 1;}
+
+
 
 

@@ -90,7 +90,7 @@ exp: term                  //{$$ = $1;}
    | exp MOD term          //{$$ = $1 % $3;}
    | exp ASSGN term          //{$$ = $1 = $3;}
    | exp NOT term          //{$$ = $1 ! $3;}
-   | exp && term         //{$$ = $1 && $3;}
+   | exp AND term         //{$$ = $1 && $3;}
    | exp EQ term         //{$$ = $1 == $3;}
    | exp OR term         //{$$ = $1 || $3;}
    | exp NOTEQ term         //{$$ = $1 != $3;}
@@ -100,10 +100,11 @@ exp: term                  //{$$ = $1;}
    | exp GREQ term         //{$$ = $1 >= $3;}
 ;
 
-term: number
+ term: NUMBER
 	| identifier 
 ;
 
+/*
 term: double
 	| identifier
 ;
@@ -111,6 +112,9 @@ term: double
 term: decimal
 	| identifier
 ;
+
+*/ 
+
 
 %%
 

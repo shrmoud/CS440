@@ -49,8 +49,6 @@ g
 %token QUOTE
 %token CHARQUOTE
 %type <int> stringassign
-%type <int> characterassign
-%type <int> character
 
 /* functions */ 
 %token FUNCTIONDEF
@@ -91,7 +89,7 @@ g
 %type <int> expression
 %type <int> value
 %%
-expression: boolexp | exp | func | calltype
+expression: boolexp | exp | func | calltype | stringassign ;
 
 statement: expression SEMI | expression SEMI statement  ;
 
@@ -106,6 +104,10 @@ boolexp:  boolterm
 boolterm: TRUE | FALSE | VAR;
 
 /* strings */ 
+stringassign: VAR ASSGN QUOTE |
+	    VAR ASSGN CHARQUOTE;
+
+
 
 /* functions */
 

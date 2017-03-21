@@ -10,10 +10,10 @@ int yylex(void);
 
 %union {
 	int num;
-	char id;
+
 }
 
-%start input
+%start exp
 %token PRINT
 %token POINTER
 %token TAINTED 
@@ -32,15 +32,17 @@ int yylex(void);
 %token CBLOCK 
 %token HEADER 
 %token IF 
-%token ELSE 
+%token ELSE
+%token MOD 
 %token END 
 %token VAR 
 %token ADD 
-%token SEMI 
+%token SEMI
+%token NEG
 %token SUBT 
 %token MULT 
 %token DIV  
-%token ASSGN 
+%token <int> ASSGN 
 %token NOT 
 %token AND 
 %token OR 
@@ -53,14 +55,32 @@ int yylex(void);
 %token LPAR 
 %token RPAR 
 %token TCOL 
-%token NUMBER 
+%token <int>  NUMBER 
 %token FUNCTIONDEF
-
+%token identifier
+%type <int>  exp
+%type <int> operator
+%type <int>  arithmatic
+%type <int>  type_t
+%type <int>  assignment
+%type <int>  term
 %%
 
-
-input: INT { printf("Result \n");} 
+exp:  NUMBER;
+arithmatic: ADD
+	| SUBT
+	| MULT	
+	| NEG
+	| MOD
 	;
+
+assignment: identifier ASSGN exp
+	  ;
+operator: arithmatic 
+	| assignment ;
+
+
+
 %%
 
 int yyerror(char * s) {

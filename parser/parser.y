@@ -13,7 +13,7 @@ int yylex(void);
 
 }
 
-%start exp
+%start expression
 %token PRINT
 %token POINTER
 %token TAINTED 
@@ -33,8 +33,17 @@ int yylex(void);
 %token HEADER 
 %token IF 
 %token ELSE
+%token TCOL
+%token <int> DECIMAL 
+%token <double>  NUMBER 
+%token END
+/* functions */ 
+%token FUNCTIONDEF
+
+
+
+/* math and arithmatic */ 
 %token MOD 
-%token END 
 %token VAR 
 %token ADD 
 %token SEMI
@@ -53,10 +62,6 @@ int yylex(void);
 %token GREQ  
 %token LPAR 
 %token RPAR 
-%token TCOL
-%token <int> DECIMAL 
-%token <double>  NUMBER 
-%token FUNCTIONDEF
 %token identifier
 %type <int>  exp
 %type <int> operator
@@ -65,8 +70,26 @@ int yylex(void);
 %type <int>  assignment
 %type <int>  term
 %type <int> logic
-%%
+%type <int> boolexp 
+%type <int> boolterm
+%type <int> expression
 
+%%
+expression: boolexp | exp
+
+/* Boolean logic */ 
+boolexp:  boolterm 
+       | boolexp logic boolexp
+       | LPAR boolexp RPAR
+;
+
+
+boolterm: TRUE | FALSE ;
+/* functions */ 
+
+
+
+/* math and arithmatic */ 
 exp:  term
    | exp operator exp
    |  LPAR exp RPAR ;
@@ -103,6 +126,7 @@ digit:SUBT NUMBER |
 
 term: digit | VAR | assignment
 ;
+
 
 
 %%

@@ -15,7 +15,7 @@ main.o: main.c
 scanner.o: scanner.c
 	${CC} ${CFLAGS} -c scanner.c -o scanner.o
 
-scanner.c: scanner.l parser.c 
+scanner.c: scanner.l parser.o
 	flex scanner.l
 	cp lex.yy.c scanner.c
 

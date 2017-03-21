@@ -1,5 +1,5 @@
 %{
-#include "parser.tab.h"
+#include "tok.h"
 %}
 W [ \t\n]*
 %%

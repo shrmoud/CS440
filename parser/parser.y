@@ -47,8 +47,8 @@ int yylex(void);
 g
 /* strings */ 
 %token QUOTE
+%token CHARQUOTE
 %type <int> stringassign
-%type <int> stringliteral
 %type <int> characterliteral
 %type <int> characterassign
 %type <int> character
@@ -107,8 +107,6 @@ boolexp:  boolterm
 boolterm: TRUE | FALSE | VAR;
 
 /* strings */ 
-
-stringliteral: 
 
 /* functions */
 

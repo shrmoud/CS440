@@ -96,7 +96,9 @@ assignment: VAR ASSGN exp
 ;
 
 
-digit: NUMBER | DECIMAL;
+digit:SUBT NUMBER |
+    	SUBT DECIMAL|
+     | NUMBER | DECIMAL;
 
 
 term: digit | VAR | assignment

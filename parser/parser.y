@@ -3,7 +3,9 @@
 
 
 %{
-#include "stdio.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #define SYMTABLE_LEN 100
 #define VARLEN 30
 int yyerror(char * s);
@@ -201,7 +203,6 @@ int yyerror(char * s) {
 }
 
 int updateSymbolVal(const symbol_t val) {
-	int index = -1;
 	int x;
 	for(x=0;x<SYMTABLE_LEN;x++) {
 		if(symbols[x].valid == 0) {
@@ -215,17 +216,28 @@ int updateSymbolVal(const symbol_t val) {
 }
 
 
-symbol_t symbolVal(char * name) {
+static int symbolIndex(char * name) {
 	int x; 
 	for(x=0;x<SYMTABLE_LEN;x++) {
 		if((symbols[x].valid == 1) && (symbols[x].name[0] == name[0])) {
 			if(strcmp(symbols[x].name, name) == 0) {
-				return symbols[x];
+				return x;
 			}
 		}
 	}
+	return -1;
+}
 
-	symbol_t invalid;
-	invalid.valid = 0;
-	return invalid;
+
+symbol_t symbolVal(char * name) {
+	int index;
+	index = symbolIndex(name);
+	if(index > 0) {
+		return symbols[index];
+	}
+	else {
+		symbol_t ret;
+		ret.valid = 0;
+		return ret;
+	}	
 }

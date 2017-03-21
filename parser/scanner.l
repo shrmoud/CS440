@@ -49,7 +49,8 @@ end      {return END;}
 {W}")"{W}  {return RPAR;}
 {W}":"{W}  {return TCOL;} /* variable type specifier */ 
 
-[0-9]+(\.?[0-9]+)? {return NUMBER;}
+[0-9]+ {return DECIMAL;}
+[0-9]+\.[0-9]+ {return NUMBER;}
 
 [a-zA-Z][a-zA-Z0-9]* {return VAR;}
 

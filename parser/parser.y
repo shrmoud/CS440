@@ -53,8 +53,10 @@ int yylex(void);
 %token GREQ  
 %token LPAR 
 %token RPAR 
-%token TCOL 
-%token <int>  NUMBER 
+%token TCOL
+%token DECIMAL
+%token <int> DECIMAL 
+%token <double>  NUMBER 
 %token FUNCTIONDEF
 %token identifier
 %type <int>  exp
@@ -97,8 +99,9 @@ exp: term                  //{$$ = $1;}
    | exp LEEQ term         //{$$ = $1 <= $3;}
    | exp GREQ term         //{$$ = $1 >= $3;}
 ;
+digit: NUMBER | DECIMAL;
 
- term: NUMBER
+ term: digit
 	| identifier 
 ;
 

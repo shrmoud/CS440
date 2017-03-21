@@ -49,7 +49,9 @@ end      {printf("END ");}
 {W}")"{W}  {printf("RPAR ");}
 {W}":"{W}  {printf("TCOL ");} /* variable type specifier */ 
 
-[0-9]+(\.?[0-9]+)? {printf("NUMBER ");}
+
+[0-9]+ {printf("DECIMAL ");}
+[0-9]+\.[0-9]+ {printf("NUMBER ");}
 
 [a-zA-Z][a-zA-Z0-9]* {printf("VAR ");}
 

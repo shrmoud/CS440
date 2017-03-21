@@ -22,19 +22,14 @@ typedef struct {
 	char name[VARLEN];
 	symboltype_t type; 
 	void * val;
-}
+} symbol_t;
 
 // symbol table
 symbol_t symbols[SYMTABLE_LEN]; 
 
 
-int m;
-for(m=0;m<SYMTABLE_LEN;m++) {
-	symbols[m].valid = 0;
-}
-
-symbol_t symbolVal(char * symbol, symboltype_t * type);
-int updateSymbolVal(char* symbol, symboltype_t type,const symbol_t val);
+symbol_t symbolVal(char * name);
+int updateSymbolVal(const symbol_t val);
 
 %}
 
@@ -205,33 +200,32 @@ int yyerror(char * s) {
 	return 0;
 }
 
-static int computeSymbolTableIndex(char * in) {
-}
-symbol_t symbolVal(char * symbol, symboltype_t * type) {
-
-	return NULL;
-}
-
-int updateSymbolVal(char* name, symboltype_t type,const symbol_t val) {
+int updateSymbolVal(const symbol_t val) {
 	int index = -1;
 	int x;
-	int idx = -1;
-	if(islower(name[0]))
-		idx = name[0] - 'a' + 26;
-	else if(isupper(symbol[0]))
-		idx = name[0] - 'A'; 
-	for(x=idx;x<SYMTABLE_LEN;x++) {
-		if(symbols[x] == NULL) {
-			if(strlen(name) < VARLEN)
-				strcpy(symbols[x].name, name);
-			else
-				return -2;
-			memcpy(symbols[x] 
+	for(x=0;x<SYMTABLE_LEN;x++) {
+		if(symbols[x].valid == 0) {
+			memcpy(&symbols[x], &val,sizeof(val));
 			return 0;
 		}
 	}
-	
+
 	return -1; 
 
 }
 
+
+symbol_t symbolVal(char * name) {
+	int x; 
+	for(x=0;x<SYMTABLE_LEN;x++) {
+		if((symbols[x].valid == 1) && (symbols[x].name[0] == name[0])) {
+			if(strcmp(symbols[x].name, name) == 0) {
+				return symbols[x];
+			}
+		}
+	}
+
+	symbol_t invalid;
+	invalid.valid = 0;
+	return invalid;
+}

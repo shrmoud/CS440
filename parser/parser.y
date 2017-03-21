@@ -5,16 +5,36 @@
 %{
 #include "stdio.h"
 #define SYMTABLE_LEN 100
+#define VARLEN 30
 int yyerror(char * s);
 int yylex(void);
-char* symbols[SYMTABLE_LEN]; 
-int q;
+
+//a type that a value can have for a symbol 
 typedef enum {
 	INT_T, VOID_T, DOUBLE_T, BOOLEAN_T
-} symbol_t;
-void * symbolVal(char * symbol, symbol_t * type);
+} symboltype_t;
 
-int updateSymbolVal(char* symbol, symbol_t type,const void * val);
+
+
+//represents a single symbol for the symbol table
+typedef struct {
+	char valid;
+	char name[VARLEN];
+	symboltype_t type; 
+	void * val;
+}
+
+// symbol table
+symbol_t symbols[SYMTABLE_LEN]; 
+
+
+int m;
+for(m=0;m<SYMTABLE_LEN;m++) {
+	symbols[m].valid = 0;
+}
+
+symbol_t symbolVal(char * symbol, symboltype_t * type);
+int updateSymbolVal(char* symbol, symboltype_t type,const symbol_t val);
 
 %}
 
@@ -187,23 +207,26 @@ int yyerror(char * s) {
 
 static int computeSymbolTableIndex(char * in) {
 }
-void * symbolVal(char * symbol, symbol_t * type) {
+symbol_t symbolVal(char * symbol, symboltype_t * type) {
 
 	return NULL;
 }
 
-int updateSymbolVal(char* symbol, symbol_t type,const void * val) {
+int updateSymbolVal(char* name, symboltype_t type,const symbol_t val) {
 	int index = -1;
 	int x;
 	int idx = -1;
-	if(islower(symbol[0]))
-		idx = symbol[0] - 'a' + 26;
+	if(islower(name[0]))
+		idx = name[0] - 'a' + 26;
 	else if(isupper(symbol[0]))
-		idx = symbol[0] - 'A'; 
+		idx = name[0] - 'A'; 
 	for(x=idx;x<SYMTABLE_LEN;x++) {
 		if(symbols[x] == NULL) {
-			symbols[x] = malloc(sizeof(char) * strlen(symbol));
-			strcpy(symbols[x], symbol);
+			if(strlen(name) < VARLEN)
+				strcpy(symbols[x].name, name);
+			else
+				return -2;
+			memcpy(symbols[x] 
 			return 0;
 		}
 	}

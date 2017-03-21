@@ -83,21 +83,21 @@ assignment: identifier '=' exp
 ;
 
 exp: term                  //{$$ = $1;}
-   | exp '+' term          //{$$ = $1 + $3;}
-   | exp '-' term          //{$$ = $1 - $3;}
-   | exp '*' term          //{$$ = $1 * $3;}
-   | exp '/' term          //{$$ = $1 / $3;}
-   | exp '%' term          //{$$ = $1 % $3;}
-   | exp '=' term          //{$$ = $1 = $3;}
-   | exp '!' term          //{$$ = $1 ! $3;}
+   | exp 'ADD' term          //{$$ = $1 + $3;}
+   | exp 'SUBT' term          //{$$ = $1 - $3;}
+   | exp 'MULT' term          //{$$ = $1 * $3;}
+   | exp 'DIV' term          //{$$ = $1 / $3;}
+   | exp 'MOD' term          //{$$ = $1 % $3;}
+   | exp 'ASSGN' term          //{$$ = $1 = $3;}
+   | exp 'NOT' term          //{$$ = $1 ! $3;}
    | exp '&&' term         //{$$ = $1 && $3;}
-   | exp '==' term         //{$$ = $1 == $3;}
-   | exp '||' term         //{$$ = $1 || $3;}
-   | exp '!=' term         //{$$ = $1 != $3;}
-   | exp '<' term          //{$$ = $1 < $3;}
-   | exp '>' term          //{$$ = $1 > $3;}
-   | exp '<=' term         //{$$ = $1 <= $3;}
-   | exp '>=' term         //{$$ = $1 >= $3;}
+   | exp 'EQ' term         //{$$ = $1 == $3;}
+   | exp 'OR' term         //{$$ = $1 || $3;}
+   | exp 'NOTEQ' term         //{$$ = $1 != $3;}
+   | exp 'LESS' term          //{$$ = $1 < $3;}
+   | exp 'GRAT' term          //{$$ = $1 > $3;}
+   | exp 'LEEQ' term         //{$$ = $1 <= $3;}
+   | exp 'GREQ' term         //{$$ = $1 >= $3;}
 ;
 
 term: number

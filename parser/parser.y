@@ -13,7 +13,7 @@ int yylex(void);
 
 //a type that a value can have for a symbol 
 typedef enum {
-	INT_T, VOID_T, DOUBLE_T, BOOLEAN_T
+	INT_T, VOID_T, DOUBLE_T, BOOLEAN_T, STRING_T, PTR_T
 } symboltype_t;
 
 
@@ -22,7 +22,8 @@ typedef enum {
 typedef struct {
 	char valid;
 	char name[VARLEN];
-	symboltype_t type; 
+	symboltype_t type;
+	size_t valsize; 
 	void * val;
 } symbol_t;
 
@@ -31,7 +32,7 @@ symbol_t symbols[SYMTABLE_LEN];
 
 
 symbol_t symbolVal(char * name);
-int updateSymbolVal(const symbol_t val);
+int updateSymbolVal(symbol_t val);
 
 %}
 
@@ -202,20 +203,6 @@ int yyerror(char * s) {
 	return 0;
 }
 
-int updateSymbolVal(const symbol_t val) {
-	int x;
-	for(x=0;x<SYMTABLE_LEN;x++) {
-		if(symbols[x].valid == 0) {
-			memcpy(&symbols[x], &val,sizeof(val));
-			return 0;
-		}
-	}
-
-	return -1; 
-
-}
-
-
 static int symbolIndex(char * name) {
 	int x; 
 	for(x=0;x<SYMTABLE_LEN;x++) {
@@ -228,6 +215,26 @@ static int symbolIndex(char * name) {
 	return -1;
 }
 
+
+int updateSymbolVal(symbol_t val) {
+	int index;
+	index = symbolIndex(val.name);
+	if(index > 0) {
+		memcpy(symbols[index].val, (char*)val.val, val.valsize);
+		symbols[index].type = val.type;
+		return 0;
+	}
+	int x;
+	for(x=index;x<SYMTABLE_LEN;x++) {
+		if(symbols[x].valid == 0) {
+			memcpy(&symbols[x], &val,sizeof(val));
+			return 0;
+		}
+	}
+
+	return -1; 
+
+}
 
 symbol_t symbolVal(char * name) {
 	int index;

@@ -13,7 +13,7 @@ int yylex(void);
 
 }
 
-%start block
+%start statement
 %token PRINT
 %token POINTER
 %token TAINTED 
@@ -87,8 +87,7 @@ int yylex(void);
 %%
 expression: boolexp | exp | func
 
-block: statement block |  END SEMI;
-statement: expression SEMI;
+statement: expression SEMI | expression SEMI statement  ;
 
 
 /* Boolean logic */ 
@@ -110,7 +109,7 @@ typecheck: type_t TCOL VAR
 
 typelist: typecheck |  typecheck typelist;
 
-func: FUNCTIONDEF type_t VAR typelist;
+func: FUNCTIONDEF type_t VAR typelist SEMI statement END;
 /* math and arithmatic */ 
 exp:  term
    | exp operator exp

@@ -48,7 +48,7 @@ end      {printf("END ");}
 {W}"("{W}  {printf("LPAR ");}
 {W}")"{W}  {printf("RPAR ");}
 {W}":"{W}  {printf("TCOL ");} /* variable type specifier */ 
-
+{W}\"{W}      {printf("QUOTE ");}
 
 [0-9]+ {printf("DECIMAL ");}
 [0-9]+\.[0-9]+ {printf("NUMBER ");}

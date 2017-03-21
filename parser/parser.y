@@ -44,7 +44,14 @@ int yylex(void);
 %token SEMI
 %type <int> statement
 %type <int> block
-
+g
+/* strings */ 
+%token QUOTE
+%type <int> stringassign
+%type <int> stringliteral
+%type <int> characterliteral
+%type <int> characterassign
+%type <int> character
 
 /* functions */ 
 %token FUNCTIONDEF
@@ -99,6 +106,9 @@ boolexp:  boolterm
 
 boolterm: TRUE | FALSE | VAR;
 
+/* strings */ 
+
+stringliteral: 
 
 /* functions */
 

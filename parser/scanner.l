@@ -55,7 +55,7 @@ end      {return END;}
 [0-9]+ {yylval.integer = atoi(yytext); return  DECIMAL;}
 [0-9]+\.[0-9]+ { yylval.dub  = atoi(yytext); return NUMBER;}
 
-[a-zA-Z][a-zA-Z0-9]* { return VAR;}
+[a-zA-Z][a-zA-Z0-9]* {strcpy(yylval.var, yytext); return VAR;}
 
 [ \t\n]+ /* ignore whitespace */
 

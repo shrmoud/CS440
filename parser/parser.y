@@ -79,7 +79,38 @@ assignment: identifier ASSGN exp
 operator: arithmatic 
 	| assignment ;
 
+assignment: identifier '=' exp
+;
 
+exp: term                  //{$$ = $1;}
+   | exp '+' term          //{$$ = $1 + $3;}
+   | exp '-' term          //{$$ = $1 - $3;}
+   | exp '*' term          //{$$ = $1 * $3;}
+   | exp '/' term          //{$$ = $1 / $3;}
+   | exp '%' term          //{$$ = $1 % $3;}
+   | exp '=' term          //{$$ = $1 = $3;}
+   | exp '!' term          //{$$ = $1 ! $3;}
+   | exp '&&' term         //{$$ = $1 && $3;}
+   | exp '==' term         //{$$ = $1 == $3;}
+   | exp '||' term         //{$$ = $1 || $3;}
+   | exp '!=' term         //{$$ = $1 != $3;}
+   | exp '<' term          //{$$ = $1 < $3;}
+   | exp '>' term          //{$$ = $1 > $3;}
+   | exp '<=' term         //{$$ = $1 <= $3;}
+   | exp '>=' term         //{$$ = $1 >= $3;}
+;
+
+term: number
+	| identifier 
+;
+
+term: double
+	| identifier
+;
+
+term: decimal
+	| identifier
+;
 
 %%
 
@@ -87,5 +118,3 @@ int yyerror(char * s) {
 	printf("%s\n",s);
 	return 0;
 }
-
-

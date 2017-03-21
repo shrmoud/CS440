@@ -4,8 +4,18 @@
 
 %{
 #include "stdio.h"
+#define SYMTABLE_LEN 100
 int yyerror(char * s);
-int yylex(void); 
+int yylex(void);
+char* symbols[SYMTABLE_LEN]; 
+int q;
+typedef enum {
+	INT_T, VOID_T, DOUBLE_T, BOOLEAN_T
+} symbol_t;
+void * symbolVal(char * symbol, symbol_t * type);
+
+void updateSymbolVal(char* symbol, symbol_t type,const void * val);
+
 %}
 
 %union {
@@ -174,3 +184,29 @@ int yyerror(char * s) {
 	printf("%s\n",s);
 	return 0;
 }
+
+static int computeSymbolTableIndex(char * in) {
+}
+void * symbolVal(char * symbol, symbol_t * type) {
+
+	return NULL;
+}
+
+void updateSymbolVal(char* symbol, symbol_t type,const void * val) {
+	int index = -1;
+	int x;
+	int idx = -1;
+	if(islower(symbol[0]))
+		idx = symbol[0] - 'a' + 26;
+	else if(isupper(symbol[0]))
+		idx = symbol[0] - 'A'; 
+	for(x=idx;x<SYMTABLE_LEN;x++) {
+		if(symbols[x] == NULL) {
+			symbols[x] = malloc(sizeof(char) * strlen(symbol));
+			strcpy(symbols[x], symbol);
+			return;
+		}
+	}
+
+}
+

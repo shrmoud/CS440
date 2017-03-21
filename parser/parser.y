@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#define YYSTYPE char *
 #define SYMTABLE_LEN 100
 #define VARLEN 30
 int yyerror(char * s);

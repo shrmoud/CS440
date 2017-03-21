@@ -43,8 +43,7 @@ int yylex(void);
 %token END
 %token SEMI
 %type <int> statement
-%type <int> block
-g
+
 /* strings */ 
 %token QUOTE
 %token CHARQUOTE

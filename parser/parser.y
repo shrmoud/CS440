@@ -54,7 +54,6 @@ int yylex(void);
 %token LPAR 
 %token RPAR 
 %token TCOL
-%token DECIMAL
 %token <int> DECIMAL 
 %token <double>  NUMBER 
 %token FUNCTIONDEF
@@ -65,49 +64,43 @@ int yylex(void);
 %type <int>  type_t
 %type <int>  assignment
 %type <int>  term
+%type <int> logic
 %%
 
-exp:  NUMBER;
+exp:  term
+   | exp operator exp
+   |  LPAR exp RPAR ;
+
 arithmatic: ADD
 	| SUBT
 	| MULT	
 	| MOD
 	;
 
-assignment: identifier ASSGN exp
-	  ;
 operator: arithmatic 
-	| assignment ;
+	| assignment 
+        | logic;
 
-assignment: identifier ASSGN exp
+logic: NOT 
+     | AND
+     | NOTEQ
+     | EQ
+     | LESS
+     | GRAT
+     | GREQ
+     | OR
+     | LEEQ
 ;
 
-exp: term                  //{$$ = $1;}
-   | exp ADD term          //{$$ = $1 + $3;}
-   | exp SUBT term          //{$$ = $1 - $3;}
-   | exp MULT term          //{$$ = $1 * $3;}
-   | exp DIV term          //{$$ = $1 / $3;}
-   | exp MOD term          //{$$ = $1 % $3;}
-   | exp ASSGN term          //{$$ = $1 = $3;}
-   | exp NOT term          //{$$ = $1 ! $3;}
-   | exp AND term         //{$$ = $1 && $3;}
-   | exp EQ term         //{$$ = $1 == $3;}
-   | exp OR term         //{$$ = $1 || $3;}
-   | exp NOTEQ term         //{$$ = $1 != $3;}
-   | exp LESS term          //{$$ = $1 < $3;}
-   | exp GRAT term          //{$$ = $1 > $3;}
-   | exp LEEQ term         //{$$ = $1 <= $3;}
-   | exp GREQ term         //{$$ = $1 >= $3;}
+assignment: VAR ASSGN exp
 ;
+
+
 digit: NUMBER | DECIMAL;
 
 
-
-term: digit
-	| identifier 
+term: digit | VAR | assignment
 ;
-
-; 
 
 
 %%

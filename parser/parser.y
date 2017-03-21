@@ -37,7 +37,9 @@ int updateSymbolVal(symbol_t val);
 %}
 
 %union {
-	int num;
+	char * var;
+	double dub;
+	int    integer;
 }
 
 %start statement
@@ -72,30 +74,24 @@ int updateSymbolVal(symbol_t val);
 
 %token END
 %token SEMI
-%type <int> statement
 
 /* strings */ 
 %token QUOTE
 %token CHARQUOTE
-%type <int> stringassign
 
 /* functions */ 
 %token FUNCTIONDEF
 %token CALL
 %token RETURN 
-%type <int> func
-%type <int> typecheck
-%type <int> typelist
-%type <int> calltype
 
 /* math and arithmatic */ 
 %token MOD 
-%token VAR 
+%token <var> VAR 
 %token ADD 
 %token SUBT 
 %token MULT 
 %token DIV  
-%token <int> ASSGN 
+%token ASSGN 
 %token NOT 
 %token AND 
 %token OR 
@@ -108,17 +104,7 @@ int updateSymbolVal(symbol_t val);
 %token LPAR 
 %token RPAR 
 %token identifier
-%type <int>  exp
-%type <int> operator
-%type <int>  arithmatic
-%type <int>  type_t
-%type <int>  assignment
-%type <int>  term
-%type <int> logic
-%type <int> boolexp 
-%type <int> boolterm
-%type <int> expression
-%type <int> value
+%type <dub> exp
 %%
 
 expression: boolexp | exp | func | calltype | stringassign ;
@@ -181,7 +167,12 @@ logic: NOT
      | LEEQ
 ;
 
-assignment: VAR ASSGN exp |
+assignment: VAR ASSGN exp {symbol_t sym;
+	     		strcpy(sym.name,$1);
+			sym.valid = 1;
+			sym.val = malloc(sizeof($3));
+			memcpy(sym.val, &$3,sizeof($3));
+			 updateSymbolVal(sym); } |
 	  VAR ASSGN boolexp
 ;
 

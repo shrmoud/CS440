@@ -59,7 +59,7 @@ int yylex(void);
 %%
 
 
-input: PRINT { printf("Result \n");} 
+input: INT { printf("Result \n");} 
 	;
 %%
 

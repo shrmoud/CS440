@@ -14,7 +14,7 @@ typedef enum {
 } symbol_t;
 void * symbolVal(char * symbol, symbol_t * type);
 
-void updateSymbolVal(char* symbol, symbol_t type,const void * val);
+int updateSymbolVal(char* symbol, symbol_t type,const void * val);
 
 %}
 
@@ -192,7 +192,7 @@ void * symbolVal(char * symbol, symbol_t * type) {
 	return NULL;
 }
 
-void updateSymbolVal(char* symbol, symbol_t type,const void * val) {
+int updateSymbolVal(char* symbol, symbol_t type,const void * val) {
 	int index = -1;
 	int x;
 	int idx = -1;
@@ -204,9 +204,11 @@ void updateSymbolVal(char* symbol, symbol_t type,const void * val) {
 		if(symbols[x] == NULL) {
 			symbols[x] = malloc(sizeof(char) * strlen(symbol));
 			strcpy(symbols[x], symbol);
-			return;
+			return 0;
 		}
 	}
+	
+	return -1; 
 
 }
 

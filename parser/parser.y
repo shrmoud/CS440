@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#define YYSTYPE char *
 #define SYMTABLE_LEN 100
 #define VARLEN 30
 int yyerror(char * s);
@@ -57,8 +58,8 @@ int updateSymbolVal(symbol_t val);
 /* types */ 
 
 %token TCOL
-%token <int> DECIMAL 
-%token <double>  NUMBER 
+%token <integer> DECIMAL 
+%token <dub>  NUMBER 
 %token DOUBLE
 %token INT
 %token STRING
@@ -68,7 +69,7 @@ int updateSymbolVal(symbol_t val);
 %token TRUE
 %token FALSE
 %token VOID 
-
+%type <dub> digit
 
 /* blocks */ 
 
@@ -105,6 +106,8 @@ int updateSymbolVal(symbol_t val);
 %token RPAR 
 %token identifier
 %type <dub> exp
+%type <dub> term
+
 %%
 
 expression: boolexp | exp | func | calltype | stringassign ;
@@ -142,9 +145,9 @@ func: FUNCTIONDEF type_t VAR typelist SEMI statement RETURN value  SEMI END
 calltype: CALL VAR
 
 /* math and arithmatic */ 
-exp:  term
+exp:  term {$$ = $1;}
    | exp operator exp
-   |  LPAR exp RPAR ;
+   |  LPAR exp RPAR {$$ = $2;} ;
 
 arithmatic: ADD
 	| SUBT
@@ -168,21 +171,26 @@ logic: NOT
 ;
 
 assignment: VAR ASSGN exp {symbol_t sym;
-	     		strcpy(sym.name,$1);
+	  			printf("1: %s 3: %f\n",$1, $3 );
+	     	/*	strcpy(sym.name,$1);
 			sym.valid = 1;
 			sym.val = malloc(sizeof($3));
 			memcpy(sym.val, &$3,sizeof($3));
-			 updateSymbolVal(sym); } |
+			 updateSymbolVal(sym); */ } |
 	  VAR ASSGN boolexp
 ;
 
 
-digit:SUBT NUMBER |
+digit:SUBT NUMBER  |
     	SUBT DECIMAL|
-     | NUMBER | DECIMAL;
+     | NUMBER {$$ = $1;} 
+     | DECIMAL {$$ = $1;}
+;
 
 
-term: digit | VAR | assignment
+term: digit {$$ = $1;}
+    | VAR  
+    | assignment
 ;
 
 value: digit | VAR
@@ -218,6 +226,7 @@ int updateSymbolVal(symbol_t val) {
 	int x;
 	for(x=index;x<SYMTABLE_LEN;x++) {
 		if(symbols[x].valid == 0) {
+			printf("found an empty slot\n");
 			memcpy(&symbols[x], &val,sizeof(val));
 			return 0;
 		}

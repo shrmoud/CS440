@@ -49,7 +49,7 @@ end      {return END;}
 {W}")"{W}  {return RPAR;}
 {W}":"{W}  {return TCOL;} /* variable type specifier */ 
 {W}\".*\"{W}   {return QUOTE;}
-{W}\'.*\'{W}   {return CHARQUOTE;}
+{W}\'.\'{W}   {return CHARQUOTE;}
 
 [0-9]+ {return DECIMAL;}
 [0-9]+\.[0-9]+ {return NUMBER;}

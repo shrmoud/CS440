@@ -49,7 +49,6 @@ g
 %token QUOTE
 %token CHARQUOTE
 %type <int> stringassign
-%type <int> characterliteral
 %type <int> characterassign
 %type <int> character
 

@@ -172,11 +172,11 @@ logic: NOT
 
 assignment: VAR ASSGN exp {symbol_t sym;
 	  			printf("1: %s 3: %f\n",$1, $3 );
-	     	/*	strcpy(sym.name,$1);
+	     		strcpy(sym.name,$1);
 			sym.valid = 1;
 			sym.val = malloc(sizeof($3));
 			memcpy(sym.val, &$3,sizeof($3));
-			 updateSymbolVal(sym); */ } |
+			 updateSymbolVal(sym);  } |
 	  VAR ASSGN boolexp
 ;
 

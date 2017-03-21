@@ -8,34 +8,32 @@ int yyerror(char * s);
 int yylex(void); 
 %}
 
-%union {
-	int num;
-
-}
-
 %start statement
 %token PRINT
+
+/* C constructs */ 
 %token POINTER
 %token TAINTED 
+%token FOR 
+%token IF 
+%token ELSE
+%token CBLOCK 
+%token HEADER 
+
+/* types */ 
+
+%token TCOL
+%token <int> DECIMAL 
+%token <double>  NUMBER 
 %token DOUBLE
 %token INT
-%token FOR 
-%token CALL
+%token STRING
+%token CHAR 
 %token ARRAY
 %token BOOLEAN
 %token TRUE
 %token FALSE
-%token STRING
-%token CHAR 
 %token VOID 
-%token RETURN 
-%token CBLOCK 
-%token HEADER 
-%token IF 
-%token ELSE
-%token TCOL
-%token <int> DECIMAL 
-%token <double>  NUMBER 
 
 
 /* blocks */ 
@@ -51,15 +49,17 @@ int yylex(void);
 
 /* functions */ 
 %token FUNCTIONDEF
+%token CALL
+%token RETURN 
 %type <int> func
 %type <int> typecheck
 %type <int> typelist
 %type <int> calltype
+
 /* math and arithmatic */ 
 %token MOD 
 %token VAR 
 %token ADD 
-
 %token SUBT 
 %token MULT 
 %token DIV  
@@ -88,6 +88,7 @@ int yylex(void);
 %type <int> expression
 %type <int> value
 %%
+
 expression: boolexp | exp | func | calltype | stringassign ;
 
 statement: expression SEMI | expression SEMI statement  ;

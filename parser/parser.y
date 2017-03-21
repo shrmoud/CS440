@@ -38,7 +38,6 @@ int yylex(void);
 %token VAR 
 %token ADD 
 %token SEMI
-%token NEG
 %token SUBT 
 %token MULT 
 %token DIV  
@@ -70,7 +69,6 @@ exp:  NUMBER;
 arithmatic: ADD
 	| SUBT
 	| MULT	
-	| NEG
 	| MOD
 	;
 

@@ -84,7 +84,9 @@ boolexp:  boolterm
 ;
 
 
-boolterm: TRUE | FALSE ;
+boolterm: TRUE | FALSE | VAR;
+
+
 /* functions */ 
 
 
@@ -115,7 +117,8 @@ logic: NOT
      | LEEQ
 ;
 
-assignment: VAR ASSGN exp
+assignment: VAR ASSGN exp |
+	  VAR ASSGN boolexp
 ;
 
 

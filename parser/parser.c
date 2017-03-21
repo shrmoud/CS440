@@ -481,7 +481,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    70,    70,    85,    86,    87,    88,    89,    90,    91,
       92,    93,    94,    95,    96,    97,    98,    99,   100,   102,
-     102,   104,   105
+     102,   106,   107
 };
 #endif
 
@@ -1503,7 +1503,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 120 "parser.y" /* yacc.c:1906  */
+#line 113 "parser.y" /* yacc.c:1906  */
 
 
 int yyerror(char * s) {

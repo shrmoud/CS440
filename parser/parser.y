@@ -101,20 +101,13 @@ exp: term                  //{$$ = $1;}
 ;
 digit: NUMBER | DECIMAL;
 
- term: digit
+
+
+term: digit
 	| identifier 
 ;
 
-/*
-term: double
-	| identifier
-;
-
-term: decimal
-	| identifier
-;
-
-*/ 
+; 
 
 
 %%

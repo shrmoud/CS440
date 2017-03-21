@@ -51,7 +51,7 @@ int yylex(void);
 %type <int> func
 %type <int> typecheck
 %type <int> typelist
-
+%type <int> calltype
 /* math and arithmatic */ 
 %token MOD 
 %token VAR 
@@ -85,7 +85,7 @@ int yylex(void);
 %type <int> expression
 %type <int> value
 %%
-expression: boolexp | exp | func
+expression: boolexp | exp | func | calltype
 
 statement: expression SEMI | expression SEMI statement  ;
 
@@ -111,6 +111,9 @@ typelist: typecheck |  typecheck typelist;
 
 func: FUNCTIONDEF type_t VAR typelist SEMI statement RETURN value  SEMI END
     |  FUNCTIONDEF VOID VAR typelist SEMI statement END;
+
+calltype: CALL VAR
+
 /* math and arithmatic */ 
 exp:  term
    | exp operator exp

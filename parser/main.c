@@ -11,7 +11,10 @@ int main(int argc, char ** argv) {
 		printf("error opening file\n");
 		exit(EXIT_FAILURE);
 	}
-	yyparse();
+	int x;
+	x = yyparse();
+	if(x == 0) 
+		printf("valid syntax\n");
 	return EXIT_SUCCESS;
 }
 

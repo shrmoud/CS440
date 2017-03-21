@@ -13,7 +13,7 @@ int yylex(void);
 
 }
 
-%start statement
+%start block
 %token PRINT
 %token POINTER
 %token TAINTED 
@@ -87,6 +87,7 @@ int yylex(void);
 %%
 expression: boolexp | exp | func
 
+block: statement block |  END SEMI;
 statement: expression SEMI;
 
 

@@ -37,6 +37,7 @@ int updateSymbolVal(symbol_t val);
 %}
 
 %union {
+	char * name;
 	char * var;
 	double dub;
 	int    integer;

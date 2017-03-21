@@ -1,4 +1,5 @@
 %{
+#include <string.h>
 #include "tok.h"
 %}
 W [ \t\n]*
@@ -51,10 +52,10 @@ end      {return END;}
 {W}\".*\"{W}   {return QUOTE;}
 {W}\'.\'{W}   {return CHARQUOTE;}
 
-[0-9]+ {return DECIMAL;}
-[0-9]+\.[0-9]+ {return NUMBER;}
+[0-9]+ {yylval.integer = atoi(yytext); return  DECIMAL;}
+[0-9]+\.[0-9]+ { yylval.dub  = atoi(yytext); return NUMBER;}
 
-[a-zA-Z][a-zA-Z0-9]* {return VAR;}
+[a-zA-Z][a-zA-Z0-9]* { return VAR;}
 
 [ \t\n]+ /* ignore whitespace */
 

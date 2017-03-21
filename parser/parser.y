@@ -8,6 +8,10 @@ int yyerror(char * s);
 int yylex(void); 
 %}
 
+%union {
+	int num;
+}
+
 %start statement
 %token PRINT
 

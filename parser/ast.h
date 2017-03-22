@@ -6,7 +6,6 @@ typedef enum {
         INT_T, VOID_T, DOUBLE_T, BOOLEAN_T, STRING_T, PTR_T
 } symboltype_t;
 
-
 struct symbol_node {
 	char valid;
 	char name[VARLEN];
@@ -14,7 +13,6 @@ struct symbol_node {
 	size_t valsize;
 	void * val;
 };
-
 
 struct ast_node {
 	int node_type;
@@ -25,7 +23,6 @@ struct ast_node {
 enum relational_operator {
 	        LESSTHAN, LESS_OR_EQUAL, GREATERTHAN, GREATER_OR_EQUAL
 };
-
 
 enum equality_operator {
 	        EQUAL, NOT_EQUAL
@@ -45,21 +42,22 @@ struct ast_equality_node {
 		struct ast_node * right; 
 };
 
-
-
 struct ast_assignment_node {
 	int node_type; 
 	struct symbol_node * symbol;
 	struct ast_node * value; 
 };
 
-
-
+struct ast_number_node {
+	int node_type;
+	double value;
+};
 
 typedef struct symbol_node symbol_t;
 typedef struct ast_node ast_node_t;
 typedef struct ast_relational_node ast_relational_node_t; 
 typedef struct ast_equality_node ast_equality_node_t;
+typedef struct ast_assignment_node ast_assignment_node_t;
+typedef struct ast_number_node ast_number_node_t
 typedef enum equality_operator equality_operator_t;
 typedef enum relational_operator relational_operator_t;
-

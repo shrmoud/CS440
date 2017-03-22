@@ -182,8 +182,8 @@ assignment: VAR ASSGN exp {symbol_t sym;
 ;
 
 
-digit:SUBT NUMBER  |
-    	SUBT DECIMAL|
+digit:SUBT NUMBER {$$ = -1 * $2;}  
+     |	SUBT DECIMAL {$$ = -1 * $2;} 
      | NUMBER {$$ = $1;} 
      | DECIMAL {$$ = $1;}
 ;

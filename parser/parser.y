@@ -175,20 +175,13 @@ digit:SUBT NUMBER {$$ = -1 * $2;}
 ;
 
 
-term: digit {$$ = $1;}
-    | VAR {symbol_t sym = symbolVal($1);
-            if(sym.type != DOUBLE_T) {
-		printf("problem\n");
-		return -1;
-		}
-	   double d = *((double*)sym.val);
-		  printf("var with value %f\n", d);
-		$$ = d;} 
+term: value
     | assignment
 ;
 
 value: digit | VAR {symbol_t sym = symbolVal($1);
             if(sym.type != DOUBLE_T) {
+		printf("err: variable not bound\n");
 		return -1;
 		}	
 	   double d = *((double*)sym.val);

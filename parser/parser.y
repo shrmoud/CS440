@@ -171,7 +171,7 @@ logic: NOT
 ;
 
 assignment: VAR ASSGN exp {symbol_t sym;
-	  			printf("1: %s 3: %f\n",$1, $3 );
+	  			printf("assign to %s value %f\n",$1, $3 );
 	     		strcpy(sym.name,$1);
 			sym.valid = 1;
 			sym.val = malloc(sizeof($3));
@@ -221,13 +221,12 @@ static void printSymbol(symbol_t s) {
 }
 
 static int symbolIndex(char * name) {
-	printf("searching for index for %s\n", name);
+	//printf("searching for index for %s\n", name);
 	int x; 
 	for(x=0;x<SYMTABLE_LEN;x++) {
 		//printSymbol(symbols[x]);
 		if((symbols[x].valid == 1) && (symbols[x].name[0] == name[0])) {
 			if(strcmp(symbols[x].name, name) == 0) {
-				printf("valid %d!\n", x);
 				return x;
 			}
 		}
@@ -247,7 +246,7 @@ int updateSymbolVal(symbol_t val) {
 	int x;
 	for(x=index;x<SYMTABLE_LEN;x++) {
 		if(symbols[x].valid == 0) {
-			printf("found an empty slot\n");
+		//	printf("found an empty slot\n");
 			memcpy(&symbols[x], &val,sizeof(val));
 			return 0;
 		}
@@ -261,7 +260,7 @@ symbol_t symbolVal(char * name) {
 	int index;
 	index = symbolIndex(name);
 	if(index >= 0) {
-		printf("found a symbol from table\n");
+		//printf("found a symbol from table\n");
 		return symbols[index];
 	}
 	else {

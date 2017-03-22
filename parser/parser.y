@@ -24,8 +24,19 @@ struct ast_node {
 	struct ast_node * right;
 };
 
-typedef struct ast_node ast_node_t;
+enum relational_operator {
+	LESSTHAN, LESS_OR_EQUAL, GREATERTHAN, GREATER_OR_EQUAL
+};
 
+struct ast_relational_node {
+	int node_type;
+	enum relational_operator operator; 
+	struct ast_node * left;
+	struct ast_node * right; 
+};
+
+typedef struct ast_node ast_node_t;
+typedef struct ast_relational_node ast_relational_node_t; 
 //represents a single symbol for the symbol table
 typedef struct {
 	char valid;

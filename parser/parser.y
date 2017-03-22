@@ -7,26 +7,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include "ast.h" 
-#define SYMTABLE_LEN 100
-#define VARLEN 30
 int yyerror(char * s);
 int yylex(void);
 
 
 
-//a type that a value can have for a symbol 
-typedef enum {
-	INT_T, VOID_T, DOUBLE_T, BOOLEAN_T, STRING_T, PTR_T
-} symboltype_t;
-
-//represents a single symbol for the symbol table
-typedef struct {
-	char valid;
-	char name[VARLEN];
-	symboltype_t type;
-	size_t valsize; 
-	void * val;
-} symbol_t;
 
 // symbol table
 symbol_t symbols[SYMTABLE_LEN]; 

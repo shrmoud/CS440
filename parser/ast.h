@@ -1,3 +1,21 @@
+#define VARLEN 30
+#define SYMTABLE_LEN 100
+
+//a type that a value can have for a symbol 
+typedef enum {
+        INT_T, VOID_T, DOUBLE_T, BOOLEAN_T, STRING_T, PTR_T
+} symboltype_t;
+
+
+struct symbol_node {
+	char valid;
+	char name[VARLEN];
+	symboltype_t type;
+	size_t valsize;
+	void * val;
+};
+
+
 struct ast_node {
 	int node_type;
 	struct ast_node * left;
@@ -29,8 +47,19 @@ struct ast_equality_node {
 
 
 
+struct ast_assignment_node {
+	int node_type; 
+	struct symbol_node * symbol;
+	struct ast_node * value; 
+};
+
+
+
+
+typedef struct symbol_node symbol_t;
 typedef struct ast_node ast_node_t;
 typedef struct ast_relational_node ast_relational_node_t; 
 typedef struct ast_equality_node ast_equality_node_t;
 typedef enum equality_operator equality_operator_t;
 typedef enum relational_operator relational_operator_t;
+

@@ -1,5 +1,5 @@
 
-OBJS = main.o scanner.o parser.o 
+OBJS = main.o scanner.o parser.o ast.o
 CC = gcc
 CFLAGS = -g -Wall
 
@@ -19,8 +19,10 @@ scanner.c: scanner.l parser.o
 	flex scanner.l
 	cp lex.yy.c scanner.c
 
+ast.o: ast.c
+	${CC} ${CFLAGS} -c ast.c -o ast.o
 
-parser.o: parser.c
+parser.o: parser.c ast.o
 	${CC} ${CFLAGS} -c parser.c -o parser.o
 
 parser.c: parser.y

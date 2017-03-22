@@ -191,16 +191,23 @@ digit:SUBT NUMBER  |
 
 term: digit {$$ = $1;}
     | VAR {symbol_t sym = symbolVal($1);
-            if(sym.type != DOUBLE_T)
+            if(sym.type != DOUBLE_T) {
+		printf("problem\n");
 		return -1;
-	   $$ = *((double*)sym.val);} 
+		}
+	   double d = *((double*)sym.val);
+		  printf("var with value %f\n", d);
+		$$ = d;} 
     | assignment
 ;
 
 value: digit | VAR {symbol_t sym = symbolVal($1);
-            if(sym.type != DOUBLE_T)
+            if(sym.type != DOUBLE_T) {
 		return -1;
-	   $$ = *((double*)sym.val);}; 
+		}	
+	   double d = *((double*)sym.val);
+		printf("var with value %f\n", d);
+		$$ = d;}; 
 
 %%
 
@@ -209,11 +216,18 @@ int yyerror(char * s) {
 	return 0;
 }
 
+static void printSymbol(symbol_t s) {
+	printf("name: %s\nvalid: %d\ntype %d\n", s.name, s.valid, s.type);
+}
+
 static int symbolIndex(char * name) {
+	printf("searching for index for %s\n", name);
 	int x; 
 	for(x=0;x<SYMTABLE_LEN;x++) {
+		//printSymbol(symbols[x]);
 		if((symbols[x].valid == 1) && (symbols[x].name[0] == name[0])) {
 			if(strcmp(symbols[x].name, name) == 0) {
+				printf("valid %d!\n", x);
 				return x;
 			}
 		}
@@ -246,7 +260,8 @@ int updateSymbolVal(symbol_t val) {
 symbol_t symbolVal(char * name) {
 	int index;
 	index = symbolIndex(name);
-	if(index > 0) {
+	if(index >= 0) {
+		printf("found a symbol from table\n");
 		return symbols[index];
 	}
 	else {

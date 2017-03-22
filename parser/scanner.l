@@ -1,3 +1,5 @@
+%option nounput
+%option noinput
 %{
 #include <string.h>
 #include "tok.h"
@@ -64,6 +66,3 @@ end      {return END;}
 
 %%
 int yywrap (void) { return 1;}
-
-
-

@@ -11,12 +11,20 @@
 int yyerror(char * s);
 int yylex(void);
 
+
+
 //a type that a value can have for a symbol 
 typedef enum {
 	INT_T, VOID_T, DOUBLE_T, BOOLEAN_T, STRING_T, PTR_T
 } symboltype_t;
 
+struct ast_node {
+	int node_type;
+	struct ast_node * left;
+	struct ast_node * right;
+};
 
+typedef struct ast_node ast_node_t;
 
 //represents a single symbol for the symbol table
 typedef struct {

@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "ast.h" 
 #define SYMTABLE_LEN 100
 #define VARLEN 30
 int yyerror(char * s);
@@ -18,25 +19,6 @@ typedef enum {
 	INT_T, VOID_T, DOUBLE_T, BOOLEAN_T, STRING_T, PTR_T
 } symboltype_t;
 
-struct ast_node {
-	int node_type;
-	struct ast_node * left;
-	struct ast_node * right;
-};
-
-enum relational_operator {
-	LESSTHAN, LESS_OR_EQUAL, GREATERTHAN, GREATER_OR_EQUAL
-};
-
-struct ast_relational_node {
-	int node_type;
-	enum relational_operator operator; 
-	struct ast_node * left;
-	struct ast_node * right; 
-};
-
-typedef struct ast_node ast_node_t;
-typedef struct ast_relational_node ast_relational_node_t; 
 //represents a single symbol for the symbol table
 typedef struct {
 	char valid;

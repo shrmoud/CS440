@@ -107,7 +107,7 @@ int updateSymbolVal(symbol_t val);
 %token identifier
 %type <dub> exp
 %type <dub> term
-
+%type <dub> value
 %%
 
 expression: boolexp | exp | func | calltype | stringassign ;
@@ -175,6 +175,7 @@ assignment: VAR ASSGN exp {symbol_t sym;
 	     		strcpy(sym.name,$1);
 			sym.valid = 1;
 			sym.val = malloc(sizeof($3));
+			sym.type = DOUBLE_T;
 			memcpy(sym.val, &$3,sizeof($3));
 			 updateSymbolVal(sym);  } |
 	  VAR ASSGN boolexp
@@ -189,11 +190,17 @@ digit:SUBT NUMBER  |
 
 
 term: digit {$$ = $1;}
-    | VAR  
+    | VAR {symbol_t sym = symbolVal($1);
+            if(sym.type != DOUBLE_T)
+		return -1;
+	   $$ = *((double*)sym.val);} 
     | assignment
 ;
 
-value: digit | VAR
+value: digit | VAR {symbol_t sym = symbolVal($1);
+            if(sym.type != DOUBLE_T)
+		return -1;
+	   $$ = *((double*)sym.val);}; 
 
 %%
 

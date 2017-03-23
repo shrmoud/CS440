@@ -26,5 +26,16 @@ ast_node_t * new_ast_relational_node(relational_operator_t op,
 }
 
 
+ast_node_t * new_ast_equality_node(equality_operator_t op, 
+		ast_node_t * left, ast_node_t * right) {
+	ast_equality_node_t * ast_node = malloc(sizeof(ast_equality_node_t));
+
+	ast_node->node_type = 'E';
+	ast_node->operator = op;
+	ast_node->left = left;
+	ast_node->right = right; 
+
+	return (ast_node_t *) ast_node; 
+}
 
 

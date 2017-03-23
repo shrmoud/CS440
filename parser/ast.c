@@ -70,3 +70,56 @@ ast_node_t * new_ast_number_node(double value) {
 	return (ast_node_t*) ast_node;
 
 }
+
+
+
+void free_ast_tree(ast_node_t * tree) {
+	if(!tree) 
+		return;
+
+	switch(tree->node_type) {
+		/* two subtrees */ 
+		case '+':
+		case '-':
+		case '*':
+		case '/':
+		case '%':
+		case 'L':
+			free_ast_tree(tree->right);
+			free_ast_tree(tree->left);
+		break;
+		/* one subtree */ 
+		/* no subtrees */ 
+		case 'S':
+		case 'N': 
+		break;
+		case 'R':
+		 {
+			ast_relational_node_t * node = 
+				(ast_relational_node_t*) tree;
+			free_ast_tree(node->left);
+			free_ast_tree(node->right);
+	 }
+		break;
+		case 'E':
+		{
+			ast_equality_node_t * node =
+				(ast_equality_node_t*) tree;
+			free_ast_tree(node->left);
+			free_ast_tree(node->right);
+		}
+		break;
+		case 'A':
+		{
+			ast_assignment_node_t * node =
+				(ast_assignment_node_t*) tree;
+
+			free_ast_tree(node->value);
+		}
+		break;
+		default:
+			printf("bad node in tree (free)\n");
+	}
+
+	free(tree);
+}

@@ -63,3 +63,5 @@ typedef enum equality_operator equality_operator_t;
 typedef enum relational_operator relational_operator_t;
 
 ast_node_t * new_ast_node(int,ast_node_t*, ast_node_t*);
+ast_node_t * new_ast_relational_node(relational_operator_t, ast_node_t*,ast_node_t*);
+

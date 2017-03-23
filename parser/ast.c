@@ -39,3 +39,13 @@ ast_node_t * new_ast_equality_node(equality_operator_t op,
 }
 
 
+ast_node_t * new_ast_symbol_reference_node(struct symbol_node * symbol) {
+	ast_symbol_reference_node_t * ast_node = malloc(sizeof(ast_symbol_reference_node_t));
+
+	ast_node->node_type = 'S';
+	ast_node->symbol = symbol;
+
+	return (ast_node_t *) ast_node; 
+}
+
+

@@ -53,15 +53,27 @@ struct ast_number_node {
 	double value;
 };
 
+
+struct ast_symbol_reference_node {
+	int node_type;
+	struct symbol_node * symbol;
+};
+
 typedef struct symbol_node symbol_t;
 typedef struct ast_node ast_node_t;
 typedef struct ast_relational_node ast_relational_node_t; 
 typedef struct ast_equality_node ast_equality_node_t;
 typedef struct ast_assignment_node ast_assignment_node_t;
 typedef struct ast_number_node ast_number_node_t;
+typedef struct ast_symbol_reference_node ast_symbol_reference_node_t;
 typedef enum equality_operator equality_operator_t;
 typedef enum relational_operator relational_operator_t;
 
 ast_node_t * new_ast_node(int,ast_node_t*, ast_node_t*);
 ast_node_t * new_ast_relational_node(relational_operator_t, ast_node_t*,ast_node_t*);
 ast_node_t * new_ast_equality_node(equality_operator_t,ast_node_t*,ast_node_t*);
+
+
+ast_node_t * new_ast_symbol_reference_node(struct symbol_node*);
+
+

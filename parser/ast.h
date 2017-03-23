@@ -61,3 +61,5 @@ typedef struct ast_assignment_node ast_assignment_node_t;
 typedef struct ast_number_node ast_number_node_t;
 typedef enum equality_operator equality_operator_t;
 typedef enum relational_operator relational_operator_t;
+
+ast_node_t * new_ast_node(int,ast_node_t*, ast_node_t*);

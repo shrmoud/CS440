@@ -14,11 +14,11 @@ int yylex(void);
 
 
 // symbol table
-symbol_t symbols[SYMTABLE_LEN]; 
+symbol_t * symbols[SYMTABLE_LEN]; 
 
 
-symbol_t symbolVal(char * name);
-int updateSymbolVal(symbol_t val);
+symbol_t * symbolVal(char * name);
+symbol_t * updateSymbolVal(symbol_t val);
 
 %}
 
@@ -27,6 +27,7 @@ int updateSymbolVal(symbol_t val);
 	char  var[30];
 	double dub;
 	int    integer;
+	struct ast_node node;
 }
 
 %start statement
@@ -44,8 +45,8 @@ int updateSymbolVal(symbol_t val);
 /* types */ 
 
 %token TCOL
-%token <integer> DECIMAL 
-%token <dub>  NUMBER 
+%token <node> DECIMAL 
+%token <node>  NUMBER 
 %token DOUBLE
 %token INT
 %token STRING
@@ -55,7 +56,7 @@ int updateSymbolVal(symbol_t val);
 %token TRUE
 %token FALSE
 %token VOID 
-%type <dub> digit
+%type <node> digit
 
 /* blocks */ 
 
@@ -73,7 +74,7 @@ int updateSymbolVal(symbol_t val);
 
 /* math and arithmatic */ 
 %token MOD 
-%token <var> VAR 
+%token <node> VAR 
 %token ADD 
 %token SUBT 
 %token MULT 
@@ -91,9 +92,10 @@ int updateSymbolVal(symbol_t val);
 %token LPAR 
 %token RPAR 
 %token identifier
-%type <dub> exp
-%type <dub> term
-%type <dub> value
+%type <node> exp
+%type <node> term
+%type <node> value
+%type <node> assignment
 %%
 
 expression: boolexp | exp | func | calltype | stringassign ;
@@ -163,15 +165,25 @@ assignment: VAR ASSGN exp {symbol_t sym;
 			sym.val = malloc(sizeof($3));
 			sym.type = DOUBLE_T;
 			memcpy(sym.val, &$3,sizeof($3));
-			 updateSymbolVal(sym);  } |
+			 symbol_t * res = updateSymbolVal(sym);
+				
+				$$ = new_assignment_node(res, $3);} |
 	  VAR ASSGN boolexp
 ;
 
 
-digit:SUBT NUMBER {$$ = -1 * $2;}  
-     |	SUBT DECIMAL {$$ = -1 * $2;} 
-     | NUMBER {$$ = $1;} 
-     | DECIMAL {$$ = $1;}
+digit:SUBT NUMBER {double val = -1 * $2;
+     			ast_number_node_t * n = new_ast_number_node(val);
+			$$ = n;}  
+     |	SUBT DECIMAL {double val = -1 * $2;
+			ast_number_node_t * n = new_ast_number_node(val); 
+			$$ = n;} 
+     | NUMBER {double val = $1;
+		ast_number_node_t * n = new_ast_number_node(val)l
+		$$ = n;} 
+     | DECIMAL {double val = $1;
+		ast_number_node_t * n = new_ast_number_node(val);
+		$$ = n;}
 ;
 
 
@@ -179,14 +191,14 @@ term: value
     | assignment
 ;
 
-value: digit | VAR {symbol_t sym = symbolVal($1);
-            if(sym.type != DOUBLE_T) {
+value: digit | VAR {symbol_t * sym = symbolVal($1);
+            if((sym == NULL) || (sym->type != DOUBLE_T)) {
 		printf("err: variable not bound\n");
 		return -1;
 		}	
-	   double d = *((double*)sym.val);
+	   double d = *((double*)sym->val);
 		printf("var with value %f\n", d);
-		$$ = d;}; 
+		$$ = //LEFT OFF HERE;}; 
 
 %%
 
@@ -204,8 +216,10 @@ static int symbolIndex(char * name) {
 	int x; 
 	for(x=0;x<SYMTABLE_LEN;x++) {
 		//printSymbol(symbols[x]);
-		if((symbols[x].valid == 1) && (symbols[x].name[0] == name[0])) {
-			if(strcmp(symbols[x].name, name) == 0) {
+		if(symbols[x] == NULL) 
+			continue;
+		if((symbols[x]->valid == 1) && (symbols[x]->name[0] == name[0])) {
+			if(strcmp(symbols[x]->name, name) == 0) {
 				return x;
 			}
 		}
@@ -214,28 +228,34 @@ static int symbolIndex(char * name) {
 }
 
 
-int updateSymbolVal(symbol_t val) {
+symbol_t *  updateSymbolVal(symbol_t val) {
 	int index;
 	index = symbolIndex(val.name);
 	if(index > 0) {
-		memcpy(symbols[index].val, (char*)val.val, val.valsize);
-		symbols[index].type = val.type;
-		return 0;
+		symbols[index] = malloc(sizeof(symbol_t));
+		memcpy(symbols[index]->val, (char*)val.val, val.valsize);
+		symbols[index]->type = val.type;	
+		return symbols[index];
 	}
 	int x;
 	for(x=index;x<SYMTABLE_LEN;x++) {
-		if(symbols[x].valid == 0) {
-		//	printf("found an empty slot\n");
+		if(symbols[x]== NULL) {
+			symbols[x] = malloc(sizeof(symbol_t));
 			memcpy(&symbols[x], &val,sizeof(val));
-			return 0;
+			return symbols[x];
+
+		}
+		else if(symbols[x]->valid == 0) {
+			memcpy(&symbols[x], &val,sizeof(val));
+			return symbols[x];
 		}
 	}
 
-	return -1; 
+	return NULL; 
 
 }
 
-symbol_t symbolVal(char * name) {
+symbol_t * symbolVal(char * name) {
 	int index;
 	index = symbolIndex(name);
 	if(index >= 0) {
@@ -243,8 +263,6 @@ symbol_t symbolVal(char * name) {
 		return symbols[index];
 	}
 	else {
-		symbol_t ret;
-		ret.valid = 0;
-		return ret;
+		return NULL ;
 	}	
 }

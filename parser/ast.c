@@ -60,3 +60,13 @@ ast_node_t * new_ast_assignment_node(struct symbol_node * symbol, ast_node_t * v
 
 	return (ast_node_t*) ast_node; 
 }
+
+
+ast_node_t * new_ast_number_node(double value) {
+	ast_number_node_t * ast_node = malloc(sizeof(ast_number_node_t));
+	
+	ast_node->node_type = 'N';
+	ast_node->value = value;
+	return (ast_node_t*) ast_node;
+
+}

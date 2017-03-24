@@ -73,6 +73,6 @@ ast_node_t * new_ast_node(int,ast_node_t*, ast_node_t*);
 ast_node_t * new_ast_relational_node(relational_operator_t, ast_node_t*,ast_node_t*);
 ast_node_t * new_ast_equality_node(equality_operator_t,ast_node_t*,ast_node_t*);
 ast_node_t * new_ast_symbol_reference_node(struct symbol_node*);
-ast_node_t * new_ast_symbol_assignment_node(struct symbol_node*, ast_node_t*);
+ast_node_t * new_ast_assignment_node(struct symbol_node*, ast_node_t*);
 ast_node_t * new_ast_number_node(double);
 void free_ast_tree(ast_node_t*);

@@ -3,6 +3,7 @@
 %{
 #include <string.h>
 #include "tok.h"
+#include "ast.h"
 %}
 W [ \t\n]*
 %%
@@ -54,11 +55,21 @@ end      {return END;}
 {W}\".*\"{W}   {return QUOTE;}
 {W}\'.\'{W}   {return CHARQUOTE;}
 
-[0-9]+ {yylval.integer = atoi(yytext);
+[0-9]+ {ast_number_node_t * n = new_ast_number_node(atoi(yytext));
+		yylval.node = n; 
 		 return  DECIMAL;}
-[0-9]+\.[0-9]+ { yylval.dub  = atoi(yytext); return NUMBER;}
+[0-9]+\.[0-9]+ { ast_number_node_t * n = new_ast_number_node(atoi(yytext));
+		yylval.node = n;
+		 return NUMBER;}
 
-[a-zA-Z][a-zA-Z0-9]* {strcpy(yylval.var, yytext); return VAR;}
+[a-zA-Z][a-zA-Z0-9]* {
+symbol_t * sym = malloc(sizeof(symbol_t));
+strcpy(sym->name, yytext); 
+sym->valsize = -1;
+sym->val = NULL;
+ast_symbol_reference_node_t * n = new_ast_symbol_reference_node(sym);
+yylval.node = n;
+return VAR;}
 
 [ \t\n]+ /* ignore whitespace */
 

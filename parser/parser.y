@@ -18,7 +18,7 @@ symbol_t * symbols[SYMTABLE_LEN];
 
 
 symbol_t * symbolVal(char * name);
-symbol_t * updateSymbolVal(symbol_t val);
+int  updateSymbolVal(symbol_t * val);
 
 %}
 
@@ -27,7 +27,7 @@ symbol_t * updateSymbolVal(symbol_t val);
 	char  var[30];
 	double dub;
 	int    integer;
-	struct ast_node node;
+	struct ast_node * node;
 }
 
 %start statement
@@ -45,8 +45,8 @@ symbol_t * updateSymbolVal(symbol_t val);
 /* types */ 
 
 %token TCOL
-%token <node> DECIMAL 
-%token <node>  NUMBER 
+%token <dub> DECIMAL 
+%token <dub>  NUMBER 
 %token DOUBLE
 %token INT
 %token STRING
@@ -158,17 +158,43 @@ logic: NOT
      | LEEQ
 ;
 
-assignment: VAR ASSGN exp {symbol_t sym;
-	  			printf("assign to %s value %f\n",$1, $3 );
-	     		strcpy(sym.name,$1);
-			sym.valid = 1;
-			sym.val = malloc(sizeof($3));
-			sym.type = DOUBLE_T;
-			memcpy(sym.val, &$3,sizeof($3));
-			 symbol_t * res = updateSymbolVal(sym);
-				
-				$$ = new_assignment_node(res, $3);} |
-	  VAR ASSGN boolexp
+assignment: VAR ASSGN exp {ast_node_t * node = $3;
+	  		ast_symbol_reference_node_t * s = (ast_symbol_reference_node_t*) $1;
+			if(s == NULL) {
+				printf("bad symbol node in assignment\n");
+				return -1;
+			}
+			if(node == NULL) {
+				printf("bad exp node in assignment\n");
+				return -1; 
+			}
+			switch(node->node_type) {
+				case 'N':
+				{
+				struct ast_number_node * num = (ast_number_node_t*) node;
+				if(s->symbol->valsize  < 0)
+					free(s->symbol->val);
+				s->symbol->val = malloc(sizeof(double));
+				*((double*)s->symbol->val) = num->value;
+				printf("updated symbol %s with result %f\n",s->symbol->name, num->value);
+				break;
+				}
+				case 'S':
+				{
+				ast_symbol_reference_node_t * ns = (ast_symbol_reference_node_t*) node;
+				memcpy(s->symbol, ns->symbol, sizeof(symbol_t));
+				printf("assigned %s to %s\n", ns->symbol->name, s->symbol->name);
+				break;
+				}
+				default:
+				printf("imposible ast situation in assign\n");
+				return -1;
+			}	
+				$$ = new_ast_assignment_node(s->symbol, $3);} |
+	  VAR ASSGN boolexp { 
+				//printf("assign to bool %s value %d\n", $1, $3);
+				//LEFT OFF HERE
+				}
 ;
 
 
@@ -179,7 +205,7 @@ digit:SUBT NUMBER {double val = -1 * $2;
 			ast_number_node_t * n = new_ast_number_node(val); 
 			$$ = n;} 
      | NUMBER {double val = $1;
-		ast_number_node_t * n = new_ast_number_node(val)l
+		ast_number_node_t * n = new_ast_number_node(val);
 		$$ = n;} 
      | DECIMAL {double val = $1;
 		ast_number_node_t * n = new_ast_number_node(val);
@@ -187,18 +213,20 @@ digit:SUBT NUMBER {double val = -1 * $2;
 ;
 
 
-term: value
-    | assignment
+term: value {$$ = $1;}
+    | assignment {$$ = $1;}
 ;
 
-value: digit | VAR {symbol_t * sym = symbolVal($1);
+value: digit {$$ = $1;} 
+     | VAR {symbol_t * sym = symbolVal(((ast_symbol_reference_node_t*)$1)->symbol->name);
             if((sym == NULL) || (sym->type != DOUBLE_T)) {
 		printf("err: variable not bound\n");
 		return -1;
 		}	
 	   double d = *((double*)sym->val);
 		printf("var with value %f\n", d);
-		$$ = //LEFT OFF HERE;}; 
+		ast_node_t * n = new_ast_symbol_reference_node(sym);
+		$$ = n;}; 
 
 %%
 
@@ -228,30 +256,27 @@ static int symbolIndex(char * name) {
 }
 
 
-symbol_t *  updateSymbolVal(symbol_t val) {
+int updateSymbolVal(symbol_t * val) {
 	int index;
-	index = symbolIndex(val.name);
+	index = symbolIndex(val->name);
 	if(index > 0) {
-		symbols[index] = malloc(sizeof(symbol_t));
-		memcpy(symbols[index]->val, (char*)val.val, val.valsize);
-		symbols[index]->type = val.type;	
-		return symbols[index];
+		symbols[index] = val;	
+		return 0;
 	}
 	int x;
 	for(x=index;x<SYMTABLE_LEN;x++) {
 		if(symbols[x]== NULL) {
-			symbols[x] = malloc(sizeof(symbol_t));
-			memcpy(&symbols[x], &val,sizeof(val));
-			return symbols[x];
+			symbols[x] = val;
+			return 0;
 
 		}
 		else if(symbols[x]->valid == 0) {
-			memcpy(&symbols[x], &val,sizeof(val));
-			return symbols[x];
+			symbols[x] = val;
+			return 0;
 		}
 	}
 
-	return NULL; 
+	return -1; 
 
 }
 

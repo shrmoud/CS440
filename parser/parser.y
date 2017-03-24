@@ -199,16 +199,16 @@ assignment: VAR ASSGN exp {ast_node_t * node = $3;
 
 
 digit:SUBT NUMBER {double val = -1 * $2;
-     			ast_number_node_t * n = new_ast_number_node(val);
+     			ast_node_t * n =  new_ast_number_node(val);
 			$$ = n;}  
      |	SUBT DECIMAL {double val = -1 * $2;
-			ast_number_node_t * n = new_ast_number_node(val); 
+			ast_node_t * n = new_ast_number_node(val); 
 			$$ = n;} 
      | NUMBER {double val = $1;
-		ast_number_node_t * n = new_ast_number_node(val);
+		ast_node_t * n = new_ast_number_node(val);
 		$$ = n;} 
      | DECIMAL {double val = $1;
-		ast_number_node_t * n = new_ast_number_node(val);
+		ast_node_t * n = new_ast_number_node(val);
 		$$ = n;}
 ;
 

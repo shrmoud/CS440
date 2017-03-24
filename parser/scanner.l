@@ -55,11 +55,11 @@ end      {return END;}
 {W}\".*\"{W}   {return QUOTE;}
 {W}\'.\'{W}   {return CHARQUOTE;}
 
-[0-9]+ {ast_number_node_t * n = new_ast_number_node(atoi(yytext));
-		yylval.node = n; 
+[0-9]+ {ast_number_node_t * n = (ast_number_node_t*) new_ast_number_node(atoi(yytext));
+		yylval.node = (ast_node_t*)  n; 
 		 return  DECIMAL;}
-[0-9]+\.[0-9]+ { ast_number_node_t * n = new_ast_number_node(atoi(yytext));
-		yylval.node = n;
+[0-9]+\.[0-9]+ { ast_number_node_t * n = (ast_number_node_t*) new_ast_number_node(atoi(yytext));
+		yylval.node = (ast_node_t*) n;
 		 return NUMBER;}
 
 [a-zA-Z][a-zA-Z0-9]* {
@@ -67,8 +67,8 @@ symbol_t * sym = malloc(sizeof(symbol_t));
 strcpy(sym->name, yytext); 
 sym->valsize = -1;
 sym->val = NULL;
-ast_symbol_reference_node_t * n = new_ast_symbol_reference_node(sym);
-yylval.node = n;
+ast_symbol_reference_node_t * n = (ast_symbol_reference_node_t*) new_ast_symbol_reference_node(sym);
+yylval.node = (ast_node_t*) n;
 return VAR;}
 
 [ \t\n]+ /* ignore whitespace */

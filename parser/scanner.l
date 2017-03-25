@@ -56,9 +56,11 @@ end      {return END;}
 {W}\'.\'{W}   {return CHARQUOTE;}
 
 [0-9]+ {ast_number_node_t * n = (ast_number_node_t*) new_ast_number_node(atoi(yytext));
+		n->node_type = DOUBLE_T;
 		yylval.node = (ast_node_t*)  n; 
 		 return  DECIMAL;}
 [0-9]+\.[0-9]+ { ast_number_node_t * n = (ast_number_node_t*) new_ast_number_node(atoi(yytext));
+		n->node_type = DOUBLE_T;
 		yylval.node = (ast_node_t*) n;
 		 return NUMBER;}
 

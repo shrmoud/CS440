@@ -45,8 +45,8 @@ int  updateSymbolVal(symbol_t * val);
 /* types */ 
 
 %token TCOL
-%token <dub> DECIMAL 
-%token <dub>  NUMBER 
+%token <node> DECIMAL 
+%token <node>  NUMBER 
 %token DOUBLE
 %token INT
 %token STRING
@@ -198,18 +198,16 @@ assignment: VAR ASSGN exp {ast_node_t * node = $3;
 ;
 
 
-digit:SUBT NUMBER {double val = -1 * $2;
-     			ast_node_t * n =  new_ast_number_node(val);
-			$$ = n;}  
-     |	SUBT DECIMAL {double val = -1 * $2;
-			ast_node_t * n = new_ast_number_node(val); 
-			$$ = n;} 
-     | NUMBER {double val = $1;
-		ast_node_t * n = new_ast_number_node(val);
-		$$ = n;} 
-     | DECIMAL {double val = $1;
-		ast_node_t * n = new_ast_number_node(val);
-		$$ = n;}
+digit:SUBT NUMBER {ast_number_node_t * n = (ast_number_node_t*) $2;
+     			n->value = n->value * -1;
+			$$ = (ast_node_t*) n;}  
+     |	SUBT DECIMAL {ast_number_node_t * n = (ast_number_node_t*) $2;
+			n->value = n->value * -1;
+			$$ = (ast_node_t*)  n;} 
+     | NUMBER {ast_number_node_t * n = (ast_number_node_t*) $1;
+		$$ = (ast_node_t*) n;} 
+     | DECIMAL {ast_number_node_t * n  = (ast_number_node_t*) $1;
+		$$ = (ast_node_t*) n;}
 ;
 
 

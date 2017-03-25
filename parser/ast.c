@@ -71,6 +71,15 @@ ast_node_t * new_ast_number_node(double value) {
 
 }
 
+ast_node_t * new_ast_function_node(symboltype_t retval) {
+	ast_function_node_t * ast_node = malloc(sizeof(ast_function_node_t));
+
+	ast_node->node_type = 'F';
+	ast_node->retval = retval;
+
+	return (ast_node_t*) ast_node; 
+}
+
 
 
 void free_ast_tree(ast_node_t * tree) {

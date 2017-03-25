@@ -3,7 +3,7 @@
 
 //a type that a value can have for a symbol 
 typedef enum {
-        INT_T, VOID_T, DOUBLE_T, BOOLEAN_T, STRING_T, PTR_T
+        INT_T, VOID_T, DOUBLE_T, BOOLEAN_T, STRING_T, PTR_T, FUNCTION_T
 } symboltype_t;
 
 struct symbol_node {

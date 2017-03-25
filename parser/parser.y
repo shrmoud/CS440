@@ -187,7 +187,7 @@ assignment: VAR ASSGN exp {ast_node_t * node = $3;
 				break;
 				}
 				default:
-				printf("imposible ast situation in assign\n");
+				printf("impossible ast situation in assign\n");
 				return -1;
 			}	
 				$$ = new_ast_assignment_node(s->symbol, $3);} |

@@ -81,6 +81,15 @@ ast_node_t * new_ast_function_node(symboltype_t retval) {
 }
 
 
+ast_node_t * new_ast_typecheck_node(symboltype_t type, symbol_t * symbol) {
+	ast_typecheck_node_t * ast_node = malloc(sizeof(ast_typecheck_node_t));
+
+	ast_node->node_type = 'T';
+	ast_node->symbol = symbol;
+	ast_node->typecheck = type;
+
+	return (ast_node_t*) ast_node;
+}
 
 void free_ast_tree(ast_node_t * tree) {
 	if(!tree) 

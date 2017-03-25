@@ -2,8 +2,8 @@
 %option noinput
 %{
 #include <string.h>
-#include "tok.h"
 #include "ast.h"
+#include "tok.h"
 %}
 W [ \t\n]*
 %%

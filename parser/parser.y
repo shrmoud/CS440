@@ -1,7 +1,5 @@
 /* HIPSTER-parser */ 
 
-
-
 %{
 #include <stdio.h>
 #include <string.h>
@@ -23,12 +21,9 @@ int  updateSymbolVal(symbol_t * val);
 %}
 
 %union {
-	char  name[30];
-	char  var[30];
-	double dub;
-	int    integer;
 	struct ast_node * node;
-}
+	symboltype_t ty;
+};
 
 %start statement
 %token PRINT
@@ -57,7 +52,7 @@ int  updateSymbolVal(symbol_t * val);
 %token FALSE
 %token VOID 
 %type <node> digit
-
+%type <node> typecheck
 /* blocks */ 
 
 %token END
@@ -71,7 +66,8 @@ int  updateSymbolVal(symbol_t * val);
 %token FUNCTIONDEF
 %token CALL
 %token RETURN 
-
+%type <node> func
+%type <ty> type_t;
 /* math and arithmatic */ 
 %token MOD 
 %token <node> VAR 
@@ -120,15 +116,34 @@ stringassign: VAR ASSGN QUOTE |
 
 /* functions */
 
-type_t:  INT | BOOLEAN | DOUBLE | POINTER | CHAR | STRING;
+type_t:  INT {$$ = INT_T;} 
+	| BOOLEAN {$$ = BOOLEAN_T;}
+	| DOUBLE {$$ = DOUBLE_T;}
+	| POINTER {$$ = PTR_T;}
+	| CHAR {$$ = CHAR_T;}
+	| STRING {$$ = STRING_T;};
 
 
-typecheck: type_t TCOL VAR
+typecheck: type_t TCOL VAR {
+	ast_typecheck_node_t * t = (ast_typecheck_node_t*) new_ast_typecheck_node($1,$3);
+	$$ = (ast_node_t*) t;
+}	
+ ;
 
 typelist: typecheck |  typecheck typelist;
 
-func: FUNCTIONDEF type_t VAR typelist SEMI statement RETURN value  SEMI END
-    |  FUNCTIONDEF VOID VAR typelist SEMI statement END;
+func: FUNCTIONDEF type_t VAR typelist SEMI statement RETURN value  SEMI END {
+	ast_function_node_t * f = (ast_function_node_t*) new_ast_function_node($2);
+	$$ = (ast_node_t*) f;
+	}
+    |  FUNCTIONDEF VOID VAR typelist SEMI statement END {
+	ast_function_node_t * f = (ast_function_node_t*) new_ast_function_node(VOID_T);
+	f->retval = VOID_T;
+	$$ = (ast_node_t*) f;
+	}
+	
+
+;
 
 calltype: CALL VAR
 

@@ -160,7 +160,7 @@ logic: NOT
 
 assignment: VAR ASSGN exp {ast_node_t * node = $3;
 	  		ast_symbol_reference_node_t * s = (ast_symbol_reference_node_t*) $1;
-			if(s == NULL) {
+			if($1 == NULL) {
 				printf("bad symbol node in assignment\n");
 				return -1;
 			}
@@ -172,10 +172,12 @@ assignment: VAR ASSGN exp {ast_node_t * node = $3;
 				case 'N':
 				{
 				struct ast_number_node * num = (ast_number_node_t*) node;
-				if(s->symbol->valsize  < 0)
+				if(s->symbol->valsize  >= 0)
 					free(s->symbol->val);
 				s->symbol->val = malloc(sizeof(double));
 				*((double*)s->symbol->val) = num->value;
+				s->symbol->valid = 1;
+				s->symbol->type = DOUBLE_T;
 				printf("updated symbol %s with result %f\n",s->symbol->name, num->value);
 				break;
 				}
@@ -189,7 +191,8 @@ assignment: VAR ASSGN exp {ast_node_t * node = $3;
 				default:
 				printf("impossible ast situation in assign\n");
 				return -1;
-			}	
+			}
+				printf("updated symbol table index %d\n", updateSymbolVal(s->symbol));	
 				$$ = new_ast_assignment_node(s->symbol, $3);} |
 	  VAR ASSGN boolexp { 
 				//printf("assign to bool %s value %d\n", $1, $3);
@@ -238,12 +241,17 @@ static void printSymbol(symbol_t s) {
 }
 
 static int symbolIndex(char * name) {
-	//printf("searching for index for %s\n", name);
+	printf("searching for index for %s\n", name);
 	int x; 
 	for(x=0;x<SYMTABLE_LEN;x++) {
-		//printSymbol(symbols[x]);
-		if(symbols[x] == NULL) 
+		//printSymbol(*symbols[x]);
+		if(symbols[x] == NULL)  {
+			//printf("null symbol\n");
 			continue;
+		}
+		if(symbols[x]->valid == 0) {
+			printf("invalid symbol\n");
+		}
 		if((symbols[x]->valid == 1) && (symbols[x]->name[0] == name[0])) {
 			if(strcmp(symbols[x]->name, name) == 0) {
 				return x;
@@ -259,21 +267,21 @@ int updateSymbolVal(symbol_t * val) {
 	index = symbolIndex(val->name);
 	if(index > 0) {
 		symbols[index] = val;	
-		return 0;
+		return index;
 	}
 	int x;
-	for(x=index;x<SYMTABLE_LEN;x++) {
+	for(x=0;x<SYMTABLE_LEN;x++) {
 		if(symbols[x]== NULL) {
 			symbols[x] = val;
-			return 0;
+			return x;
 
 		}
 		else if(symbols[x]->valid == 0) {
 			symbols[x] = val;
-			return 0;
+			return x;
 		}
 	}
-
+	printf("error with updateSymbolVal\n");
 	return -1; 
 
 }
@@ -282,7 +290,7 @@ symbol_t * symbolVal(char * name) {
 	int index;
 	index = symbolIndex(name);
 	if(index >= 0) {
-		//printf("found a symbol from table\n");
+		printf("found a symbol from table\n");
 		return symbols[index];
 	}
 	else {

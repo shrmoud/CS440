@@ -376,6 +376,19 @@ int symAssign(const ast_node_t * node, ast_symbol_reference_node_t * s) {
 				printf("assigned %s to %s\n", ns->symbol->name, s->symbol->name);
 				break;
 				}
+				case 'C':
+				{
+				struct ast_string_node * num = (ast_string_node_t*) node;
+				if(s->symbol->valsize  >= 0)
+					free(s->symbol->val);
+				s->symbol->val = malloc(sizeof(char) * strlen(num->str));
+				s->symbol->val = (char*) num->str;
+				s->symbol->valid = 1;
+				s->symbol->type = STRING_T;
+				printf("updated symbol %s with result %s\n",s->symbol->name, num->str);
+				break;
+				}
+
 				default:
 				printf("impossible ast situation in assign\n");
 				return -1;

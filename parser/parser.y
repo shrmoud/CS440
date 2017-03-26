@@ -125,7 +125,7 @@ type_t:  INT {$$ = INT_T;}
 
 
 typecheck: type_t TCOL VAR {
-	ast_typecheck_node_t * t = (ast_typecheck_node_t*) new_ast_typecheck_node($1,$3);
+	ast_typecheck_node_t * t = (ast_typecheck_node_t*) new_ast_typecheck_node($1,((ast_symbol_reference_node_t*)$3)->symbol);
 	$$ = (ast_node_t*) t;
 }	
  ;

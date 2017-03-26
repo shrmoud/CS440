@@ -17,6 +17,7 @@ symbol_t * symbols[SYMTABLE_LEN];
 
 symbol_t * symbolVal(char * name);
 int  updateSymbolVal(symbol_t * val);
+int symAssign(const ast_node_t*, ast_symbol_reference_node_t*);
 
 %}
 
@@ -343,4 +344,43 @@ symbol_t * symbolVal(char * name) {
 	else {
 		return NULL ;
 	}	
+}
+
+
+int symAssign(const ast_node_t * node, ast_symbol_reference_node_t * s) {
+			if(node == NULL) {
+				printf("bad symbol node in assignment\n");
+				return -1;
+			}
+			if(node == NULL) {
+				printf("bad exp node in assignment\n");
+				return -1; 
+			}
+			switch(node->node_type) {
+				case 'N':
+				{
+				struct ast_number_node * num = (ast_number_node_t*) node;
+				if(s->symbol->valsize  >= 0)
+					free(s->symbol->val);
+				s->symbol->val = malloc(sizeof(double));
+				*((double*)s->symbol->val) = num->value;
+				s->symbol->valid = 1;
+				s->symbol->type = DOUBLE_T;
+				printf("updated symbol %s with result %f\n",s->symbol->name, num->value);
+				break;
+				}
+				case 'S':
+				{
+				ast_symbol_reference_node_t * ns = (ast_symbol_reference_node_t*) node;
+				memcpy(s->symbol, ns->symbol, sizeof(symbol_t));
+				printf("assigned %s to %s\n", ns->symbol->name, s->symbol->name);
+				break;
+				}
+				default:
+				printf("impossible ast situation in assign\n");
+				return -1;
+			}
+
+		return 0; 
+
 }

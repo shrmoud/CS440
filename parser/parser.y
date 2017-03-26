@@ -265,14 +265,16 @@ term: value {$$ = $1;}
 
 value: digit {$$ = $1;} 
      | VAR {symbol_t * sym = symbolVal(((ast_symbol_reference_node_t*)$1)->symbol->name);
-            if((sym == NULL) || (sym->type != DOUBLE_T)) {
-		printf("err: variable not bound\n");
-		return -1;
-		}	
+            if((sym != NULL) && (sym->type == DOUBLE_T)) {	
 	   double d = *((double*)sym->val);
 		printf("var with value %f\n", d);
 		ast_node_t * n = new_ast_symbol_reference_node(sym);
-		$$ = n;}; 
+		$$ = n;
+		}
+	else if(sym->type == STRING_T) {
+		printf("referenced string %s in a numeric expression\n", ((char*)sym->val));
+	}
+}; 
 
 %%
 

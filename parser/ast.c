@@ -91,6 +91,15 @@ ast_node_t * new_ast_typecheck_node(symboltype_t type, symbol_t * symbol) {
 	return (ast_node_t*) ast_node;
 }
 
+ast_node_t * new_ast_string_node(char * str) {
+	ast_string_node_t * ast_node = malloc(sizeof(ast_string_node_t));
+
+	ast_node->node_type = 'C';
+	ast_node->str = str;
+
+	return (ast_node_t*) ast_node;
+}
+
 void free_ast_tree(ast_node_t * tree) {
 	if(!tree) 
 		return;

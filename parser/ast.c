@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <malloc.h>
+#include <string.h>
 #include "ast.h"
 
 ast_node_t * new_ast_node(int node_type, ast_node_t * left, 
@@ -100,11 +101,12 @@ ast_node_t * new_ast_string_node(char * str) {
 	return (ast_node_t*) ast_node;
 }
 
-ast_node_t * new_ast_typelist_node(symboltype_t * list, int size) {
+ast_node_t * new_ast_typelist_node(struct ast_typecheck_node * list, int size) {
 	ast_typelist_node_t * ast_node = malloc(sizeof(ast_typelist_node_t));
 
 	ast_node->node_type = 'L'; 
-	ast_node->types = malloc(sizeof(symboltype_t)*size);
+	ast_node->types = malloc(sizeof(struct ast_typecheck_node*)*size);
+	memcpy(ast_node->types, list, sizeof(struct ast_typecheck_node*));
 	ast_node->size = size; 
 
 	return (ast_node_t*) ast_node;

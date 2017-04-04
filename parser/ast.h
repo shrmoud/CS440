@@ -81,7 +81,7 @@ struct ast_string_node {
 struct ast_typelist_node {
 	int node_type;
 	int size; 
-	symboltype_t * types; 
+	struct ast_typecheck_node ** types; 
 };
 
 
@@ -109,5 +109,5 @@ ast_node_t * new_ast_number_node(double);
 ast_node_t * new_ast_function_node(symboltype_t);
 ast_node_t * new_ast_typecheck_node(symboltype_t, symbol_t*);
 ast_node_t * new_ast_string_node(char * str);
-ast_node_t * new_ast_typelist_node(symboltype_t*, int);
+ast_node_t * new_ast_typelist_node(struct ast_typecheck_node*, int);
 void free_ast_tree(ast_node_t*);

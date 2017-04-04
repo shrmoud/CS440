@@ -100,18 +100,32 @@ ast_node_t * new_ast_string_node(char * str) {
 
 	return (ast_node_t*) ast_node;
 }
-
-ast_node_t * new_ast_typelist_node(struct ast_typecheck_node * list, int size) {
+ 
+ast_node_t * new_ast_typelist_node(struct ast_typecheck_node* t) {
 	ast_typelist_node_t * ast_node = malloc(sizeof(ast_typelist_node_t));
 
-	ast_node->node_type = 'L'; 
-	ast_node->types = malloc(sizeof(struct ast_typecheck_node*)*size);
-	memcpy(ast_node->types, list, sizeof(struct ast_typecheck_node*));
-	ast_node->size = size; 
-
+	ast_node->node_type = 'L';
+	ast_node->next = NULL;
+	ast_node->type = t;
+	ast_node->first = ast_node;
 	return (ast_node_t*) ast_node;
 }
 
+
+void typelist_add(struct ast_typelist_node * n, struct ast_typecheck_node * t) {
+	while(n != NULL) {
+		if(n->next == NULL) {
+			ast_typelist_node_t *  tp = (ast_typelist_node_t*)  new_ast_typelist_node(t);
+			n->next = tp;
+			n = n->first; 
+			return;
+		}
+		else {
+			n = n->next;
+		}
+	}
+	
+}
 void free_ast_tree(ast_node_t * tree) {
 	if(!tree) 
 		return;

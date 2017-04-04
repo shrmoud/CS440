@@ -113,37 +113,18 @@ boolterm: TRUE | FALSE | VAR;
 stringassign: VAR ASSGN QUOTE {
 	    		ast_node_t * node = $3;
 	  		ast_symbol_reference_node_t * s = (ast_symbol_reference_node_t*) $1;
-			if($1 == NULL) {
-				printf("bad symbol node in assignment\n");
-				return -1;
+			if(symAssign(node, s) != 0) {
+				printf("error assigning string\n");
 			}
-			if(node == NULL) {
-				printf("bad exp node in assignment\n");
-				return -1; 
-			}
-			switch(node->node_type) {
-				case 'C':
-				{
-				struct ast_string_node * num = (ast_string_node_t*) node;
-				if(s->symbol->valsize  >= 0)
-					free(s->symbol->val);
-				s->symbol->val = malloc(sizeof(char) * strlen(num->str));
-				s->symbol->val = (char*) num->str;
-				s->symbol->valid = 1;
-				s->symbol->type = STRING_T;
-				printf("updated symbol %s with result %s\n",s->symbol->name, num->str);
-				break;
-				}
-				default:
-				printf("impossible ast situation in stringassign\n");
-				return -1;
-			}
-				printf("updated symbol table index %d\n", updateSymbolVal(s->symbol));	
-				$$ = new_ast_assignment_node(s->symbol, $3);
+			$$ = new_ast_assignment_node(s->symbol, $3);
 }
 |	    VAR ASSGN CHARQUOTE {
 		ast_node_t * node = $3;
-			
+		ast_symbol_reference_node_t * s = (ast_symbol_reference_node_t*) $1;
+		if(symAssign(node, s) != 0) {
+			printf("error assigning char\n)");
+		}
+		$$ = new_ast_assignment_node(s->symbol, $3);	
 
 };
 

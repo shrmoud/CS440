@@ -78,6 +78,12 @@ struct ast_string_node {
 	char * str; 
 };
 
+struct ast_typelist_node {
+	int node_type;
+	int size; 
+	symboltype_t * types; 
+};
+
 
 
 typedef struct symbol_node symbol_t;
@@ -90,6 +96,7 @@ typedef struct ast_symbol_reference_node ast_symbol_reference_node_t;
 typedef struct ast_function_node ast_function_node_t;
 typedef struct ast_typecheck_node ast_typecheck_node_t;
 typedef struct ast_string_node ast_string_node_t;
+typedef struct ast_typelist_node ast_typelist_node_t; 
 typedef enum equality_operator equality_operator_t;
 typedef enum relational_operator relational_operator_t;
 
@@ -102,4 +109,5 @@ ast_node_t * new_ast_number_node(double);
 ast_node_t * new_ast_function_node(symboltype_t);
 ast_node_t * new_ast_typecheck_node(symboltype_t, symbol_t*);
 ast_node_t * new_ast_string_node(char * str);
+ast_node_t * new_ast_typelist_node(symboltype_t*, int);
 void free_ast_tree(ast_node_t*);

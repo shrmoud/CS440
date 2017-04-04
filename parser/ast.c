@@ -100,6 +100,16 @@ ast_node_t * new_ast_string_node(char * str) {
 	return (ast_node_t*) ast_node;
 }
 
+ast_node_t * new_ast_typelist_node(symboltype_t * list, int size) {
+	ast_typelist_node_t * ast_node = malloc(sizeof(ast_typelist_node_t));
+
+	ast_node->node_type = 'L'; 
+	ast_node->types = malloc(sizeof(symboltype_t)*size);
+	ast_node->size = size; 
+
+	return (ast_node_t*) ast_node;
+}
+
 void free_ast_tree(ast_node_t * tree) {
 	if(!tree) 
 		return;

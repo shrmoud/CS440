@@ -60,7 +60,13 @@ end      {return END;}
 	yylval.node = (ast_node_t*) ast; 
 	return QUOTE;
 }
-{W}\'.\'{W}   {return CHARQUOTE;}
+{W}\'.\'{W}   {
+		char * str = malloc(sizeof(char) * strlen(yytext));
+		strcpy(str,(yytext+1));
+		str[strlen(str)-1] = '\0';
+		ast_string_node_t * ast = (ast_string_node_t*) new_ast_string_node(str);
+		yylval.node = (ast_node_t*) ast; 
+		return CHARQUOTE;}
 
 [0-9]+ {ast_number_node_t * n = (ast_number_node_t*) new_ast_number_node(atoi(yytext));
 		yylval.node = (ast_node_t*)  n; 

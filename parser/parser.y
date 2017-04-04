@@ -61,7 +61,7 @@ int symAssign(const ast_node_t*, ast_symbol_reference_node_t*);
 
 /* strings */ 
 %token <node> QUOTE
-%token CHARQUOTE
+%token <node> CHARQUOTE
 %type <node> stringassign
 /* functions */ 
 %token FUNCTIONDEF
@@ -141,7 +141,11 @@ stringassign: VAR ASSGN QUOTE {
 				printf("updated symbol table index %d\n", updateSymbolVal(s->symbol));	
 				$$ = new_ast_assignment_node(s->symbol, $3);
 }
-|	    VAR ASSGN CHARQUOTE;
+|	    VAR ASSGN CHARQUOTE {
+		ast_node_t * node = $3;
+			
+
+};
 
 
 
@@ -393,7 +397,7 @@ int symAssign(const ast_node_t * node, ast_symbol_reference_node_t * s) {
 				printf("impossible ast situation in assign\n");
 				return -1;
 			}
-
+		
 		return 0; 
 
 }

@@ -210,39 +210,9 @@ logic: NOT
 
 assignment: VAR ASSGN exp {ast_node_t * node = $3;
 	  		ast_symbol_reference_node_t * s = (ast_symbol_reference_node_t*) $1;
-			if($1 == NULL) {
-				printf("bad symbol node in assignment\n");
-				return -1;
-			}
-			if(node == NULL) {
-				printf("bad exp node in assignment\n");
-				return -1; 
-			}
-			switch(node->node_type) {
-				case 'N':
-				{
-				struct ast_number_node * num = (ast_number_node_t*) node;
-				if(s->symbol->valsize  >= 0)
-					free(s->symbol->val);
-				s->symbol->val = malloc(sizeof(double));
-				*((double*)s->symbol->val) = num->value;
-				s->symbol->valid = 1;
-				s->symbol->type = DOUBLE_T;
-				printf("updated symbol %s with result %f\n",s->symbol->name, num->value);
-				break;
+				if(symAssign(node, s) != 0) {
+					printf("error in assigning symbol\n");
 				}
-				case 'S':
-				{
-				ast_symbol_reference_node_t * ns = (ast_symbol_reference_node_t*) node;
-				memcpy(s->symbol, ns->symbol, sizeof(symbol_t));
-				printf("assigned %s to %s\n", ns->symbol->name, s->symbol->name);
-				break;
-				}
-				default:
-				printf("impossible ast situation in assign\n");
-				return -1;
-			}
-				printf("updated symbol table index %d\n", updateSymbolVal(s->symbol));	
 				$$ = new_ast_assignment_node(s->symbol, $3);} |
 	  VAR ASSGN boolexp { 
 				//printf("assign to bool %s value %d\n", $1, $3);

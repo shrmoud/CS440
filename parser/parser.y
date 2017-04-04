@@ -243,9 +243,9 @@ int yyerror(char * s) {
 	return 0;
 }
 
-static void printSymbol(symbol_t s) {
-	printf("name: %s\nvalid: %d\ntype %d\n", s.name, s.valid, s.type);
-}
+//static void printSymbol(symbol_t s) {
+//	printf("name: %s\nvalid: %d\ntype %d\n", s.name, s.valid, s.type);
+//}
 
 static int symbolIndex(char * name) {
 	printf("searching for index for %s\n", name);

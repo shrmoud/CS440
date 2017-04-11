@@ -203,13 +203,13 @@ logic: NOT
      | LEEQ
 ;
 
-assignment: VAR ASSGN exp {ast_node_t * node = $3;
+assignment: varblob ASSGN exp {ast_node_t * node = $3;
 	  		ast_symbol_reference_node_t * s = (ast_symbol_reference_node_t*) $1;
 			if(symAssign(node, s) != 0) {
 				printf("error in assigning symbol\n");
 			}
 			$$ = new_ast_assignment_node(s->symbol, $3);} |
-	  VAR ASSGN boolexp { 
+	  varblob ASSGN boolexp { 
 			//printf("assign to bool %s value %d\n", $1, $3);
 			//LEFT OFF HERE
 			}

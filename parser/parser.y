@@ -54,6 +54,8 @@ int symAssign(const ast_node_t*, ast_symbol_reference_node_t*);
 %token VOID 
 %type <node> digit
 %type <node> typecheck
+%type <node> typelist
+%type <node> varblob
 /* blocks */ 
 
 %token END
@@ -107,10 +109,15 @@ boolexp:  boolterm
 ;
 
 
-boolterm: TRUE | FALSE | VAR;
+boolterm: 
+	TRUE 
+      | FALSE 
+      | varblob {
+	
+};
 
 /* strings */ 
-stringassign: VAR ASSGN QUOTE {
+stringassign: varblob ASSGN QUOTE {
 	    	ast_node_t * node = $3;
 	  	ast_symbol_reference_node_t * s = (ast_symbol_reference_node_t*) $1;
 		if(symAssign(node, s) != 0) {
@@ -118,7 +125,7 @@ stringassign: VAR ASSGN QUOTE {
 		}
 		$$ = new_ast_assignment_node(s->symbol, $3);
 }
-|	    VAR ASSGN CHARQUOTE {
+|	    varblob ASSGN CHARQUOTE {
 		ast_node_t * node = $3;
 		ast_symbol_reference_node_t * s = (ast_symbol_reference_node_t*) $1;
 		if(symAssign(node, s) != 0) {
@@ -146,7 +153,14 @@ typecheck: type_t TCOL VAR {
 }	
  ;
 
-typelist: typecheck |  typecheck typelist;
+typelist: typecheck {
+	ast_node_t * list = new_ast_typelist_node((ast_typecheck_node_t*)$1);
+	$$ = list; 
+}
+       	|  typecheck typelist {
+	typelist_add((ast_typelist_node_t*)$2, (ast_typecheck_node_t*)$1);
+	$$ = $2;
+};
 
 func: FUNCTIONDEF type_t VAR typelist SEMI statement RETURN value  SEMI END {
 	ast_function_node_t * f = (ast_function_node_t*) new_ast_function_node($2);
@@ -223,9 +237,9 @@ term: value {$$ = $1;}
     | assignment {$$ = $1;}
 ;
 
-value: digit {$$ = $1;} 
-     | VAR {symbol_t * sym = symbolVal(((ast_symbol_reference_node_t*)$1)->symbol->name);
-            if((sym != NULL) && (sym->type == DOUBLE_T)) {	
+varblob: VAR {
+	symbol_t * sym = symbolVal(((ast_symbol_reference_node_t*)$1)->symbol->name);
+           if((sym != NULL) && (sym->type == DOUBLE_T)) {	
 	   double d = *((double*)sym->val);
 		printf("var with value %f\n", d);
 		ast_node_t * n = new_ast_symbol_reference_node(sym);
@@ -237,7 +251,33 @@ value: digit {$$ = $1;}
 	else if(sym == NULL) {
 		printf("encountered a null symbol\n");
 	}
-}; 
+
+}
+       | typecheck {
+	ast_typecheck_node_t * tc = (ast_typecheck_node_t*) $1;
+	symbol_t * sym = symbolVal(tc->symbol->name);
+	if((sym != NULL) && (sym->type != tc->typecheck)) {
+		printf("failed typecheck on declare\n");
+		return -1;
+	}
+        if((sym != NULL) && (sym->type == DOUBLE_T)) {	
+		double d = *((double*)sym->val);
+		printf("var with value %f\n", d);
+		ast_node_t * n = new_ast_symbol_reference_node(sym);
+		$$ = n;
+	}
+	else if((sym != NULL) && (sym->type == STRING_T)) {
+		printf("referenced string %s in a numeric expression\n", ((char*)sym->val));
+	}
+	else if(sym == NULL) {
+		printf("encountered a null symbol\n");
+	}
+
+}
+;
+
+value: digit {$$ = $1;} 
+     | varblob {$$ = $1;}; 
 
 %%
 

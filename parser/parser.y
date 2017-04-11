@@ -231,8 +231,11 @@ value: digit {$$ = $1;}
 		ast_node_t * n = new_ast_symbol_reference_node(sym);
 		$$ = n;
 		}
-	else if(sym->type == STRING_T) {
+	else if((sym != NULL) && (sym->type == STRING_T)) {
 		printf("referenced string %s in a numeric expression\n", ((char*)sym->val));
+	}
+	else if(sym == NULL) {
+		printf("encountered a null symbol\n");
 	}
 }; 
 
@@ -271,6 +274,7 @@ static int symbolIndex(char * name) {
 
 int updateSymbolVal(symbol_t * val) {
 	int index;
+	val->valid = 1;
 	index = symbolIndex(val->name);
 	if(index > 0) {
 		symbols[index] = val;	
@@ -301,6 +305,7 @@ symbol_t * symbolVal(char * name) {
 		return symbols[index];
 	}
 	else {
+		printf("cannot find symbol\n");
 		return NULL ;
 	}	
 }
@@ -352,7 +357,8 @@ int symAssign(const ast_node_t * node, ast_symbol_reference_node_t * s) {
 				printf("impossible ast situation in assign\n");
 				return -1;
 			}
-		
+		updateSymbolVal(s->symbol);
+
 		return 0; 
 
 }

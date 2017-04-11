@@ -137,7 +137,6 @@ void free_ast_tree(ast_node_t * tree) {
 		case '*':
 		case '/':
 		case '%':
-		case 'L':
 			free_ast_tree(tree->right);
 			free_ast_tree(tree->left);
 		break;
@@ -168,6 +167,13 @@ void free_ast_tree(ast_node_t * tree) {
 				(ast_assignment_node_t*) tree;
 
 			free_ast_tree(node->value);
+		}
+		case 'L':
+		{
+			ast_typelist_node_t * node = 
+				(ast_typelist_node_t*) tree;
+			free_ast_tree((ast_node_t*)node->next);
+			free_ast_tree((ast_node_t*)node->type);
 		}
 		break;
 		default:

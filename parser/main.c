@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "symbols.h"
+#include "ast.h"
 
 extern int yyparse();
 
@@ -15,6 +16,12 @@ int main(int argc, char ** argv) {
 	x = yyparse();
 	if(x == 0) 
 		printf("valid syntax\n");
+
+	if(root != NULL) {
+		printf("we sort of have an ast!\n");
+	}
+
+	free_ast_tree(root);
 	return EXIT_SUCCESS;
 }
 

@@ -95,11 +95,27 @@ int symAssign(const ast_node_t*, ast_symbol_reference_node_t*);
 %type <node> term
 %type <node> value
 %type <node> assignment
+%type <node> expression
+%type <node> calltype
+%type <node> statement
 %%
 
-expression: boolexp | exp | func | calltype | stringassign ;
+expression: 
+	 boolexp
+	| exp {$$ = $1;}
+	| func {$$ = $1;}
+	| calltype {$$ = $1;}
+	| stringassign {$$ = $1;}
+;
 
-statement: expression SEMI | expression SEMI statement  ;
+statement: expression SEMI {
+	root = $1;
+	$$ = $1;
+} 
+	| expression SEMI statement {
+	$$ = $1;
+}
+;
 
 
 /* Boolean logic */ 

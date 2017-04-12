@@ -113,3 +113,4 @@ ast_node_t * new_ast_string_node(char * str);
 ast_node_t * new_ast_typelist_node(ast_typecheck_node_t*);
 void typelist_add(ast_typelist_node_t*,ast_typecheck_node_t*);
 void free_ast_tree(ast_node_t*);
+ast_node_t * root; 

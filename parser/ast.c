@@ -144,6 +144,8 @@ void free_ast_tree(ast_node_t * tree) {
 		/* no subtrees */ 
 		case 'S':
 		case 'N': 
+		case 'C':
+		case 'T': //TODO: This DOES NOT fre=e the symbol in the symbol table
 		break;
 		case 'R':
 		 {
@@ -151,6 +153,7 @@ void free_ast_tree(ast_node_t * tree) {
 				(ast_relational_node_t*) tree;
 			free_ast_tree(node->left);
 			free_ast_tree(node->right);
+			break;
 	 }
 		break;
 		case 'E':
@@ -159,6 +162,7 @@ void free_ast_tree(ast_node_t * tree) {
 				(ast_equality_node_t*) tree;
 			free_ast_tree(node->left);
 			free_ast_tree(node->right);
+			break;
 		}
 		break;
 		case 'A':
@@ -167,6 +171,7 @@ void free_ast_tree(ast_node_t * tree) {
 				(ast_assignment_node_t*) tree;
 
 			free_ast_tree(node->value);
+			break;
 		}
 		case 'L':
 		{
@@ -174,10 +179,10 @@ void free_ast_tree(ast_node_t * tree) {
 				(ast_typelist_node_t*) tree;
 			free_ast_tree((ast_node_t*)node->next);
 			free_ast_tree((ast_node_t*)node->type);
+			break;
 		}
-		break;
 		default:
-			printf("bad node in tree (free)\n");
+			printf("dropping out in tree (free)\n");
 	}
 
 	free(tree);

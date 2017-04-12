@@ -194,6 +194,9 @@ void free_symbol_table(symbol_t ** table) {
 	for(i=0;i<SYMTABLE_LEN;i++) {
 		if(table[i] != NULL) {
 			printf("freeing symbol %s\n", table[i]->name);
+			if(table[i]->val != NULL) {
+				free(table[i]->val);
+			}
 			free(table[i]);
 		}
 	}

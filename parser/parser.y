@@ -11,9 +11,6 @@ int yylex(void);
 
 
 
-// symbol table
-symbol_t * symbols[SYMTABLE_LEN]; 
-
 
 symbol_t * symbolVal(char * name);
 int  updateSymbolVal(symbol_t * val);

@@ -22,6 +22,7 @@ int main(int argc, char ** argv) {
 	}
 
 	free_ast_tree(root);
+	free_symbol_table(symbols);
 	return EXIT_SUCCESS;
 }
 

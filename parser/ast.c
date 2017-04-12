@@ -184,6 +184,17 @@ void free_ast_tree(ast_node_t * tree) {
 		default:
 			printf("dropping out in tree (free)\n");
 	}
-
+	printf("freeing node with type %c\n",tree->node_type);
 	free(tree);
+}
+
+
+void free_symbol_table(symbol_t ** table) {
+	int i;
+	for(i=0;i<SYMTABLE_LEN;i++) {
+		if(table[i] != NULL) {
+			printf("freeing symbol %s\n", table[i]->name);
+			free(table[i]);
+		}
+	}
 }

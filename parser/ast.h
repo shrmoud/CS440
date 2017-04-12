@@ -1,6 +1,5 @@
 #define VARLEN 30
 #define SYMTABLE_LEN 100
-
 //a type that a value can have for a symbol 
 typedef enum symboltype {
         INT_T, VOID_T, DOUBLE_T, BOOLEAN_T, STRING_T, PTR_T, FUNCTION_T, CHAR_T
@@ -100,6 +99,8 @@ typedef struct ast_string_node ast_string_node_t;
 typedef struct ast_typelist_node ast_typelist_node_t; 
 typedef enum equality_operator equality_operator_t;
 typedef enum relational_operator relational_operator_t;
+// symbol table
+symbol_t * symbols[SYMTABLE_LEN];
 
 ast_node_t * new_ast_node(int,ast_node_t*, ast_node_t*);
 ast_node_t * new_ast_relational_node(relational_operator_t, ast_node_t*,ast_node_t*);
@@ -113,4 +114,5 @@ ast_node_t * new_ast_string_node(char * str);
 ast_node_t * new_ast_typelist_node(ast_typecheck_node_t*);
 void typelist_add(ast_typelist_node_t*,ast_typecheck_node_t*);
 void free_ast_tree(ast_node_t*);
+void free_symbol_table(symbol_t **);
 ast_node_t * root; 

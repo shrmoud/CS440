@@ -103,6 +103,8 @@ expression:
 	| func {$$ = $1;}
 	| calltype {$$ = $1;}
 	| stringassign {$$ = $1;}
+	| DECIMAL {$$ = $1;}
+	| NUMBER {$$ = $1;}
 ;
 
 statement: expression SEMI {

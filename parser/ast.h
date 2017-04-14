@@ -19,6 +19,12 @@ struct ast_node {
 	struct ast_node * right;
 };
 
+struct ast_root_node {
+	int node_type;
+	struct ast_node * payload;
+	struct ast_node * next; 
+};
+
 enum relational_operator {
 	        LESSTHAN, LESS_OR_EQUAL, GREATERTHAN, GREATER_OR_EQUAL
 };
@@ -97,6 +103,7 @@ typedef struct ast_function_node ast_function_node_t;
 typedef struct ast_typecheck_node ast_typecheck_node_t;
 typedef struct ast_string_node ast_string_node_t;
 typedef struct ast_typelist_node ast_typelist_node_t; 
+typedef struct ast_root_node ast_root_node_t; 
 typedef enum equality_operator equality_operator_t;
 typedef enum relational_operator relational_operator_t;
 // symbol table

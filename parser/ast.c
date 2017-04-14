@@ -111,6 +111,20 @@ ast_node_t * new_ast_typelist_node(struct ast_typecheck_node* t) {
 	return (ast_node_t*) ast_node;
 }
 
+ast_node_t * new_ast_root_node(ast_node_t * base) {
+	ast_root_node_t * ast_node = malloc(sizeof(ast_root_node_t));
+
+	ast_node->node_type = 'R';
+	ast_node->next = NULL;
+	ast_node->payload = base; 
+
+	return (ast_node_t*) ast_node; 
+}
+
+void root_node_add(ast_root_node_t * root, ast_node_t * new) {
+	root->next = new_ast_root_node(new);
+}
+
 
 void typelist_add(struct ast_typelist_node * n, struct ast_typecheck_node * t) {
 	while(n != NULL) {
@@ -124,8 +138,8 @@ void typelist_add(struct ast_typelist_node * n, struct ast_typecheck_node * t) {
 			n = n->next;
 		}
 	}
-	
 }
+
 void free_ast_tree(ast_node_t * tree) {
 	if(!tree) 
 		return;
@@ -142,7 +156,6 @@ void free_ast_tree(ast_node_t * tree) {
 		break;
 		/* one subtree */ 
 		/* no subtrees */ 
-		case 'S':
 		case 'N': 
 		case 'C':
 		case 'T': //TODO: This DOES NOT fre=e the symbol in the symbol table
@@ -179,6 +192,18 @@ void free_ast_tree(ast_node_t * tree) {
 				(ast_typelist_node_t*) tree;
 			free_ast_tree((ast_node_t*)node->next);
 			free_ast_tree((ast_node_t*)node->type);
+			break;
+		}
+		case 'S':
+		{
+			ast_symbol_reference_node_t * node = 
+				(ast_symbol_reference_node_t*) tree;
+			if(node->symbol != NULL) {
+				if(node->symbol->val != NULL) {
+					free(node->symbol->val);
+				}
+				free(node->symbol);
+			}
 			break;
 		}
 		default:

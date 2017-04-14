@@ -125,4 +125,4 @@ void root_node_add(ast_root_node_t*, ast_node_t*);
 void typelist_add(ast_typelist_node_t*,ast_typecheck_node_t*);
 void free_ast_tree(ast_node_t*);
 void free_symbol_table(symbol_t **);
-ast_node_t * root; 
+ast_root_node_t * root; 

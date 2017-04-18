@@ -412,7 +412,7 @@ int symAssign(const ast_node_t * node, ast_symbol_reference_node_t * s) {
 				if(s->symbol->valsize  >= 0)
 					free(s->symbol->val);
 				s->symbol->val = malloc(sizeof(char) * strlen(num->str));
-				strcpy(s->symbol->val, num->str);
+				strcpy((char*)s->symbol->val, num->str);
 				s->symbol->valsize = strlen(num->str);
 				s->symbol->valid = 1;
 				s->symbol->type = STRING_T;

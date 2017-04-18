@@ -240,7 +240,9 @@ void free_ast_tree(ast_node_t * tree) {
 		printf("freeing tree 1\n");
 		if(root->payload != NULL) 
 			free_ast_tree_sys(root->payload);
+		ast_root_node_t * prev = root; 
 		root = (ast_root_node_t*) root->next;
+		free(prev);
 	}
 
 }

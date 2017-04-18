@@ -202,6 +202,7 @@ exp:  term {$$ = $1;}
    | exp operator exp {
 	ast_relational_node_t * n = 
 	(ast_relational_node_t*) new_ast_relational_node($2,$1,$3);
+	printf("created operator node with operator %c\n", $2);
 	$$ = (ast_node_t*) n;
 
 }

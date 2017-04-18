@@ -112,7 +112,7 @@ statement: expression SEMI {
 	$$ = (ast_node_t*) root;
 } 
 	| expression SEMI statement {
-	ast_node_t * n = $3;
+	ast_node_t * n =  $1;
 	root_node_add(root, n);
 	$$ = (ast_node_t*) root;
 }

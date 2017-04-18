@@ -113,8 +113,10 @@ ast_node_t * new_ast_typelist_node(struct ast_typecheck_node* t) {
 
 ast_node_t * new_ast_root_node(ast_node_t * base) {
 	ast_root_node_t * ast_node = malloc(sizeof(ast_root_node_t));
-
-	ast_node->node_type = 'R';
+	if(base->node_type == 'H') {
+		printf("warning: tried to add a root as a payload\n");
+	}
+	ast_node->node_type = 'H';
 	ast_node->next = NULL;
 	ast_node->payload = base; 
 
@@ -140,7 +142,7 @@ void typelist_add(struct ast_typelist_node * n, struct ast_typecheck_node * t) {
 	}
 }
 
-void free_ast_tree(ast_node_t * tree) {
+static void free_ast_tree_sys(ast_node_t * tree) {
 	if(!tree) 
 		return;
 
@@ -151,8 +153,8 @@ void free_ast_tree(ast_node_t * tree) {
 		case '*':
 		case '/':
 		case '%':
-			free_ast_tree(tree->right);
-			free_ast_tree(tree->left);
+			free_ast_tree_sys(tree->right);
+			free_ast_tree_sys(tree->left);
 		break;
 		/* one subtree */ 
 		/* no subtrees */ 
@@ -164,8 +166,8 @@ void free_ast_tree(ast_node_t * tree) {
 		 {
 			ast_relational_node_t * node = 
 				(ast_relational_node_t*) tree;
-			free_ast_tree(node->left);
-			free_ast_tree(node->right);
+			free_ast_tree_sys(node->left);
+			free_ast_tree_sys(node->right);
 			break;
 	 }
 		break;
@@ -173,8 +175,8 @@ void free_ast_tree(ast_node_t * tree) {
 		{
 			ast_equality_node_t * node =
 				(ast_equality_node_t*) tree;
-			free_ast_tree(node->left);
-			free_ast_tree(node->right);
+			free_ast_tree_sys(node->left);
+			free_ast_tree_sys(node->right);
 			break;
 		}
 		break;
@@ -183,15 +185,15 @@ void free_ast_tree(ast_node_t * tree) {
 			ast_assignment_node_t * node =
 				(ast_assignment_node_t*) tree;
 
-			free_ast_tree(node->value);
+			free_ast_tree_sys(node->value);
 			break;
 		}
 		case 'L':
 		{
 			ast_typelist_node_t * node = 
 				(ast_typelist_node_t*) tree;
-			free_ast_tree((ast_node_t*)node->next);
-			free_ast_tree((ast_node_t*)node->type);
+			free_ast_tree_sys((ast_node_t*)node->next);
+			free_ast_tree_sys((ast_node_t*)node->type);
 			break;
 		}
 		case 'S':
@@ -206,12 +208,37 @@ void free_ast_tree(ast_node_t * tree) {
 			}
 			break;
 		}
+		case 'H':
+		{
+			printf("we should not be freeing a root\n");
+			return;
+		}
 		default:
 			printf("dropping out in tree (free)\n");
 	}
-	printf("freeing node with type %c\n",tree->node_type);
-	free(tree);
+	if(tree != NULL) {
+		printf("freeing node with type %c\n",tree->node_type);
+		free(tree);
+	}
 }
+
+void free_ast_tree(ast_node_t * tree) {
+	if(tree->node_type != 'H') {
+		printf("free_ast_tree should only be called on a root\n");
+		return;
+	}
+
+	ast_root_node_t * root  = (ast_root_node_t*) tree;
+
+	while(root != NULL) {
+		printf("freeing tree 1\n");
+		if(root->payload != NULL) 
+			free_ast_tree_sys(root->payload);
+		root = (ast_root_node_t*) root->next;
+	}
+
+}
+
 
 
 void free_symbol_table(symbol_t ** table) {

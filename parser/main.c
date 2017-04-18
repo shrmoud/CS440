@@ -21,7 +21,7 @@ int main(int argc, char ** argv) {
 		printf("we sort of have an ast!\n");
 	}
 
-	free_ast_tree(root);
+	free_ast_tree((ast_node_t*)root);
 	free_symbol_table(symbols);
 	return EXIT_SUCCESS;
 }

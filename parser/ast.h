@@ -42,7 +42,7 @@ struct ast_equality_node {
 
 struct ast_assignment_node {
 	int node_type; 
-	struct symbol_node * symbol;
+	struct ast_symbol_reference_node * symbol;
 	struct ast_node * value; 
 };
 
@@ -106,7 +106,7 @@ ast_node_t * new_ast_node(int,ast_node_t*, ast_node_t*);
 ast_node_t * new_ast_relational_node(char, ast_node_t*,ast_node_t*);
 ast_node_t * new_ast_equality_node(char,ast_node_t*,ast_node_t*);
 ast_node_t * new_ast_symbol_reference_node(struct symbol_node*);
-ast_node_t * new_ast_assignment_node(struct symbol_node*, ast_node_t*);
+ast_node_t * new_ast_assignment_node(ast_symbol_reference_node_t*, ast_node_t*);
 ast_node_t * new_ast_number_node(double);
 ast_node_t * new_ast_function_node(symboltype_t);
 ast_node_t * new_ast_typecheck_node(symboltype_t, symbol_t*);

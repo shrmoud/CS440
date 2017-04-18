@@ -143,7 +143,7 @@ stringassign: varblob ASSGN QUOTE {
 		if(symAssign(node, s) != 0) {
 			printf("error assigning string\n");
 		}
-		$$ = new_ast_assignment_node(s->symbol, $3);
+		$$ = new_ast_assignment_node(s, $3);
 }
 |	    varblob ASSGN CHARQUOTE {
 		ast_node_t * node = $3;
@@ -151,7 +151,7 @@ stringassign: varblob ASSGN QUOTE {
 		if(symAssign(node, s) != 0) {
 			printf("error assigning char\n)");
 		}
-		$$ = new_ast_assignment_node(s->symbol, $3);	
+		$$ = new_ast_assignment_node(s, $3);	
 
 };
 
@@ -234,7 +234,7 @@ assignment: varblob ASSGN exp {ast_node_t * node = $3;
 			if(symAssign(node, s) != 0) {
 				printf("error in assigning symbol\n");
 			}
-			$$ = new_ast_assignment_node(s->symbol, $3);} |
+			$$ = new_ast_assignment_node(s, $3);} |
 	  varblob ASSGN boolexp { 
 			//printf("assign to bool %s value %d\n", $1, $3);
 			//LEFT OFF HERE

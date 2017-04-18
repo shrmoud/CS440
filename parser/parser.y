@@ -270,7 +270,7 @@ varblob: VAR {
 		printf("var with value %f\n", d);
 		}
 	else if((sym != NULL) && (sym->type == STRING_T)) {
-		printf("referenced string %s in a numeric expression\n", ((char*)sym->val));
+		printf("referenced string in a numeric expression\n");
 	}
 	else if(sym == NULL) {
 		printf("encountered a null symbol\n");

@@ -143,9 +143,8 @@ void typelist_add(struct ast_typelist_node * n, struct ast_typecheck_node * t) {
 }
 
 static void free_ast_tree_sys(ast_node_t * tree) {
-	if(!tree) 
+	if(tree == NULL)
 		return;
-
 	switch(tree->node_type) {
 		/* two subtrees */ 
 		case '+':
@@ -183,7 +182,7 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 		{
 			ast_assignment_node_t * node =
 				(ast_assignment_node_t*) tree;
-
+		
 			free_ast_tree_sys(node->value);
 			free_ast_tree_sys((ast_node_t*)node->symbol);
 			break;
@@ -223,10 +222,8 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 		default:
 			printf("dropping out in tree (free)\n");
 	}
-	if(tree != NULL) {
-		printf("freeing node with type %c\n",tree->node_type);
-		free(tree);
-	}
+	printf("freeing node with type %c\n",tree->node_type);
+	free(tree);
 }
 
 void free_ast_tree(ast_node_t * tree) {
@@ -254,7 +251,6 @@ void free_symbol_table(symbol_t ** table) {
 	int i;
 	for(i=0;i<SYMTABLE_LEN;i++) {
 		if(table[i] != NULL) {
-			printf("freeing symbol %s\n", table[i]->name);
 			if(table[i]->val != NULL) {
 				free(table[i]->val);
 			}

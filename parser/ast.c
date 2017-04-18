@@ -185,6 +185,7 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 				(ast_assignment_node_t*) tree;
 
 			free_ast_tree_sys(node->value);
+			free_ast_tree_sys((ast_node_t*)node->symbol);
 			break;
 		}
 		case 'L':

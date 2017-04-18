@@ -25,24 +25,17 @@ struct ast_root_node {
 	struct ast_node * next; 
 };
 
-enum relational_operator {
-	        LESSTHAN, LESS_OR_EQUAL, GREATERTHAN, GREATER_OR_EQUAL
-};
-
-enum equality_operator {
-	        EQUAL, NOT_EQUAL
-};
 
 struct ast_relational_node {
 	        int node_type;
-		enum relational_operator operator;
+		char operator;
 		struct ast_node * left;
 		struct ast_node * right;
 };
 
 struct ast_equality_node {
 	        int node_type;
-		enum equality_operator operator;
+		char operator;
 		struct ast_node * left;
 		struct ast_node * right; 
 };
@@ -110,7 +103,7 @@ typedef enum relational_operator relational_operator_t;
 symbol_t * symbols[SYMTABLE_LEN];
 
 ast_node_t * new_ast_node(int,ast_node_t*, ast_node_t*);
-ast_node_t * new_ast_relational_node(relational_operator_t, ast_node_t*,ast_node_t*);
+ast_node_t * new_ast_relational_node(char, ast_node_t*,ast_node_t*);
 ast_node_t * new_ast_equality_node(equality_operator_t,ast_node_t*,ast_node_t*);
 ast_node_t * new_ast_symbol_reference_node(struct symbol_node*);
 ast_node_t * new_ast_assignment_node(struct symbol_node*, ast_node_t*);

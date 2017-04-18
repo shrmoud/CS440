@@ -21,6 +21,7 @@ int symAssign(const ast_node_t*, ast_symbol_reference_node_t*);
 %union {
 	struct ast_node * node;
 	symboltype_t ty;
+	char op;
 };
 
 %start statement
@@ -95,8 +96,10 @@ int symAssign(const ast_node_t*, ast_symbol_reference_node_t*);
 %type <node> expression
 %type <node> calltype
 %type <node> statement
+%type <op> operator
+%type <op> arithmatic
+%type <op> logic
 %%
-
 expression: 
 	 boolexp
 	| exp {$$ = $1;}
@@ -196,28 +199,33 @@ calltype: CALL VAR
 
 /* math and arithmatic */ 
 exp:  term {$$ = $1;}
-   | exp operator exp
+   | exp operator exp {
+	ast_relational_node_t * n = 
+	(ast_relational_node_t*) new_ast_relational_node($2,$1,$3);
+	$$ = (ast_node_t*) n;
+
+}
    |  LPAR exp RPAR {$$ = $2;} ;
 
-arithmatic: ADD
-	| SUBT
-	| MULT	
-	| MOD
+arithmatic: ADD {$$ = '+';}
+	| SUBT  {$$ = '-';}
+	| MULT	{$$ = '*';}
+	| MOD   {$$ = '%';}
 	;
 
-operator: arithmatic 
-	| assignment 
-        | logic;
+operator: arithmatic {$$ = $1;}
+	| assignment {$$ = 'S';}
+        | logic {$$ = $1;};
 
-logic: NOT 
-     | AND
-     | NOTEQ
-     | EQ
-     | LESS
-     | GRAT
-     | GREQ
-     | OR
-     | LEEQ
+logic: NOT {$$ = '!';}
+     | AND {$$ = 'A';} 
+     | NOTEQ {$$ = 'K';} 
+     | EQ    {$$ = '=';}
+     | LESS {$$ = '<';}
+     | GRAT {$$ = '>';} 
+     | GREQ {$$ = 'Y';} 
+     | OR   {$$ = 'O';}
+     | LEEQ {$$ = 'P';}
 ;
 
 assignment: varblob ASSGN exp {ast_node_t * node = $3;
@@ -285,6 +293,7 @@ varblob: VAR {
 	}
 	else if((sym != NULL) && (sym->type == STRING_T)) {
 		printf("referenced string %s in a numeric expression\n", ((char*)sym->val));
+		
 	}
 	else if(sym == NULL) {
 		printf("encountered a null symbol\n");

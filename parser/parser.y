@@ -391,7 +391,7 @@ int symAssign(const ast_node_t * node, ast_symbol_reference_node_t * s) {
 				{
 				struct ast_number_node * num = (ast_number_node_t*) node;
 				if(s->symbol->valsize  >= 0)
-					free(s->symbol->val);
+					hs_safe_free(s->symbol->val);
 				s->symbol->val = malloc(sizeof(double));
 				*((double*)s->symbol->val) = num->value;
 				s->symbol->valid = 1;
@@ -410,7 +410,7 @@ int symAssign(const ast_node_t * node, ast_symbol_reference_node_t * s) {
 				{
 				struct ast_string_node * num = (ast_string_node_t*) node;
 				if(s->symbol->valsize  >= 0)
-					free(s->symbol->val);
+					hs_safe_free(s->symbol->val);
 				s->symbol->val = malloc(sizeof(char) * strlen(num->str));
 				strcpy((char*)s->symbol->val, num->str);
 				s->symbol->valsize = strlen(num->str);

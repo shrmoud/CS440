@@ -3,6 +3,19 @@
 #include <string.h>
 #include "ast.h"
 
+
+int hs_safe_free(void * data) {
+	if(data != NULL) {
+		free(data);
+		data = NULL;
+		return 0; 
+	}
+	else {
+		return -1;
+	}
+}
+
+
 ast_node_t * new_ast_node(int node_type, ast_node_t * left, 
 		ast_node_t * right) {
 	ast_node_t * ast_node = malloc(sizeof(ast_node_t));
@@ -201,9 +214,9 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 				(ast_symbol_reference_node_t*) tree;
 			if(node->symbol != NULL) {
 				if(node->symbol->val != NULL) {
-					free(node->symbol->val);
+					hs_safe_free(node->symbol->val);
 				}
-				free(node->symbol);
+				hs_safe_free(node->symbol);
 			}
 			break;
 		}
@@ -216,14 +229,14 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 		{
 			ast_string_node_t * n = 
 				(ast_string_node_t*) tree;
-			free(n->str);
+			hs_safe_free(n->str);
 			break;
 		}
 		default:
 			printf("dropping out in tree (free)\n");
 	}
 	printf("freeing node with type %c\n",tree->node_type);
-	free(tree);
+	hs_safe_free(tree);
 }
 
 void free_ast_tree(ast_node_t * tree) {
@@ -240,7 +253,7 @@ void free_ast_tree(ast_node_t * tree) {
 			free_ast_tree_sys(root->payload);
 		ast_root_node_t * prev = root; 
 		root = (ast_root_node_t*) root->next;
-		free(prev);
+		hs_safe_free(prev);
 	}
 
 }
@@ -252,9 +265,9 @@ void free_symbol_table(symbol_t ** table) {
 	for(i=0;i<SYMTABLE_LEN;i++) {
 		if(table[i] != NULL) {
 			if(table[i]->val != NULL) {
-				free(table[i]->val);
+				hs_safe_free(table[i]->val);
 			}
-			free(table[i]);
+			hs_safe_free(table[i]);
 		}
 	}
 }

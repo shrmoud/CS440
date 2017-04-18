@@ -27,7 +27,7 @@ ast_node_t * new_ast_relational_node(char op,
 }
 
 
-ast_node_t * new_ast_equality_node(equality_operator_t op, 
+ast_node_t * new_ast_equality_node(char op, 
 		ast_node_t * left, ast_node_t * right) {
 	ast_equality_node_t * ast_node = malloc(sizeof(ast_equality_node_t));
 
@@ -159,7 +159,6 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 		/* one subtree */ 
 		/* no subtrees */ 
 		case 'N': 
-		case 'C':
 		case 'T': //TODO: This DOES NOT fre=e the symbol in the symbol table
 		break;
 		case 'R':
@@ -212,6 +211,13 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 		{
 			printf("we should not be freeing a root\n");
 			return;
+		}
+		case 'C': 
+		{
+			ast_string_node_t * n = 
+				(ast_string_node_t*) tree;
+			free(n->str);
+			break;
 		}
 		default:
 			printf("dropping out in tree (free)\n");

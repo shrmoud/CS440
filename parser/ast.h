@@ -104,7 +104,7 @@ symbol_t * symbols[SYMTABLE_LEN];
 
 ast_node_t * new_ast_node(int,ast_node_t*, ast_node_t*);
 ast_node_t * new_ast_relational_node(char, ast_node_t*,ast_node_t*);
-ast_node_t * new_ast_equality_node(equality_operator_t,ast_node_t*,ast_node_t*);
+ast_node_t * new_ast_equality_node(char,ast_node_t*,ast_node_t*);
 ast_node_t * new_ast_symbol_reference_node(struct symbol_node*);
 ast_node_t * new_ast_assignment_node(struct symbol_node*, ast_node_t*);
 ast_node_t * new_ast_number_node(double);

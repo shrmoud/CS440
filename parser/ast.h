@@ -1,4 +1,4 @@
-#define VARLEN 30
+#define VARLEN 100
 #define SYMTABLE_LEN 100
 //a type that a value can have for a symbol 
 typedef enum symboltype {
@@ -7,7 +7,7 @@ typedef enum symboltype {
 
 struct symbol_node {
 	char valid;
-	char name[VARLEN];
+	char * name;
 	symboltype_t type;
 	size_t valsize;
 	void * val;

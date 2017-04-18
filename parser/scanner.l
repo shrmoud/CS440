@@ -78,6 +78,7 @@ end      {return END;}
 [a-zA-Z][a-zA-Z0-9]* {
 symbol_t * sym = malloc(sizeof(symbol_t));
 strcpy(sym->name, yytext); 
+printf("made a SYMBOL\n");
 sym->valsize = -1;
 sym->val = NULL;
 ast_symbol_reference_node_t * n = (ast_symbol_reference_node_t*) new_ast_symbol_reference_node(sym);

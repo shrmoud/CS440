@@ -268,8 +268,7 @@ varblob: VAR {
            if((sym != NULL) && (sym->type == DOUBLE_T)) {	
 	   double d = *((double*)sym->val);
 		printf("var with value %f\n", d);
-		ast_node_t * n = new_ast_symbol_reference_node(sym);
-		$$ = n;
+		$$ = $1;
 		}
 	else if((sym != NULL) && (sym->type == STRING_T)) {
 		printf("referenced string %s in a numeric expression\n", ((char*)sym->val));
@@ -289,8 +288,7 @@ varblob: VAR {
         if((sym != NULL) && (sym->type == DOUBLE_T)) {	
 		double d = *((double*)sym->val);
 		printf("var with value %f\n", d);
-		ast_node_t * n = new_ast_symbol_reference_node(sym);
-		$$ = n;
+		$$ = $1;
 	}
 	else if((sym != NULL) && (sym->type == STRING_T)) {
 		printf("referenced string %s in a numeric expression\n", ((char*)sym->val));

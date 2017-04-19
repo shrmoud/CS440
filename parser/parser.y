@@ -142,12 +142,10 @@ stringassign: varblob ASSGN QUOTE {
 	  	ast_symbol_reference_node_t * s = (ast_symbol_reference_node_t*) $1;
 		int ret = symAssign(node, s); 
 		if(ret == -2) {
-			printf("ERR: typecheck error\n");
-			return -1;
+			yyerror("ERR: typecheck error\n");
 		}
 		else if(ret != 0) {
-			printf("error assigning string\n");
-			return -1; 
+			yyerror("error assigning string\n");
 		}
 		$$ = new_ast_assignment_node(s, $3);
 }
@@ -157,12 +155,10 @@ stringassign: varblob ASSGN QUOTE {
 
 		int ret = symAssign(node, s);
 		if(ret == -2) {
-			printf("ERR: typecheck error\n");
-			return -1; 
+			yyerror("ERR: typecheck error\n");
 		}
 		else if(ret != 0) {
-			printf("error assigning char\n)");
-			return -1;
+			yyerror("error assigning char\n)");
 		}
 		$$ = new_ast_assignment_node(s, $3);	
 
@@ -247,12 +243,10 @@ assignment: varblob ASSGN exp {ast_node_t * node = $3;
 
 			int ret = symAssign(node, s);
 			if(ret == -2) {
-				printf("typecheck error\n");
-				return -1;
+				yyerror("typecheck error\n");
 			}
 			else if(ret != 0) {
-				printf("error in assigning symbol\n");
-				return -1; 
+				yyerror("error in assigning symbol\n");
 			}
 			$$ = new_ast_assignment_node(s, $3);} |
 	  varblob ASSGN boolexp { 
@@ -290,7 +284,7 @@ varblob: VAR {
 		printf("var with value %f\n", d);
 		}
 	else if((sym != NULL) && (sym->type == STRING_T)) {
-		printf("referenced string in a numeric expression\n");
+		yyerror("ERR: typecheck error: string != number\n");
 	}
 	else if(sym == NULL) {
 		printf("encountered a null symbol\n");
@@ -303,8 +297,7 @@ varblob: VAR {
 	ast_typecheck_node_t * tc = (ast_typecheck_node_t*) $1;
 	symbol_t * sym = symbolVal(tc->symbol->name);
 	if((sym != NULL) && (sym->type != tc->typecheck)) {
-		printf("failed typecheck on declare\n");
-		return -1;
+		yyerror("failed typecheck on declare\n");
 	}
         if((sym != NULL) && (sym->type == DOUBLE_T)) {	
 		double d = *((double*)sym->val);
@@ -378,9 +371,9 @@ int updateSymbolVal(symbol_t * val) {
 			return x;
 		}
 	}
-	printf("error with updateSymbolVal\n");
-	return -1; 
+	yyerror("error with updateSymbolVal\n");
 
+	return 0;
 }
 
 symbol_t * symbolVal(char * name) {
@@ -450,8 +443,7 @@ int symAssign(const ast_node_t * node, ast_symbol_reference_node_t * s) {
 				}
 
 				default:
-				printf("impossible ast situation in assign\n");
-				return -1;
+				yyerror("impossible ast situation in assign\n");
 			}
 		updateSymbolVal(s->symbol);
 

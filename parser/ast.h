@@ -118,6 +118,7 @@ ast_node_t * new_ast_root_node(ast_node_t*);
 void root_node_add(ast_root_node_t*,ast_node_t*);
 void typelist_add(ast_typelist_node_t*,ast_typecheck_node_t*);
 void free_ast_tree(ast_node_t*);
+void print_ast_tree(ast_node_t*);
 void free_symbol_table(symbol_t **);
 int hs_safe_free(void*);
 ast_root_node_t * root; 

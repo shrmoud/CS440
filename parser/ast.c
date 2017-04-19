@@ -233,7 +233,6 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 		default:
 			printf("dropping out in tree (free)\n");
 	}
-	printf("freeing node with type %c\n",tree->node_type);
 	hs_safe_free(tree);
 }
 
@@ -272,3 +271,71 @@ void free_symbol_table(symbol_t ** table) {
 		}
 	}
 }
+
+
+static void print_ast_tree_sys(ast_node_t * tree) {
+	if(tree == NULL)
+		return;
+	switch(tree->node_type) {
+		/* two subtrees */ 
+		case 'R':
+		 {
+			ast_relational_node_t * node = 
+				(ast_relational_node_t*) tree;
+			print_ast_tree_sys(node->left);
+			print_ast_tree_sys(node->right);
+			break;
+	 	}
+		break;
+		case 'E':
+		{
+			ast_equality_node_t * node =
+				(ast_equality_node_t*) tree;
+			print_ast_tree_sys(node->left);
+			print_ast_tree_sys(node->right);
+			break;
+		}
+		break;
+		case 'A':
+		{
+			ast_assignment_node_t * node =
+				(ast_assignment_node_t*) tree;
+		
+			print_ast_tree_sys(node->value);
+			print_ast_tree_sys((ast_node_t*)node->symbol);
+			break;
+		}
+		case 'L':
+		{
+			ast_typelist_node_t * node = 
+				(ast_typelist_node_t*) tree;
+			print_ast_tree_sys((ast_node_t*)node->next);
+			print_ast_tree_sys((ast_node_t*)node->type);
+			break;
+		}
+	}
+	printf("node with type %c\n",tree->node_type);
+}
+
+
+void print_ast_tree(ast_node_t * tree) {
+	if(tree == NULL) {
+		return;
+	}
+	if(tree->node_type != 'H') {
+		printf("print_ast_tree should only be called on a root\n");
+		return;
+	}
+
+	ast_root_node_t * root  = (ast_root_node_t*) tree;
+
+	while(root != NULL) {
+		printf("printing tree 1\n");
+		if(root->payload != NULL) 
+			print_ast_tree_sys(root->payload);
+		root = (ast_root_node_t*) root->next;
+	}
+
+}
+
+

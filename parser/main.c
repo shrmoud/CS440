@@ -19,6 +19,7 @@ int main(int argc, char ** argv) {
 
 	if(root != NULL) {
 		printf("we sort of have an ast!\n");
+		print_ast_tree((ast_node_t*)root);
 	}
 
 	free_ast_tree((ast_node_t*)root);

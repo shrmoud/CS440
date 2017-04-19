@@ -76,11 +76,12 @@ ast_node_t * new_ast_assignment_node(ast_symbol_reference_node_t* symbol, ast_no
 }
 
 
-ast_node_t * new_ast_number_node(double value) {
+ast_node_t * new_ast_number_node(double value, symboltype_t type) {
 	ast_number_node_t * ast_node = malloc(sizeof(ast_number_node_t));
 	
 	ast_node->node_type = 'N';
 	ast_node->value = value;
+	ast_node->type = type; 
 	return (ast_node_t*) ast_node;
 
 }

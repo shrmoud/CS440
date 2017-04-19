@@ -68,10 +68,10 @@ end      {return END;}
 		yylval.node = (ast_node_t*) ast; 
 		return CHARQUOTE;}
 
-[0-9]+ {ast_number_node_t * n = (ast_number_node_t*) new_ast_number_node(atoi(yytext));
+[0-9]+ {ast_number_node_t * n = (ast_number_node_t*) new_ast_number_node(atoi(yytext), INT_T);
 		yylval.node = (ast_node_t*)  n; 
 		 return  DECIMAL;}
-[0-9]+\.[0-9]+ { ast_number_node_t * n = (ast_number_node_t*) new_ast_number_node(atoi(yytext));
+[0-9]+\.[0-9]+ { ast_number_node_t * n = (ast_number_node_t*) new_ast_number_node(atoi(yytext), DOUBLE_T);
 		yylval.node = (ast_node_t*) n;
 		 return NUMBER;}
 

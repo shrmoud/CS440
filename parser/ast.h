@@ -42,6 +42,7 @@ struct ast_equality_node {
 
 struct ast_assignment_node {
 	int node_type; 
+	symboltype_t type;
 	struct ast_symbol_reference_node * symbol;
 	struct ast_node * value; 
 };

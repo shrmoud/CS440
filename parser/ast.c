@@ -66,9 +66,9 @@ ast_node_t * new_ast_symbol_reference_node(struct symbol_node * symbol) {
 
 ast_node_t * new_ast_assignment_node(ast_symbol_reference_node_t* symbol, ast_node_t * value) {
 	ast_assignment_node_t * ast_node = malloc(sizeof(ast_assignment_node_t));
-
+	
 	ast_node->node_type = 'A';
-
+	ast_node->type = symbol->symbol->type;
 	ast_node->symbol = symbol; 
 	ast_node->value = value; 
 

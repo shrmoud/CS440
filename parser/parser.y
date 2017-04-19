@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "ast.h" 
+#include "ast.h"
 int yyerror(char * s);
 int yylex(void);
 
@@ -143,9 +143,11 @@ stringassign: varblob ASSGN QUOTE {
 		int ret = symAssign(node, s); 
 		if(ret == -2) {
 			yyerror("ERR: typecheck error\n");
+			YYERROR;
 		}
 		else if(ret != 0) {
 			yyerror("error assigning string\n");
+			YYERROR;
 		}
 		$$ = new_ast_assignment_node(s, $3);
 }
@@ -156,9 +158,11 @@ stringassign: varblob ASSGN QUOTE {
 		int ret = symAssign(node, s);
 		if(ret == -2) {
 			yyerror("ERR: typecheck error\n");
+			YYERROR;
 		}
 		else if(ret != 0) {
 			yyerror("error assigning char\n)");
+			YYERROR;	
 		}
 		$$ = new_ast_assignment_node(s, $3);	
 
@@ -244,9 +248,11 @@ assignment: varblob ASSGN exp {ast_node_t * node = $3;
 			int ret = symAssign(node, s);
 			if(ret == -2) {
 				yyerror("typecheck error\n");
+				YYERROR;
 			}
 			else if(ret != 0) {
 				yyerror("error in assigning symbol\n");
+				YYERROR;	
 			}
 			$$ = new_ast_assignment_node(s, $3);} |
 	  varblob ASSGN boolexp { 
@@ -285,6 +291,7 @@ varblob: VAR {
 		}
 	else if((sym != NULL) && (sym->type == STRING_T)) {
 		yyerror("ERR: typecheck error: string != number\n");
+		YYERROR;
 	}
 	else if(sym == NULL) {
 		printf("encountered a null symbol\n");
@@ -298,6 +305,7 @@ varblob: VAR {
 	symbol_t * sym = symbolVal(tc->symbol->name);
 	if((sym != NULL) && (sym->type != tc->typecheck)) {
 		yyerror("failed typecheck on declare\n");
+		YYERROR;
 	}
         if((sym != NULL) && (sym->type == DOUBLE_T)) {	
 		double d = *((double*)sym->val);
@@ -322,7 +330,7 @@ value: digit {$$ = $1;}
 
 int yyerror(char * s) {
 	printf("%s\n",s);
-	return 0;
+	return 1;
 }
 
 //static void printSymbol(symbol_t s) {
@@ -372,7 +380,6 @@ int updateSymbolVal(symbol_t * val) {
 		}
 	}
 	yyerror("error with updateSymbolVal\n");
-
 	return 0;
 }
 

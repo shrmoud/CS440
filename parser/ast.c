@@ -238,6 +238,9 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 }
 
 void free_ast_tree(ast_node_t * tree) {
+	if(tree == NULL) {
+		return;
+	}
 	if(tree->node_type != 'H') {
 		printf("free_ast_tree should only be called on a root\n");
 		return;

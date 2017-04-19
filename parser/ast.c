@@ -211,11 +211,11 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 		}
 		case 'S':
 		{
-			ast_symbol_reference_node_t * node = 
-				(ast_symbol_reference_node_t*) tree;
-				hs_safe_free(node->symbol->val);
-				hs_safe_free(node->symbol->name);
-				hs_safe_free(node->symbol);
+			//ast_symbol_reference_node_t * node = 
+			//	(ast_symbol_reference_node_t*) tree;
+			//	hs_safe_free(node->symbol->val);
+			//	hs_safe_free(node->symbol->name);
+			//	hs_safe_free(node->symbol);
 			break;
 		}
 		case 'H':

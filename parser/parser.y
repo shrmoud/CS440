@@ -140,16 +140,29 @@ boolterm:
 stringassign: varblob ASSGN QUOTE {
 	    	ast_node_t * node = $3;
 	  	ast_symbol_reference_node_t * s = (ast_symbol_reference_node_t*) $1;
-		if(symAssign(node, s) != 0) {
+		int ret = symAssign(node, s); 
+		if(ret == -2) {
+			printf("ERR: typecheck error\n");
+			return -1;
+		}
+		else if(ret != 0) {
 			printf("error assigning string\n");
+			return -1; 
 		}
 		$$ = new_ast_assignment_node(s, $3);
 }
 |	    varblob ASSGN CHARQUOTE {
 		ast_node_t * node = $3;
 		ast_symbol_reference_node_t * s = (ast_symbol_reference_node_t*) $1;
-		if(symAssign(node, s) != 0) {
+
+		int ret = symAssign(node, s);
+		if(ret == -2) {
+			printf("ERR: typecheck error\n");
+			return -1; 
+		}
+		else if(ret != 0) {
 			printf("error assigning char\n)");
+			return -1;
 		}
 		$$ = new_ast_assignment_node(s, $3);	
 
@@ -231,8 +244,15 @@ logic: NOT {$$ = '!';}
 
 assignment: varblob ASSGN exp {ast_node_t * node = $3;
 	  		ast_symbol_reference_node_t * s = (ast_symbol_reference_node_t*) $1;
-			if(symAssign(node, s) != 0) {
+
+			int ret = symAssign(node, s);
+			if(ret == -2) {
+				printf("typecheck error\n");
+				return -1;
+			}
+			else if(ret != 0) {
 				printf("error in assigning symbol\n");
+				return -1; 
 			}
 			$$ = new_ast_assignment_node(s, $3);} |
 	  varblob ASSGN boolexp { 
@@ -378,20 +398,29 @@ symbol_t * symbolVal(char * name) {
 
 
 int symAssign(const ast_node_t * node, ast_symbol_reference_node_t * s) {
-			if(node == NULL) {
-				printf("bad symbol node in assignment\n");
+			if(s == NULL) {
 				return -1;
 			}
+
+			if(s->symbol == NULL) {
+				return -1;
+			}
+
 			if(node == NULL) {
-				printf("bad exp node in assignment\n");
 				return -1; 
 			}
 			switch(node->node_type) {
 				case 'N':
 				{
 				struct ast_number_node * num = (ast_number_node_t*) node;
+				
+				if(s->symbol->type != num->type) {
+					return -2;
+				}
+
 				if(s->symbol->valsize  >= 0)
 					hs_safe_free(s->symbol->val);
+
 				s->symbol->val = malloc(sizeof(double));
 				*((double*)s->symbol->val) = num->value;
 				s->symbol->valid = 1;

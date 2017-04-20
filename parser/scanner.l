@@ -81,6 +81,7 @@ printf("YYTEXT: %lu \n ", strlen(yytext));
 sym->name = malloc(sizeof(char*)*strlen(yytext)+1);
 strcpy(sym->name, yytext); 
 printf("made a SYMBOL\n");
+sym->enforce_type = 0; 
 sym->valsize = -1;
 sym->val = NULL;
 ast_symbol_reference_node_t * n = (ast_symbol_reference_node_t*) new_ast_symbol_reference_node(sym);

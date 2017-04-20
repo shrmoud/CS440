@@ -289,10 +289,10 @@ varblob: VAR {
 	   double d = *((double*)sym->val);
 		printf("var with value %f\n", d);
 		}
-	else if((sym != NULL) && (sym->type == STRING_T)) {
-		yyerror("ERR: typecheck error: string != number\n");
-		YYERROR;
-	}
+	//else if((sym != NULL) && (sym->type == STRING_T)) {
+	//	yyerror("ERR: typecheck error: string != number\n");
+	//	YYERROR;
+	//}
 	else if(sym == NULL) {
 		printf("encountered a null symbol\n");
 	}
@@ -304,21 +304,15 @@ varblob: VAR {
 	ast_typecheck_node_t * tc = (ast_typecheck_node_t*) $1;
 	symbol_t * sym = symbolVal(tc->symbol->name);
 	if((sym != NULL) && (sym->type != tc->typecheck)) {
-		yyerror("failed typecheck on declare\n");
+		yyerror("ERR: failed typecheck on declare\n");
 		YYERROR;
-	}
-        if((sym != NULL) && (sym->type == DOUBLE_T)) {	
-		double d = *((double*)sym->val);
-		printf("var with value %f\n", d);
-		$$ = $1;
-	}
-	else if((sym != NULL) && (sym->type == STRING_T)) {
-		printf("referenced string %s in a numeric expression\n", ((char*)sym->val));
-		
 	}
 	else if(sym == NULL) {
 		printf("encountered a null symbol\n");
 	}
+	
+	tc->symbol->enforce_type = 1; 
+	$$ = (ast_node_t*) tc; 
 
 }
 ;

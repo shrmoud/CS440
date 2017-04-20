@@ -9,6 +9,7 @@ struct symbol_node {
 	char valid;
 	char * name;
 	symboltype_t type;
+	char enforce_type; 
 	size_t valsize;
 	void * val;
 };

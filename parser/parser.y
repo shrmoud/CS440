@@ -327,6 +327,7 @@ value: digit {$$ = $1;}
 int yyerror(char * s) {
 	printf("%s\n",s);
 	free_ast_tree((ast_node_t*)root);
+	free_symbol_table(symbols);
 	return 1;
 }
 

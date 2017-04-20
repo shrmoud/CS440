@@ -181,7 +181,9 @@ type_t:  INT {$$ = INT_T;}
 
 
 typecheck: type_t TCOL VAR {
-	ast_typecheck_node_t * t = (ast_typecheck_node_t*) new_ast_typecheck_node($1,((ast_symbol_reference_node_t*)$3)->symbol);
+	symbol_t * sr = ((ast_symbol_reference_node_t*)$3)->symbol;
+	sr->type = $1;
+	ast_typecheck_node_t * t = (ast_typecheck_node_t*) new_ast_typecheck_node($1,sr);
 	$$ = (ast_node_t*) t;
 }	
  ;
@@ -288,7 +290,7 @@ varblob: VAR {
            if((sym != NULL) && (sym->type == DOUBLE_T)) {	
 	   double d = *((double*)sym->val);
 		printf("var with value %f\n", d);
-		}
+	}
 	//else if((sym != NULL) && (sym->type == STRING_T)) {
 	//	yyerror("ERR: typecheck error: string != number\n");
 	//	YYERROR;
@@ -434,6 +436,9 @@ int symAssign(const ast_node_t * node, ast_symbol_reference_node_t * s) {
 				struct ast_string_node * num = (ast_string_node_t*) node;
 				if(s->symbol->valsize  >= 0)
 					hs_safe_free(s->symbol->val);
+				if((s->symbol->enforce_type == 1) && (s->symbol->type != STRING_T)) {
+					return -2;
+				}
 				s->symbol->val = malloc(sizeof(char) * strlen(num->str));
 				strcpy((char*)s->symbol->val, num->str);
 				s->symbol->valsize = strlen(num->str);

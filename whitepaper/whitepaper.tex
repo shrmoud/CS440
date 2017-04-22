@@ -38,7 +38,6 @@ HIPSTER-C uses a simple syntax that tries to minimize cluttered nested block sta
 HIPSTER-C supports operators:\par
 Arithmetic: \texttt{+, -, *, /, \%}\par 
 Assignment: \texttt{=}\par
-Boolean Logic: \texttt{!, \&\&, ||}\par
 Equality Testing: \texttt{==, !=}\par
 Order Relations: \texttt{<, <=, >, >=}\par
 Sequencing: whitespace
@@ -84,53 +83,11 @@ end;
 \subsection{Types}
 Numeric types include all basic primitives from C. Type checking is enforced however, and some type conflicts will result in a compiler warning or error
 \begin{verbatim}
-int inttype = 4; //int
-double doubletype = call double inttype; // 4.0 
-int new; //defaults to 0 
+int:inttype = 4; //int
+double:doubletype = call double inttype; // 4.0 
+int:new; //defaults to 0 
 new = doubletype; //won't compile. Loss of precision
 new = call int doubletype; //floor(doubletype) 
-\end{verbatim}
-
-
-\subsection{Arrays}
-Arrays are much more high level than C arrays. They support range checking, dynamic resizing, and have some build it functions for checking length. Arrays are actually a function that takes an element or range of elements as a parameter, and returns an element or range of elements.  
-\begin{verbatim}
-int array inta = 1000; //1000 element array
-int array goob = [1 2 3 4 5 6 7 8]; //literal array with stuff in it
-call inta 1 = 3; //assign slot to 3
-call inta 1002 = 2; //realloc to bigger array, assign 2 to last spot
-call inta 2000; //realloc again
-call inta 2 55; //another array with elements 2-55 in it
-\end{verbatim}
-
-
-\subsection{Blobs}
-A blob is just a wrapper for a C struct. Blobs have block bodies. Blobs can be called like functions. Blobs can be accessed like functions with a series of overloaded parameters. A blob may have a hashmap backend later instead of a plain struct to avoid expensive memory operations when adding new values. 
-
-
-\begin{verbatim}
-
-blob b;
-int boing;
-double hooo;
-boolean akatsuki;
-end; 
-
-int bo = call b "boing"; //access boing value
-call b "boing" 2; //set boing to 2
-call b "russiannuclearcodes" 32;  //creates new value and reallocs struct. Guesses type from value (Bad idea. Expensive)  
-call b "russiannuclearcodes" int 32; //creates new value using int. Fails if value fails typecheck. 
-call b "russiannuclearcodes" int; //creates int value but does not assign. 
-\end{verbatim} 
-
-\subsection{Boolean Logic}
-Booleans use predefined keywords for \textit{true} and \textit{false}. HIPSTER-C supports C boolean operators. 
-\begin{verbatim}
-boolean ftype = false; 
-boolean ttype = true; 
-
-ttype && ftype //evaluates to false
-ttype || ftype //evaluates to true
 \end{verbatim}
 
 
@@ -165,72 +122,5 @@ call test2 3; //calling a function with call keyword
 \end{verbatim}
 
 
-
-\section{Handling Low Level Constructs}
-HIPSTER-C is a primarily high level language used for scripting or application purposes. In the event that low level memory access is needed, however, there are a series of constructs that allow access to data structures, pointers, and even escaped out C code blocks. 
-
-\subsection{Pointers}
-HIPSTER-C relies primarily on garbage collection for memory management. In the event that the user needs more manual control, HIPSTER-C allows for an interface to regular C pointers. This can be used to interface with device drivers, or just to allow for speed and memory efficiency. \par
-Pointers can point to any primitive type, arrays, or blobs. When pointing to an array, the array is treated like a normal C array with no safeguards. When pointed to a struct, a pointer points to the beginning of the struct represented by the blob. 
-
-
-\begin{verbatim}
-blob b;
- int boing;
- double hooo;
- boolean akatsuki;
-end; 
-
-int array a = [1 2 3 4 5 6 7 8];
-
-pointer int p; //declare a pointer.
-
-p = a; //same as p = call a 0;
-
-int new = call p; //dereference
-
-pointer int newp  = p+1 ; //pointer arithmatic
-
-pointer double = call double p; //scaaaaarry scaaaary pointer casting. Never do this.
-\end{verbatim}
-
-\subsection{C Escape Blocks}
-These are a direct analogy to asm blocks in plain C. They allow direct execution of a C function that passes parameters and returns a value. This function is NOT managed by the garbage collector and the user is responsible for freeing all data returned from it. Any includes or preprocessor directives at the top of the function in the header block will only apply to that particular function.\par
-Cblocks are treated as functions in HIPSTER-C and can support the same argument types and return values. Cblocks do NOT support typechecking in arguments though. Return value is typechecked and defaults to a default value on error. 
-
-
-
-\begin{verbatim}
-cblock void forkbomb;
-   header; 
-     #include <unistd.h>
-   end;
-   while(1) {
-     fork(); //muahahhaha
-   }
-end; 
-
-
-cblock int retzero;
-   header;
-   end;
-   return 0;
-end;
-
-int out = call retzero; // it's zero 
-\end{verbatim}
-
-\subsection{Tainted Functions}
-A function must be marked as tanted if any native C constructs (pointers, C blocks, etc) are used in it. Any data in the heap generated by the constructs will be autmatically freed upon exiting a tainted function, with the data copied into variable where possible. Any local variables that cannot be assigned to will be assigned to a default value. Cblocks are marked as tainted automatically. \par
-Tainted functions keep any weirdness associated with low level memory management contained in a recognizable area. 
-
-\begin{verbatim}
-
-tainted function void test void; 
-   return void;
-end;
-
-
-\end{verbatim}
 
 \end{document} 

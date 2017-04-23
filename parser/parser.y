@@ -96,6 +96,13 @@ int symAssign(const ast_node_t*, ast_symbol_reference_node_t*);
 %type <node> expression
 %type <node> calltype
 %type <node> statement
+%type <node> ifstatement
+%type <node> elifchain
+%type <node> elif
+%type <node> singleelse
+%type <node> singleif
+%type <node> boolterm
+%type <node> boolexp
 %type <op> operator
 %type <op> arithmatic
 %type <op> logic
@@ -104,6 +111,7 @@ expression:
 	 boolexp
 	| exp {$$ = $1;}
 	| func {$$ = $1;}
+	| ifstatement
 	| calltype {$$ = $1;}
 	| stringassign {$$ = $1;}
 	| DECIMAL {$$ = $1;}
@@ -206,8 +214,23 @@ func: FUNCTIONDEF type_t VAR typelist SEMI statement RETURN value  SEMI END {
 	f->retval = VOID_T;
 	$$ = (ast_node_t*) f;
 	}
-	
+;
 
+singleif: IF exp SEMI statement
+ ; 
+
+elif: ELSE IF exp SEMI statement 
+  ;
+
+singleelse: ELSE SEMI statement;
+
+
+elifchain: elif elifchain;
+
+ifstatement: singleif END
+	   | singleif elifchain END
+	   | singleif elifchain singleelse END
+	   | singleif singleelse END
 ;
 
 calltype: CALL VAR

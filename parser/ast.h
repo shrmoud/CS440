@@ -87,6 +87,13 @@ struct ast_typelist_node {
 };
 
 
+struct ast_if_node {
+	int node_type; 
+	struct ast_node * bstatement;
+	struct ast_node * body; 
+}
+
+
 
 typedef struct symbol_node symbol_t;
 typedef struct ast_node ast_node_t;

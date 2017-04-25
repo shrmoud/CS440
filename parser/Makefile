@@ -19,7 +19,7 @@ scanner.c: scanner.l parser.o ast.o
 	flex scanner.l
 	cp lex.yy.c scanner.c
 
-ast.o: ast.c
+ast.o: ast.c parser.c
 	${CC} ${CFLAGS} -c ast.c -o ast.o
 
 parser.o: parser.c ast.o

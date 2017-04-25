@@ -439,8 +439,8 @@ int symAssign(const ast_node_t * node, ast_symbol_reference_node_t * s) {
 					return -2;
 				}
 
-				if(s->symbol->valsize  >= 0)
-					hs_safe_free(s->symbol->val);
+		//		if(s->symbol->valsize  >= 0)
+		//			hs_safe_free(s->symbol->val);
 
 				s->symbol->val = malloc(sizeof(double));
 				*((double*)s->symbol->val) = num->value;
@@ -459,8 +459,8 @@ int symAssign(const ast_node_t * node, ast_symbol_reference_node_t * s) {
 				case 'C':
 				{
 				struct ast_string_node * num = (ast_string_node_t*) node;
-				if(s->symbol->valsize  >= 0)
-					hs_safe_free(s->symbol->val);
+			//	if(s->symbol->valsize  >= 0)
+			//		hs_safe_free(s->symbol->val);
 				if((s->symbol->enforce_type == 1) && (s->symbol->type != STRING_T)) {
 					return -2;
 				}

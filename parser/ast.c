@@ -2,7 +2,7 @@
 #include <malloc.h>
 #include <string.h>
 #include "ast.h"
-
+#include "parser.tab.h"
 
 int hs_safe_free(void * data) {
 	if(data != NULL) {
@@ -198,7 +198,6 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 				(ast_assignment_node_t*) tree;
 		
 			free_ast_tree_sys(node->value);
-			free_ast_tree_sys((ast_node_t*)node->symbol);
 			break;
 		}
 		case 'L':
@@ -264,10 +263,12 @@ void free_symbol_table(symbol_t ** table) {
 	int i;
 	for(i=0;i<SYMTABLE_LEN;i++) {
 		if(table[i] != NULL) {
-			if(table[i]->val != NULL) {
-				hs_safe_free(table[i]->val);
+			if(table[i]->valid != 0) {
+				if(table[i]->val != NULL) {
+					hs_safe_free(table[i]->val);
+				}
+				hs_safe_free(table[i]);
 			}
-			hs_safe_free(table[i]);
 		}
 	}
 }

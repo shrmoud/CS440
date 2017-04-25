@@ -86,12 +86,13 @@ ast_node_t * new_ast_number_node(double value, symboltype_t type) {
 
 }
 
-ast_node_t * new_ast_function_node(symboltype_t retval) {
+ast_node_t * new_ast_function_node(symboltype_t retval, ast_node_t * body, ast_node_t *  param) {
 	ast_function_node_t * ast_node = malloc(sizeof(ast_function_node_t));
 
 	ast_node->node_type = 'F';
 	ast_node->retval = retval;
-
+	ast_node->body = body;
+	ast_node->param = param; 
 	return (ast_node_t*) ast_node; 
 }
 
@@ -228,6 +229,14 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 				(ast_string_node_t*) tree;
 			hs_safe_free(n->str);
 			break;
+		}
+		case 'F': 
+		{
+			ast_function_node_t * n = 
+				(ast_function_node_t*) tree;
+			free_ast_tree_sys(n->body);
+			free_ast_tree_sys(n->param);
+
 		}
 		default:
 			printf("dropping out in tree (free)\n");

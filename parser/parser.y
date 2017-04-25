@@ -206,11 +206,11 @@ typelist: typecheck {
 };
 
 func: FUNCTIONDEF type_t VAR typelist SEMI statement RETURN value  SEMI END {
-	ast_function_node_t * f = (ast_function_node_t*) new_ast_function_node($2);
+	ast_function_node_t * f = (ast_function_node_t*) new_ast_function_node($2, $6, $4);
 	$$ = (ast_node_t*) f;
 	}
     |  FUNCTIONDEF VOID VAR typelist SEMI statement END {
-	ast_function_node_t * f = (ast_function_node_t*) new_ast_function_node(VOID_T);
+	ast_function_node_t * f = (ast_function_node_t*) new_ast_function_node(VOID_T, $6, $4);
 	f->retval = VOID_T;
 	$$ = (ast_node_t*) f;
 	}

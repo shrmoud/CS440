@@ -69,7 +69,9 @@ struct ast_typecheck_node {
 struct ast_function_node {
 	int node_type; 
 	symboltype_t retval;
-	size_t typelist_size; 
+	size_t typelist_size;
+	struct ast_node * body; 
+	struct ast_node * param; 
 	struct ast_typecheck_node * typelist;
 };
 
@@ -111,7 +113,7 @@ ast_node_t * new_ast_equality_node(char,ast_node_t*,ast_node_t*);
 ast_node_t * new_ast_symbol_reference_node(struct symbol_node*);
 ast_node_t * new_ast_assignment_node(ast_symbol_reference_node_t*, ast_node_t*);
 ast_node_t * new_ast_number_node(double, symboltype_t);
-ast_node_t * new_ast_function_node(symboltype_t);
+ast_node_t * new_ast_function_node(symboltype_t, ast_node_t*, ast_node_t*);
 ast_node_t * new_ast_typecheck_node(symboltype_t, symbol_t*);
 ast_node_t * new_ast_string_node(char * str);
 ast_node_t * new_ast_typelist_node(ast_typecheck_node_t*);

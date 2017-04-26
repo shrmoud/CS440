@@ -355,7 +355,7 @@ static struct ast_printnode * print_ast_tree_sys(ast_node_t * tree, int depth) {
 	else  {
 		int counter = 0;
 		struct ast_printnode * lo = printroot;
-		while(lo != NULL) {
+		while(lo->down != NULL) {
 			if(counter == depth) {
 				break;
 			}

@@ -377,6 +377,19 @@ static struct ast_printnode * print_ast_tree_sys(ast_node_t * tree, int depth) {
 }
 
 
+static void print_printnode(struct ast_printnode * input) {
+	struct ast_printnode * r = input; 
+	while(r != NULL) {
+		struct ast_printnode * s = r;
+		while(s != NULL) {
+			printf(" %c ", s->label);
+			s = s->next; 	
+		}
+		printf("\n");
+		r = r->down;
+	}
+}
+
 void print_ast_tree(ast_node_t * tree) {
 	if(tree == NULL) {
 		return;
@@ -387,12 +400,16 @@ void print_ast_tree(ast_node_t * tree) {
 	}
 
 	ast_root_node_t * root  = (ast_root_node_t*) tree;
-
+	struct ast_printnode * print = NULL;
 	while(root != NULL) {
 		printf("printing tree 1\n");
 		if(root->payload != NULL) 
-			print_ast_tree_sys(root->payload,0);
+			print = print_ast_tree_sys(root->payload,0);
 		root = (ast_root_node_t*) root->next;
+	}
+
+	if(print != NULL) {
+		print_printnode(print);
 	}
 
 }

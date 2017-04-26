@@ -283,9 +283,20 @@ void free_symbol_table(symbol_t ** table) {
 }
 
 
-static void print_ast_tree_sys(ast_node_t * tree, int depth) {
+struct ast_printnode {
+	char label;
+	int depth;
+	struct ast_printnode * next;
+	struct ast_printnode * down;
+};
+
+struct ast_printnode * printroot = NULL;
+
+
+
+static struct ast_printnode * print_ast_tree_sys(ast_node_t * tree, int depth) {
 	if(tree == NULL)
-		return;
+		return NULL;
 	switch(tree->node_type) {
 		/* two subtrees */ 
 		case 'R':
@@ -334,6 +345,35 @@ static void print_ast_tree_sys(ast_node_t * tree, int depth) {
 
 	}
 	printf("node with type %c and depth %d\n ",tree->node_type, depth);
+	if(printroot == NULL) {
+		printroot = malloc(sizeof(struct ast_printnode));
+		printroot->label = tree->node_type;
+		printroot->depth = depth;
+		printroot->next = NULL;
+		printroot->down = NULL;
+	}
+	else  {
+		int counter = 0;
+		struct ast_printnode * lo = printroot;
+		while(lo != NULL) {
+			if(counter == depth) {
+				break;
+			}
+			lo = lo->down;
+			counter++;
+		}
+		while(lo->next != NULL) {
+			lo = lo->next; 
+		}
+
+		lo->next = malloc(sizeof(struct ast_printnode));
+		lo->next->label = tree->node_type;
+		lo->depth = depth;
+		lo->next = NULL;
+		lo->down = NULL;
+	}
+
+	return printroot;
 }
 
 

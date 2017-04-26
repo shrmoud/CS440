@@ -283,7 +283,7 @@ void free_symbol_table(symbol_t ** table) {
 }
 
 
-static void print_ast_tree_sys(ast_node_t * tree) {
+static void print_ast_tree_sys(ast_node_t * tree, int depth) {
 	if(tree == NULL)
 		return;
 	switch(tree->node_type) {
@@ -292,8 +292,8 @@ static void print_ast_tree_sys(ast_node_t * tree) {
 		 {
 			ast_relational_node_t * node = 
 				(ast_relational_node_t*) tree;
-			print_ast_tree_sys(node->left);
-			print_ast_tree_sys(node->right);
+			print_ast_tree_sys(node->left, depth + 1);
+			print_ast_tree_sys(node->right, depth + 1);
 			break;
 	 	}
 		break;
@@ -301,8 +301,8 @@ static void print_ast_tree_sys(ast_node_t * tree) {
 		{
 			ast_equality_node_t * node =
 				(ast_equality_node_t*) tree;
-			print_ast_tree_sys(node->left);
-			print_ast_tree_sys(node->right);
+			print_ast_tree_sys(node->left, depth + 1);
+			print_ast_tree_sys(node->right, depth + 1);
 			break;
 		}
 		break;
@@ -311,29 +311,29 @@ static void print_ast_tree_sys(ast_node_t * tree) {
 			ast_assignment_node_t * node =
 				(ast_assignment_node_t*) tree;
 		
-			print_ast_tree_sys(node->value);
-			print_ast_tree_sys((ast_node_t*)node->symbol);
+			print_ast_tree_sys(node->value, depth + 1);
+			print_ast_tree_sys((ast_node_t*)node->symbol, depth + 1);
 			break;
 		}
 		case 'L':
 		{
 			ast_typelist_node_t * node = 
 				(ast_typelist_node_t*) tree;
-			print_ast_tree_sys((ast_node_t*)node->next);
-			print_ast_tree_sys((ast_node_t*)node->type);
+			print_ast_tree_sys((ast_node_t*)node->next, depth + 1);
+			print_ast_tree_sys((ast_node_t*)node->type, depth + 1);
 			break;
 		}
 		case 'F': 
 		{
 			ast_function_node_t * n = 
 				(ast_function_node_t*) tree;
-			print_ast_tree_sys(n->body);
-			print_ast_tree_sys(n->param);
+			print_ast_tree_sys(n->body, depth + 1);
+			print_ast_tree_sys(n->param, depth + 1);
 			break;
 		}
 
 	}
-	printf("node with type %c\n",tree->node_type);
+	printf("node with type %c and depth %d\n ",tree->node_type, depth);
 }
 
 
@@ -351,7 +351,7 @@ void print_ast_tree(ast_node_t * tree) {
 	while(root != NULL) {
 		printf("printing tree 1\n");
 		if(root->payload != NULL) 
-			print_ast_tree_sys(root->payload);
+			print_ast_tree_sys(root->payload,0);
 		root = (ast_root_node_t*) root->next;
 	}
 

@@ -361,13 +361,13 @@ static struct ast_printnode * print_ast_tree_sys(ast_node_t * tree, int depth) {
 			}
 			lo = lo->down;
 			counter++;
-			printf("print: making new down node\n");
+		//	printf("print: making new down node\n");
 		}
 		while(lo->next != NULL) {
-			printf("print: building next\n");
+		//	printf("print: building next\n");
 			lo = lo->next; 
 		}
-		printf("print: building new node at depth %d\n" , depth);
+		//printf("print: building new node at depth %d\n" , depth);
 		lo->next = malloc(sizeof(struct ast_printnode));
 		lo->next->label = tree->node_type;
 		lo->next->depth = depth;
@@ -383,8 +383,9 @@ static void print_printnode(struct ast_printnode * input) {
 	struct ast_printnode * r = input; 
 	while(r != NULL) {
 		struct ast_printnode * s = r;
+		s = s->next;
 		while(s != NULL) {
-			printf(" %d ", s->label);
+			printf(" %c", s->label);
 			s = s->next; 	
 		}
 		printf("\n");

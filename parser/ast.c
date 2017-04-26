@@ -236,7 +236,7 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 				(ast_function_node_t*) tree;
 			free_ast_tree_sys(n->body);
 			free_ast_tree_sys(n->param);
-
+			break;
 		}
 		default:
 			printf("dropping out in tree (free)\n");
@@ -329,7 +329,7 @@ static void print_ast_tree_sys(ast_node_t * tree) {
 				(ast_function_node_t*) tree;
 			print_ast_tree_sys(n->body);
 			print_ast_tree_sys(n->param);
-
+			break;
 		}
 
 	}

@@ -323,6 +323,15 @@ static void print_ast_tree_sys(ast_node_t * tree) {
 			print_ast_tree_sys((ast_node_t*)node->type);
 			break;
 		}
+		case 'F': 
+		{
+			ast_function_node_t * n = 
+				(ast_function_node_t*) tree;
+			print_ast_tree_sys(n->body);
+			print_ast_tree_sys(n->param);
+
+		}
+
 	}
 	printf("node with type %c\n",tree->node_type);
 }

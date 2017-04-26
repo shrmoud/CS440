@@ -111,7 +111,6 @@ expression:
 	 boolexp
 	| exp {$$ = $1;}
 	| func {$$ = $1;}
-	| ifstatement
 	| calltype {$$ = $1;}
 	| stringassign {$$ = $1;}
 	| DECIMAL {$$ = $1;}
@@ -214,23 +213,6 @@ func: FUNCTIONDEF type_t VAR typelist SEMI statement RETURN value  SEMI END {
 	f->retval = VOID_T;
 	$$ = (ast_node_t*) f;
 	}
-;
-
-singleif: IF exp SEMI statement
- ; 
-
-elif: ELSE IF exp SEMI statement 
-  ;
-
-singleelse: ELSE SEMI statement;
-
-
-elifchain: elif elifchain;
-
-ifstatement: singleif END
-	   | singleif elifchain END
-	   | singleif elifchain singleelse END
-	   | singleif singleelse END
 ;
 
 calltype: CALL VAR

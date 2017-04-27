@@ -286,14 +286,14 @@ void free_symbol_table(symbol_t ** table) {
 struct ast_printnode {
 	char label;
 	int depth;
+	int size; 
 	struct ast_printnode * next;
 	struct ast_printnode * down;
 };
 
 struct ast_printnode * printroot = NULL;
 
-
-
+int maxsize;
 static struct ast_printnode * print_ast_tree_sys(ast_node_t * tree, int depth) {
 	if(tree == NULL)
 		return NULL;
@@ -372,9 +372,16 @@ static struct ast_printnode * print_ast_tree_sys(ast_node_t * tree, int depth) {
 			counter++;
 		//	printf("print: making new down node\n");
 		}
+		counter = 1;
+		struct ast_printnode * lofirst = lo;
 		while(lo->next != NULL) {
 		//	printf("print: building next\n");
-			lo = lo->next; 
+			lo = lo->next;
+			counter++;	
+		}
+		lofirst->size = counter;
+		if(maxsize < counter) {
+			maxsize = counter; 
 		}
 		//printf("print: building new node at depth %d\n" , depth);
 		lo->next = malloc(sizeof(struct ast_printnode));
@@ -394,6 +401,10 @@ static void print_printnode(struct ast_printnode * input) {
 		struct ast_printnode * s = r;
 		s = s->next;
 		while(s != NULL) {
+			int i;
+			for(i=0;i<(int)(maxsize/(r->size+1*0.25));i++) {
+				printf(" ");
+			}
 			printf(" %c", s->label);
 			s = s->next; 	
 		}

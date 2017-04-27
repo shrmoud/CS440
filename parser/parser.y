@@ -111,6 +111,7 @@ expression:
 	 boolexp
 	| exp {$$ = $1;}
 	| func {$$ = $1;}
+	| call
 	| calltype {$$ = $1;}
 	| stringassign {$$ = $1;}
 	| DECIMAL {$$ = $1;}
@@ -136,12 +137,20 @@ boolexp:  boolterm
 ;
 
 
+call: CALL callable
+
 boolterm: 
 	TRUE 
       | FALSE 
       | varblob {
 	
 };
+
+callable: 
+	  func
+	| varblob
+	| type_t
+;
 
 /* strings */ 
 stringassign: varblob ASSGN QUOTE {

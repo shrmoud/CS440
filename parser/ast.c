@@ -218,10 +218,14 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 			break;
 		}
 		case 'H':
-		{
-			printf("we should not be freeing a root\n");
-			return;
-		}
+                {
+                        ast_root_node_t * n =
+                                (ast_root_node_t*) tree;
+                        while(n != NULL) {
+                                free_ast_tree_sys(n->payload);
+                                n = (ast_root_node_t*) n->next;
+                        }
+                }
 		case 'C': 
 		{
 			ast_string_node_t * n = 
@@ -341,6 +345,15 @@ static struct ast_printnode * print_ast_tree_sys(ast_node_t * tree, int depth) {
 			print_ast_tree_sys(n->param, depth + 1);
 			break;
 		}
+		case 'H':
+                {
+                        ast_root_node_t * n =
+                                (ast_root_node_t*) tree;
+                        while(n != NULL) {
+                                print_ast_tree_sys(n->payload,depth+1);
+                                n = (ast_root_node_t*) n->next;
+                        }
+                }
 
 	}
 	printf("node with type %c and depth %d\n ",tree->node_type, depth);

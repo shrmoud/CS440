@@ -44,13 +44,23 @@ Sequencing: whitespace
 Subexpression Grouping: \texttt{( )}\par
 Type checking: \texttt{:}
 
-
 \begin{verbatim}
 int y = input;
 int x = input + 9;
 double z = input / 10;
 \end{verbatim}
 
+\subsection {Keywords and Characters}
+Listed below are some of the reserved keywords and character sets used.
+
+Character Set:\par
+Letters: \texttt a-z A-Z\par
+Decimal Digits: \texttt 0-9\par
+Whitespace: \texttt space, tab, newline\par
+
+\begin{verbatim}function, double, int, for, call, boolean, true, false,
+string, char, void, return, header, if, else, end
+\end{verbatim}\par
 
 \subsection{Types}
 Numeric types include all basic primitives from C. Type checking is enforced however, and some type conflicts will result in a compiler warning or error
@@ -75,7 +85,6 @@ x = stype 3; //x is now 't'
 \subsection{Functions}
 Functions are declared with the \textit{function} keyword, with a single return value and a set number of parameters. Function overloading is allowed. Functions are called with the \textit{call} keyword. If \textit{call} is not used, a function can be treated as a type and passed to other functions, much like C function pointers or watered down lisp functions. 
 \begin{verbatim}
-
 function void test void; 
    return void;
 end;
@@ -93,6 +102,15 @@ end;
 call test2 3; //calling a function with call keyword
 \end{verbatim}
 
+\subsection{Boolean Logic}
+Booleans use predefined keywords for \textit{true} and \textit{false}. HIPSTER-C supports C boolean operators. 
+\begin{verbatim}
+boolean ftype = false; 
+boolean ttype = true; 
+
+ttype && ftype //evaluates to false
+ttype || ftype //evaluates to true
+\end{verbatim}
 
 
 \end{document} 

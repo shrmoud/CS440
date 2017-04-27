@@ -6,7 +6,7 @@ CFLAGS = -g -Wall
 all: hc
 
 hc: ${OBJS}
-	${CC} ${CFLAGS} ${OBJS} -o hc -lfl 
+	${CC} ${CFLAGS} ${OBJS} -o hc -lm -lfl 
 
 
 main.o: main.c

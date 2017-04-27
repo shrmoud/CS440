@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <string.h>
+#include <math.h>
 #include "ast.h"
 
 int hs_safe_free(void * data) {
@@ -402,7 +403,7 @@ static void print_printnode(struct ast_printnode * input) {
 		s = s->next;
 		while(s != NULL) {
 			int i;
-			for(i=0;i<(int)(maxsize/(r->size+1*0.25));i++) {
+			for(i=0;i<floor((maxsize/(r->size)));i++) {
 				printf(" ");
 			}
 			printf(" %c", s->label);

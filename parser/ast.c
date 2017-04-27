@@ -2,7 +2,6 @@
 #include <malloc.h>
 #include <string.h>
 #include "ast.h"
-#include "parser.tab.h"
 
 int hs_safe_free(void * data) {
 	if(data != NULL) {

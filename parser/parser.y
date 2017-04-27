@@ -222,7 +222,6 @@ exp:  term {$$ = $1;}
    | exp operator exp {
 	ast_relational_node_t * n = 
 	(ast_relational_node_t*) new_ast_relational_node($2,$1,$3);
-	printf("created operator node with operator %c\n", $2);
 	$$ = (ast_node_t*) n;
 
 }
@@ -301,7 +300,6 @@ varblob: VAR {
 	//	YYERROR;
 	//}
 	else if(sym == NULL) {
-		printf("encountered a null symbol\n");
 	}
 
 	$$ = $1;
@@ -315,7 +313,6 @@ varblob: VAR {
 		YYERROR;
 	}
 	else if(sym == NULL) {
-		printf("encountered a null symbol\n");
 	}
 	
 	tc->symbol->enforce_type = 1; 
@@ -341,7 +338,6 @@ int yyerror(char * s) {
 //}
 
 static int symbolIndex(char * name) {
-	printf("searching for index for %s\n", name);
 	int x; 
 	for(x=0;x<SYMTABLE_LEN;x++) {
 		//printSymbol(*symbols[x]);
@@ -390,11 +386,9 @@ symbol_t * symbolVal(char * name) {
 	int index;
 	index = symbolIndex(name);
 	if(index >= 0) {
-		printf("found a symbol from table\n");
 		return symbols[index];
 	}
 	else {
-		printf("cannot find symbol\n");
 		return NULL ;
 	}	
 }
@@ -455,8 +449,6 @@ int symAssign(const ast_node_t * node, ast_symbol_reference_node_t * s) {
 				break;
 				}
 
-				default:
-				yyerror("impossible ast situation in assign\n");
 			}
 		updateSymbolVal(s->symbol);
 

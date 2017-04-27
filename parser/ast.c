@@ -241,8 +241,6 @@ static void free_ast_tree_sys(ast_node_t * tree) {
 			free_ast_tree_sys(n->param);
 			break;
 		}
-		default:
-			printf("dropping out in tree (free)\n");
 	}
 	hs_safe_free(tree);
 }
@@ -259,7 +257,6 @@ void free_ast_tree(ast_node_t * tree) {
 	ast_root_node_t * root  = (ast_root_node_t*) tree;
 
 	while(root != NULL) {
-		printf("freeing tree 1\n");
 		if(root->payload != NULL) 
 			free_ast_tree_sys(root->payload);
 		ast_root_node_t * prev = root; 
@@ -356,7 +353,7 @@ static struct ast_printnode * print_ast_tree_sys(ast_node_t * tree, int depth) {
                 }
 
 	}
-	printf("node with type %c and depth %d\n ",tree->node_type, depth);
+	//printf("node with type %c and depth %d\n ",tree->node_type, depth);
 	if(printroot == NULL) {
 		printroot = malloc(sizeof(struct ast_printnode));
 		printroot->label = tree->node_type;
@@ -416,8 +413,8 @@ void print_ast_tree(ast_node_t * tree) {
 
 	ast_root_node_t * root  = (ast_root_node_t*) tree;
 	struct ast_printnode * print = NULL;
+	printf("printing AST\n");
 	while(root != NULL) {
-		printf("printing tree 1\n");
 		if(root->payload != NULL) 
 			print = print_ast_tree_sys(root->payload,0);
 		root = (ast_root_node_t*) root->next;

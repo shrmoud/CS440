@@ -77,10 +77,8 @@ end      {return END;}
 
 [a-zA-Z][a-zA-Z0-9]* {
 symbol_t * sym = malloc(sizeof(symbol_t));
-printf("YYTEXT: %lu \n ", strlen(yytext));
 sym->name = malloc(sizeof(char*)*strlen(yytext)+1);
 strcpy(sym->name, yytext); 
-printf("made a SYMBOL\n");
 sym->enforce_type = 0; 
 sym->valsize = -1;
 sym->val = NULL;

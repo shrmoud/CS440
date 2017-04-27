@@ -18,8 +18,11 @@ int main(int argc, char ** argv) {
 		printf("valid syntax\n");
 
 	if(root != NULL) {
-		printf("we sort of have an ast!\n");
+		printf("generated AST\n");
 		print_ast_tree((ast_node_t*)root);
+	}
+	else {
+		printf("error: AST is null\n");
 	}
 
 	free_ast_tree((ast_node_t*)root);
